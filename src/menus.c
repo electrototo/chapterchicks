@@ -88,11 +88,3 @@ int menu_usuario() {
         getchar();
     } while(opcion_usuario < 1 || opcion_usuario > 3);
 }
-
-int main() {
-    menu_principal();
-    menu_acceso();
-    menu_administrador_como();
-    menu_administrador_general();
-    menu_usuario();
-}
