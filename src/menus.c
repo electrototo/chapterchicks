@@ -16,9 +16,18 @@ int menu_principal() {
     return opcion_principal;
 }
 
-int menu_agregar_usuario(char *nombre_usuario,char *contrasena,char *contrasena2){
-  printf("Ingresa tu nombre completo: ");
-  scanf("%s",nombre_usuario);
+int menu_agregar_usuario(char *nombre_usuario, char *contrasena) {
+    char contrasena1[50];
+    char contrasena2[50];
+
+    printf("Ingresa tu nombre completo: ");
+    scanf("%s", nombre_usuario);
+
+    printf("Ingresa tu contraseña: ");
+    scanf("%s", contrasena1);
+
+    printf("Vuelve a ingresar tu contraseña: ");
+    scanf("%s", contrasena2);
 }
 
 int menu_acceso(char *correo,char *password){
