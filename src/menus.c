@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <menus.h>
 
 int menu_principal() {
     int opcion_principal;
