@@ -1,14 +1,19 @@
-#include<stdio.h>
+#include <stdio.h>
 
-int menu_principal(){
-  int opcion_principal;
-  printf("BIENVENIDO\n\n");
-  printf("[1] Entrar\n[2] Agregar nueva cuenta\n");
-  do{
-    printf("Opción: ");
-    scanf("%d",&opcion_principal);
-    getchar();
-  }while(opcion_principal<1 || opcion_principal>2);
+int menu_principal() {
+    int opcion_principal;
+    printf("BIENVENIDO\n\n");
+    printf("[1] Entrar\n");
+    printf("[2] Agregar nueva cuenta\n");
+
+    do {
+        printf("Opción: ");
+        scanf("%d",&opcion_principal);
+        getchar();
+
+    } while(opcion_principal < 1 || opcion_principal > 2);
+
+    return opcion_principal;
 }
 
 int menu_agregar_usuario(char *nombre_usuario,char *contrasena,char *contrasena2){
