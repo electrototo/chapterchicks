@@ -7,14 +7,14 @@ ODIR=obj
 _DEPS = menus.h
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 
-_OBJ = menus.o prueba_menu.o
+_OBJ = menus.o $(name).o
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
 
 $(ODIR)/%.o: %.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
-prueba_menu: $(OBJ)
+$(name): $(OBJ)
 	gcc -o $@ $^ $(CFLAGS)
 
 .PHONY: clean
