@@ -52,7 +52,13 @@ int menu_administrador_como()
 int menu_administrador_general(){
   int opcion_admin;
   printf("¿Qué quieres hacer?\n");
-  printf("[1] Informe de libros en préstamo\n[2] Informe de usuarios dados de aña y libros en préstamo\n[3] Alta y baja de libros\n[4] Baja de un cliente\n[5] Obtener la categoría, autor y el título más popular\n[6] Ayuda\n[7] Salida del sistema\n");
+  printf("[1] Informe de libros en préstamo\n");
+  printf("[2] Informe de usuarios dados de alta y libros en préstamo\n");
+  printf("[3] Alta y baja de libros\n");
+  printf("[4] Baja de un cliente\n");
+  printf("[5] Obtener la categoría, autor y el título más popular\n");
+  printf("[6] Ayuda\n");
+  printf("[7] Salida del sistema\n");
   do{
     printf("Opción: ");
     scanf("%d",&opcion_admin);
