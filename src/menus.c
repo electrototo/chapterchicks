@@ -31,26 +31,38 @@ int menu_agregar_usuario(char *nombre_usuario, char *contrasena) {
     scanf("%s", contrasena2);
 }
 
-int menu_acceso(char *correo,char *password) {
+/*
+ * el problema de esta funcion es que si usamos scanf()
+ * para la contraseña, la contraseña no puede tener un
+ * espacio, por lo tanto tenemos que usar un fgets(),
+ * sin embargo si usamos un fgets, tenemos que quitar el
+ * ultimo caracter, el cual es una nueva linea ('\n')
+*/
+int menu_acceso(char *correo, char *password) {
     printf("Ingresa tu correo:\n ");
-    scanf("%s",correo);
+    scanf("%s", correo);
+    getchar();
+
     printf("Ingresa tu contraseña: ");
-    scanf("%s",password);
+    fgets(password, 50, stdin);
 }
 
 int menu_administrador_como() {
     int opcion_acceso_admin;
 
     printf("¿Deseas ingresar como administrador o como usuario?\n");
-    printf("[1] Administrador\n[2] Usuario\n");
+    printf("[1] Administrador\n");
+    printf("[2] Usuario\n");
 
     do{
 
         printf("Opción: ");
-        scanf("%d",&opcion_acceso_admin);
+        scanf("%d", &opcion_acceso_admin);
         getchar();
 
     } while(opcion_acceso_admin < 1 || opcion_acceso_admin > 2);
+
+    return opcion_acceso_admin;
 }
 
 int menu_administrador_general() {
@@ -72,6 +84,8 @@ int menu_administrador_general() {
         getchar();
 
     } while(opcion_admin < 1 || opcion_admin > 7);
+
+    return opcion_admin;
 }
   
 int menu_usuario() {
@@ -84,7 +98,9 @@ int menu_usuario() {
 
     do{
         printf("Opción: ");
-        scanf("%d",&opcion_usuario);
+        scanf("%d", &opcion_usuario);
         getchar();
     } while(opcion_usuario < 1 || opcion_usuario > 3);
+
+    return opcion_usuario;
 }
