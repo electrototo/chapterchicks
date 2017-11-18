@@ -1,5 +1,7 @@
 #include <stdio.h>
+#include <string.h>
 #include <menus.h>
+#include <utilities.h>
 
 int menu_principal() {
     int opcion_principal;
@@ -17,18 +19,43 @@ int menu_principal() {
     return opcion_principal;
 }
 
-int menu_agregar_usuario(char *nombre_usuario, char *contrasena) {
+int menu_agregar_usuario(char *nombre_usuario, char *contrasena,
+        int *fecha, char *direccion) {
+
     char contrasena1[50];
     char contrasena2[50];
 
+    int wrong = 0;
+
     printf("Ingresa tu nombre completo: ");
-    scanf("%s", nombre_usuario);
+    fgets(nombre_usuario, 50, stdin);
 
-    printf("Ingresa tu contraseña: ");
-    scanf("%s", contrasena1);
+    strip_char(nombre_usuario, '\n');
 
-    printf("Vuelve a ingresar tu contraseña: ");
-    scanf("%s", contrasena2);
+    printf("Ingresa tu direccion: ");
+    fgets(direccion, 50, stdin);
+
+    strip_char(direccion, '\n');
+
+    printf("Ingresa tu fecha de nacimiento [dd/mm/aaaa]: ");
+    scanf("%d/%d/%d", &fecha[0], &fecha[1], &fecha[2]);
+    getchar();
+
+    do {
+        if (!wrong)
+            wrong = 1;
+        else
+            printf("\tLas contraseñas no coinciden\n");
+
+        printf("Ingresa tu contraseña: ");
+        fgets(contrasena1, 50, stdin);
+
+        printf("Vuelve a ingresar tu contraseña: ");
+        fgets(contrasena2, 50, stdin);
+    } while (strcmp(contrasena1, contrasena2) != 0);
+
+    strip_char(contrasena1, '\n');
+    strcpy(contrasena, contrasena1);
 }
 
 /*
@@ -38,13 +65,21 @@ int menu_agregar_usuario(char *nombre_usuario, char *contrasena) {
  * sin embargo si usamos un fgets, tenemos que quitar el
  * ultimo caracter, el cual es una nueva linea ('\n')
 */
-int menu_acceso(char *correo, char *password) {
+int menu_acceso(char *correo, char *password1, char *password2) {
     printf("Ingresa tu correo:\n ");
     scanf("%s", correo);
     getchar();
 
     printf("Ingresa tu contraseña: ");
-    fgets(password, 50, stdin);
+    fgets(password1, 50, stdin);
+
+    if (strcmp(password1, password2) != 0) {
+        printf("\tLa contraseña y/o el nombre de usuario son incorrectos\n");
+
+        return 0;
+    }
+
+    return 1;
 }
 
 int menu_administrador_como() {
