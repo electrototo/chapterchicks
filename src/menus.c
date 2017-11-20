@@ -1,3 +1,12 @@
+/*
+ * @menus.c
+ *
+ * @brief
+ *
+ * @author Guillermo Ortega, Elena Ginebra, Cristobal Liendo
+ * @date 20/11/17
+*/
+
 #include <stdio.h>
 #include <string.h>
 #include <menus.h>

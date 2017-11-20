@@ -1,3 +1,13 @@
+/*
+ * @menus.h
+ *
+ * @brief Este archivo contiene todas las definiciones de las
+ *        funciones que se encuentran en menus.c
+ *
+ * @author Cristobal Liendo
+ * @date 20/11/17
+*/
+
 #ifndef MENUS_H
     #define MENUS_H
 

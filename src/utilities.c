@@ -1,3 +1,12 @@
+/*
+ * @utilities.c
+ *
+ * @brief
+ *
+ * @author Cristobal Liendo
+ * @date 20/11/17
+*/
+
 #include <utilities.h>
 
 /*
