@@ -8,8 +8,8 @@ int main() {
 
     menu_principal();
 
-    if (opcion_principal==1){
-      menu_acceso (correo, password1, password2);
+    if (opcion_principal==1) {
+        menu_acceso(correo, password1, password2);
     }
 
     else {
@@ -26,16 +26,16 @@ int main() {
     //en este caso haré que sí lo sea
     menu_administrador_como ();
 
-    if(opcion_acceso_admin==1){
-      menu_administrador_general ();
+    if(opcion_acceso_admin == 1){
+        menu_administrador_general();
     }
 
     else {
-    menu_usuario ();
+        menu_usuario ();
     }
 
     if (opcion_admin==3){
-    menu_registrar_libro (nombre_libro,nombre_autor,categoria, isbn, costo_libro);
+        menu_registrar_libro(nombre_libro, nombre_autor, categoria, &isbn, &costo_libro);
     }
 
 
