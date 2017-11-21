@@ -28,7 +28,7 @@ int menu_principal() {
     return opcion_principal;
 }
 
-int menu_agregar_usuario(char *nombre_usuario, char *contrasena,
+int menu_agregar_usuario (char *nombre_usuario, char *contrasena,
         int *fecha, char *direccion) {
 
     char contrasena1[50];
