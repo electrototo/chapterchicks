@@ -3,8 +3,13 @@
 #include <utilities.h>
 
 int main() {
-  char usuario[50], pwd[50], direccion[50], correo[254], password1[50], password2[50], nombre_libro [100],nombre_autor[50],categoria[50];
-  int fecha[3], isbn, costo_libro,opcion_principal, opcion_acceso_admin, opcion_admin;
+    char usuario[50], pwd[50], direccion[50];
+    char correo[254], password1[50], password2[50];
+    char nombre_libro [100],nombre_autor[50],categoria[50];
+    char isbn[14];
+
+    int fecha[3], opcion_principal, opcion_acceso_admin, opcion_admin;
+    float costo_libro;
 
     menu_principal();
 
@@ -35,7 +40,7 @@ int main() {
     }
 
     if (opcion_admin==3){
-        menu_registrar_libro(nombre_libro, nombre_autor, categoria, &isbn, &costo_libro);
+        menu_registrar_libro(nombre_libro, nombre_autor, categoria, isbn, &costo_libro);
     }
 
 
