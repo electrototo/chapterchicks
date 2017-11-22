@@ -4,10 +4,10 @@ CFLAGS=-I$(IDIR)
 
 ODIR=obj
 
-_DEPS = menus.h utilities.h
+_DEPS = menus.h utilities.h estructuras.h
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 
-_OBJ = menus.o utilities.o $(name).o
+_OBJ = menus.o utilities.o estructuras.o $(name).o
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
 
