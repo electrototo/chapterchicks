@@ -8,6 +8,9 @@
 */
 
 #include <utilities.h>
+#include <stdio.h>
+
+FILE *log_file;
 
 /*
  * Esta funcion recibe como parametro un arreglo de caracteres
@@ -36,4 +39,10 @@ int strip_char(char *source, char target) {
     }
 
     return status;
+}
+
+void log_msg(char *msg) {
+    log_file = fopen("actividades.log", "a");
+    fprintf(log_file, "%s\n", msg);
+    fclose(log_file);
 }

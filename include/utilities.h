@@ -12,4 +12,5 @@
     #define UTILITES_H
 
     int strip_char(char *source, char target);
+    void log_msg(char *msg);
 #endif
