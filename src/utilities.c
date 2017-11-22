@@ -41,6 +41,18 @@ int strip_char(char *source, char target) {
     return status;
 }
 
+/*
+ * Esta funcion recibe como parametro una cadena de texto para
+ * poder registar esa cadena en un archivo que se llama
+ * actividades.log
+ * Sirve para poder llevar una bitacora de todas las acciones
+ * que el administrador realiza
+ *
+ * @autor Cristobal Liendo
+ * @param *msg    Es el mensaje que se quiere guardar en "actividades.log"
+ * @return void
+*/
+
 void log_msg(char *msg) {
     log_file = fopen("actividades.log", "a");
     fprintf(log_file, "%s\n", msg);
