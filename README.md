@@ -15,5 +15,19 @@ las librerías, se tienen que seguir los siguientes pasos:
 2. Ejecutar `make name=nombre_del_archivo` donde *nombre_del_archivo* es el nombre del archivo **fuente** a compilar; aquel que hace uso de las librerías que se encuentran
 dentro del repositorio
 
+## Ejecución de _aleer_
+Hay dos formas de ejecución del programa, la primera no tiene argumentos por lo que se ejecuta de la siguiente manera:
+
+`$ aleer`
+
+La segunda manera de ejecutar el programa es ingresando los siguientes argumentos:
+
+| **Modificador** | **Comportamiento**                                                                             |
+| --------------- | ---------------------------------------------------------------------------------------------- |
+| -h              | Despliega el menú de ayuda al usuario                                                          |
+| -c              | Despliega un informe de libros en préstamo                                                     |
+| -usu            | Despliega el listado de todos los *usuaios del servicio* catalogados y muestra su alta y baja. |
+| -a              | Indica al programa que se quiere crear una cuenta de administrador.                            |
+
 ## TODO
 Por el momento el proyecto se encuentra en una etapa muy temprana. Cualquier duda y comentario será muy bienvenida dentro de la sección de issues. 
