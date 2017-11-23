@@ -11,6 +11,8 @@ int main() {
     int fecha[3], opcion_principal, opcion_acceso_admin, opcion_admin;
     float costo_libro;
 
+    creditos();
+    
     menu_principal();
 
     if (opcion_principal==1) {
