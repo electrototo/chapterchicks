@@ -15,6 +15,14 @@
 
 #define CLS system("clear")
 
+/*
+ * Esta funcion imprime los nombres de los programadores
+ * cada vez que se inicie el programa
+ *
+ * @author Cristobal Liendo
+ * @return void
+*/
+
 void creditos() {
     CLS;
 
@@ -31,6 +39,17 @@ void creditos() {
     getchar();
 }
 
+/*
+ * Es el menu que se imprime despues de haber mostrado
+ * los nombres de los programadores. Hay dos opciones:
+ * entrar al sistema o el auto registro para usuarios 
+ * nuevos que quieran usar el sistema.
+ * El sistema entra en un ciclo hasta que el usuario
+ * haya ingresado una opcion valida
+ *
+ * @author Guillermo Ortega
+ * @return 1 o 2, dependiendo de la eleccion del usuario
+*/
 int menu_principal() {
     int opcion_principal;
     printf("BIENVENIDO\n\n");
@@ -49,7 +68,20 @@ int menu_principal() {
     return opcion_principal;
 }
 
-int menu_agregar_usuario (char *nombre_usuario, char *contrasena,
+/*
+ * Este menu sera usado para que el usuario pueda registrarse.
+ * La contrasena la ingresa el usuario, debido a que es una
+ * mala practica mandar contrasenas por correo debido a que 
+ * estas deben ir en texto claro.
+ * La funcion tambien verifica que ambas contrasenas coincidan,
+ * si no coinciden entra en un ciclo hasta que el usuario haya
+ * ingresado unas contrasenas que coincidan
+ *
+ * @author Guillermo Ortega, Elena Ginebra, Cristobal Liendo
+ * @return void
+*/
+
+void menu_agregar_usuario (char *nombre_usuario, char *contrasena,
         int *fecha, char *direccion) {
 
     char contrasena1[50];
@@ -91,13 +123,21 @@ int menu_agregar_usuario (char *nombre_usuario, char *contrasena,
 }
 
 /*
- * el problema de esta funcion es que si usamos scanf()
- * para la contraseña, la contraseña no puede tener un
- * espacio, por lo tanto tenemos que usar un fgets(),
- * sin embargo si usamos un fgets, tenemos que quitar el
- * ultimo caracter, el cual es una nueva linea ('\n')
+ * Esta funcion recibe como parametros dos direcciones de memoria
+ * a las que se van a guardar el correo y la contrasena proporcionadas
+ * por el usuario.
+ * Su funcion principal es preguntarle al usuario su correo y su
+ * contrasena
+ *
+ * @author Cristobal Liendo, Elena Ginebra, Guillermo Ortega
+ * @param  *correo    Significa donde se desea guardar el correo
+ *                    ingresado por el usuario
+ * @param  *password  Es a donde se desea guardar la contrasena
+ *                    proporcionada por el usuario
+ * @return int
 */
-int menu_acceso(char *correo, char *password1, char *password2) {
+
+void menu_acceso(char *correo, char *password1) {
     printf("Ingresa tu correo:\n ");
     scanf("%s", correo);
     getchar();
@@ -106,12 +146,19 @@ int menu_acceso(char *correo, char *password1, char *password2) {
     fgets(password1, 50, stdin);
 
     CLS;
-
-    if (strcmp(password1, password2) != 0)
-        return 0;
-
-    return 1;
 }
+
+/*
+ * Si el tipo de usuario es un administrador, se le va a desplegar
+ * este menu para que pueda seleccionar la modalidad en la que desea
+ * entrar al sistema.
+ * Regresa un 1 si quiere entrar como administrador y un 2 si es que
+ * desea ingresar como usuario normal
+ *
+ *
+ * @author Guillermo Ortega, Elena Ginebra, Cristobal Liendo
+ * @return int
+*/
 
 int menu_administrador_como() {
     int opcion_acceso_admin;
