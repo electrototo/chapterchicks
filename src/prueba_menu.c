@@ -18,7 +18,7 @@ int main() {
     }
 
     else {
-    menu_agregar_usuario (usuario, pwd, fecha, direccion);
+        menu_agregar_usuario (usuario, pwd, fecha, direccion);
     }
 
     printf("Bienvenido de vuelta, %s.\n", usuario);
@@ -42,6 +42,8 @@ int main() {
     if (opcion_admin==3){
         menu_registrar_libro(nombre_libro, nombre_autor, categoria, isbn, &costo_libro);
     }
+    
+    creditos();
 
 
     return 0;
