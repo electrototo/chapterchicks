@@ -180,6 +180,14 @@ int menu_administrador_como() {
     return opcion_acceso_admin;
 }
 
+/*
+ * Si el administrador escoge ingresar como admiistrador se le
+ * deplegara la lsta de opciones
+ * Regresa la opción que sea escogida y sigue preguntando mientras
+ * que la opcion ingresada no esté entre las opciones disponibles
+ * @author Guillermo Ortega, Elena Ginebra, Cristobal Liendo
+ * @return int
+*/
 int menu_administrador_general() {
     int opcion_admin;
 
@@ -204,7 +212,16 @@ int menu_administrador_general() {
 
     return opcion_admin;
 }
-  
+
+/*
+ * Si el tipo de usuario es un usuario o un administrados escoge ingresar como
+ * usuario, este menu despliega las acciones disponibles 
+ * para un usuario
+ * Regresa la opción escogida por el usuario y sigue preguntando por esta mientras
+ * que la opción ingresada no sea válida.
+ * @author Guillermo Ortega, Elena Ginebra, Cristobal Liendo
+ * @return int
+*/
 int menu_usuario() {
     int opcion_usuario;
 
@@ -224,6 +241,17 @@ int menu_usuario() {
     return opcion_usuario;
 }
 
+/*
+ * Si el tipo de usuario es un administrador, puede escoger registrar un libro
+ * nuevo, este menú le pregunta los datos del libro al administrador para poder guardarlo.
+ * @author Guillermo Ortega, Elena Ginebra, Cristobal Liendo
+ * @param *nombre_libro      el nombre del libro
+ * @param *nombre_autor      el nombre del autor del libro
+ * @param *categoria         la categoría/género del libro
+ * @param *isbn              el isbn del libro
+ * @param *costo_libro       el costo del libro
+ * @return void
+*/
 void menu_registrar_libro(char *nombre_libro, char *nombre_autor, char *categoria, char *isbn, float *costo_libro) {
     printf("Registrar nuevo libro:\n");
 
