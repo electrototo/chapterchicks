@@ -20,7 +20,7 @@ FILE *log_file;
  * que se obtiene al utilizar fgets().
  * Regresa un 1 si se encontro el caracter y un 0 si no
  *
- * @autor Cristobal Liendo
+ * @author Cristobal Liendo
  * @param *source      la cadena de caracteres en la que se va a buscar
  * @param target       el caracter a sustituir con '\0'
  * @return int
@@ -48,7 +48,7 @@ int strip_char(char *source, char target) {
  * Sirve para poder llevar una bitacora de todas las acciones
  * que el administrador realiza
  *
- * @autor Cristobal Liendo
+ * @author Cristobal Liendo
  * @param *msg    Es el mensaje que se quiere guardar en "actividades.log"
  * @return void
 */
