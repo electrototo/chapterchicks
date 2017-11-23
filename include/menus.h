@@ -19,4 +19,5 @@
     int menu_administrador_general();
     int menu_usuario();
     void menu_registrar_libro(char *nombre_libro, char *nombre_autor, char *categoria, char *isbn, float *costo_libro);
+    void creditos();
 #endif
