@@ -44,24 +44,24 @@ int main() {
       
       else {
         menu_usuario ();
-
+	
       }
       
       if (opcion_admin==3){
-
-    }
-
-    if (opcion_admin==1){
-      printf("\nInforme de libros en préstamo\n");
-    }
-    else if (opcion_admin==2){
-      printf("\nInforme de usuarios y libros en préstamo\n");
-    }
-    else if (opcion_admin==3){
-
+	
+      }
+      
+      if (opcion_admin==1){
+	printf("\nInforme de libros en préstamo\n");
+      }
+      else if (opcion_admin==2){
+	printf("\nInforme de usuarios y libros en préstamo\n");
+      }
+      else if (opcion_admin==3){
+	
         menu_registrar_libro(nombre_libro, nombre_autor, categoria, isbn, &costo_libro);
       }
-    }
+ 
     else if (opcion_admin==4){
       printf("\nDar de baja a un usuario\n");
       printf("Usuario: \n");
@@ -77,8 +77,9 @@ int main() {
     else if (opcion_admin>=7){
       return 0;
     }
-    
 
+
+    }   
     creditos();
     
     return 0;    
