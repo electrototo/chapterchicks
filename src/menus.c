@@ -8,9 +8,28 @@
 */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <menus.h>
 #include <utilities.h>
+
+#define CLS system("clear")
+
+void creditos() {
+    CLS;
+
+    printf("Universidad Iberoamericana\n");
+    printf("Fundamentos de Programacion\n\n");
+
+    printf("Este programa fue desarrollado por:\n");
+    printf("\tElena Giebra\n");
+    printf("\tGuillermo Ortega\n");
+    printf("\tCristobal Liendo\n");
+
+    printf("\n\nPresiona cualquier tecla para salir...");
+
+    getchar();
+}
 
 int menu_principal() {
     int opcion_principal;
@@ -24,6 +43,8 @@ int menu_principal() {
         getchar();
 
     } while(opcion_principal < 1 || opcion_principal > 2);
+
+    CLS;
 
     return opcion_principal;
 }
@@ -65,6 +86,8 @@ int menu_agregar_usuario (char *nombre_usuario, char *contrasena,
 
     strip_char(contrasena1, '\n');
     strcpy(contrasena, contrasena1);
+
+    CLS;
 }
 
 /*
@@ -82,11 +105,10 @@ int menu_acceso(char *correo, char *password1, char *password2) {
     printf("Ingresa tu contraseña: ");
     fgets(password1, 50, stdin);
 
-    if (strcmp(password1, password2) != 0) {
-        printf("\tLa contraseña y/o el nombre de usuario son incorrectos\n");
+    CLS;
 
+    if (strcmp(password1, password2) != 0)
         return 0;
-    }
 
     return 1;
 }
@@ -105,6 +127,8 @@ int menu_administrador_como() {
         getchar();
 
     } while(opcion_acceso_admin < 1 || opcion_acceso_admin > 2);
+
+    CLS;
 
     return opcion_acceso_admin;
 }
@@ -129,6 +153,8 @@ int menu_administrador_general() {
 
     } while(opcion_admin < 1 || opcion_admin > 7);
 
+    CLS;
+
     return opcion_admin;
 }
   
@@ -145,6 +171,8 @@ int menu_usuario() {
         scanf("%d", &opcion_usuario);
         getchar();
     } while(opcion_usuario < 1 || opcion_usuario > 3);
+
+    CLS;
 
     return opcion_usuario;
 }
@@ -166,4 +194,6 @@ void menu_registrar_libro(char *nombre_libro, char *nombre_autor, char *categori
 
     printf("Ingresa el costo del libro: ");
     scanf("%f", costo_libro);
+
+    CLS;
 }
