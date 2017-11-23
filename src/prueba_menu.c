@@ -25,28 +25,34 @@ int main() {
 
     printf("Bienvenido de vuelta, %s.\n", usuario);
 
-    //    printf("Tu contraseña es: %s\n", pwd);
-
+   
+    
     //aqui debería hacerse una validación para ver
-    //si el usuario es admin o no.
+    //si el usuario es admin o no, por el momento lo dejaré así
+    int sino;
+    printf("¿Eres admin?\n[1]Si\n[2]No\n");
+    scanf("%d", &sino);
 
-    //en este caso haré que sí lo sea
-    menu_administrador_como ();
 
-    if(opcion_acceso_admin == 1){
+    
+    if (sino==1){
+      menu_administrador_como ();
+      
+      if(opcion_acceso_admin == 1){
         menu_administrador_general();
-    }
-
-    else {
+      }
+      
+      else {
         menu_usuario ();
-    }
-
-    if (opcion_admin==3){
+      }
+      
+      if (opcion_admin==3){
         menu_registrar_libro(nombre_libro, nombre_autor, categoria, isbn, &costo_libro);
+      }
     }
     
     creditos();
-
-
+    
+    
     return 0;
 }
