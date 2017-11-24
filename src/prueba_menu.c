@@ -40,7 +40,7 @@ int main()
         opcion_acceso_admin = menu_administrador_como();
     
         if(opcion_acceso_admin == 1) {
-            menu_administrador_general();
+            opcion_admin = menu_administrador_general();
         
             switch (opcion_admin) {
                 
