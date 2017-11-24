@@ -4,6 +4,7 @@
 
 int main() 
 {
+
     char usuario[50], pwd[50], direccion[50];
     char email[254], password1[50], password2[50];
     char nombre_libro [100],nombre_autor[50],categoria[50];
