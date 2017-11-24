@@ -91,13 +91,13 @@ int main()
       else if (opcion_acceso_admin ==2){
 	menu_usuario();
       }
-    }
     
-    else if (sino ==2){
+    if (sino ==2){
       menu_usuario ();
     }
 
-    creditos();
+//me hace un error que no se arreglar
+//    creditos();
     
     return 0;    
     
