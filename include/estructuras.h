@@ -48,6 +48,11 @@
     } Usuario; 
 
     typedef struct {
+        Usuario usuarios[50];
+        int actual;
+    } ManejoUsuarios;
+
+    typedef struct {
         int libro;
         int usuario;
         int fecha_prestamo;
