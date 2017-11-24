@@ -276,9 +276,11 @@ void menu_registrar_libro(char *nombre_libro, char *nombre_autor, char *categori
 }
 
 
-void menu_informe_prestamos (int *total_libros_prestamo)
+void menu_informe_prestamos ()
 {
-  printf("Número total de libros en préstamo%d\n\n, total_libros_prestamo");
+  int total_libros_prestamo;
+
+  printf("Número total de libros en préstamo%d\n\n" total_libros_prestamo);
 
   for (int i=0; i<=total_libros_prestamo; i++)
     {
