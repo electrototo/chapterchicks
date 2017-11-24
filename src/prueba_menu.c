@@ -49,7 +49,7 @@ int main()
                     break;
                     
                 case 2:
-                    printf("\nInforme de usuarios y libros en préstamo\n");
+		  menu_informe_usuarios();
                     break;
                     
                 case 3:
