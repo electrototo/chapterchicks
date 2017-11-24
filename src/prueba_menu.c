@@ -54,7 +54,20 @@ int main()
 	      break;
               
 	    case 3:
-	      menu_registrar_libro (nombre_libro,nombre_autor,categoria,isbn, costo_libro);
+	      int alta_o_baja;
+
+	      printf("¿Quieres dar de alta ó dar de baja un libro?\n[1]Alta\n[2]Baja\n");
+	      scanf("%d", &alta_o_baja);
+	      
+	      if (alta_o_baja == 1){
+		menu_registrar_libro (nombre_libro,nombre_autor,categoria,isbn, costo_libro);
+	      }
+
+	      else {printf("Enlistar libros");
+	      printf("¿Qué libro quieres dar de bajar?");
+	      printf("Opción: ");}
+	      //falta terminar esto
+
 	      break;
               
 	    case 4:
