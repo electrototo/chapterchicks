@@ -36,7 +36,7 @@ int main()
     int sino;
     printf("¿Eres admin? Nota*: Esta validación se realiza de manera automática\n[1]Si\n[2]No\n");
     scanf("%d", &sino);
-    
+    getchar ();
     
     
     if (sino==1){
@@ -45,8 +45,6 @@ int main()
     }
  
 
-
-     /*      
       if(opcion_acceso_admin == 1)
 	{	  
 	  menu_administrador_general();
@@ -95,7 +93,7 @@ int main()
     else if (sino ==2){
       menu_usuario ();
     }
-      */
+
     creditos();
     
     return 0;    
