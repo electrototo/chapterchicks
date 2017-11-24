@@ -142,9 +142,9 @@ void menu_agregar_usuario (char *nombre_usuario, char *contrasena,
  * @return void
 */
 
-void menu_acceso(char *correo, char *password1) {
+void menu_acceso(char *email, char *password1) {
     printf("Ingresa tu correo: ");
-    scanf("%s", correo);
+    scanf("%s", email);
     getchar();
 
     printf("Ingresa tu contraseña: ");
