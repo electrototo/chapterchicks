@@ -13,7 +13,7 @@
 #include <menus.h>
 #include <utilities.h>
 
-#define CLS system ("clear")
+#define CLS system("clear")
 
 /*
  * Esta funcion imprime los nombres de los programadores
@@ -24,8 +24,6 @@
 */
 
 void creditos() {
-    CLS;
-
     printf("Universidad Iberoamericana\n");
     printf("Fundamentos de Programacion\n\n");
 
@@ -37,6 +35,8 @@ void creditos() {
     printf("\n\nPresiona cualquier tecla para salir...");
 
     getchar();
+
+    CLS;
 }
 
 /*
@@ -134,7 +134,7 @@ void menu_agregar_usuario (char *nombre_usuario, char *contrasena,
  *                    ingresado por el usuario
  * @param  *password  Es a donde se desea guardar la contrasena
  *                    proporcionada por el usuario
- * @return int
+ * @return void
 */
 
 void menu_acceso(char *correo, char *password1) {
@@ -154,7 +154,6 @@ void menu_acceso(char *correo, char *password1) {
  * entrar al sistema.
  * Regresa un 1 si quiere entrar como administrador y un 2 si es que
  * desea ingresar como usuario normal
- *
  *
  * @author Guillermo Ortega, Elena Ginebra, Cristobal Liendo
  * @return int
@@ -185,6 +184,7 @@ int menu_administrador_como() {
  * deplegara la lsta de opciones
  * Regresa la opción que sea escogida y sigue preguntando mientras
  * que la opcion ingresada no esté entre las opciones disponibles
+ *
  * @author Guillermo Ortega, Elena Ginebra, Cristobal Liendo
  * @return int
 */
@@ -219,6 +219,7 @@ int menu_administrador_general() {
  * para un usuario
  * Regresa la opción escogida por el usuario y sigue preguntando por esta mientras
  * que la opción ingresada no sea válida.
+ *
  * @author Guillermo Ortega, Elena Ginebra, Cristobal Liendo
  * @return int
 */
@@ -244,6 +245,7 @@ int menu_usuario() {
 /*
  * Si el tipo de usuario es un administrador, puede escoger registrar un libro
  * nuevo, este menú le pregunta los datos del libro al administrador para poder guardarlo.
+ *
  * @author Guillermo Ortega, Elena Ginebra, Cristobal Liendo
  * @param *nombre_libro      el nombre del libro
  * @param *nombre_autor      el nombre del autor del libro
