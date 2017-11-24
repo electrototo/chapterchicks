@@ -283,8 +283,11 @@ void menu_registrar_libro(char *nombre_libro, char *nombre_autor, char *categori
 
 void menu_informe_prestamos ()
 {
+
+
   int total_libros_prestamo;
 
+  printf("INFORME DE LIBROS EN PRÉSTAMO");
   printf("Número total de libros en préstamo %d\n\n", total_libros_prestamo);
 
   for (int i=1; i<=total_libros_prestamo; i++)
@@ -299,3 +302,17 @@ void menu_informe_prestamos ()
   
 }
 
+void menu_informe_usuarios ()
+{
+
+  int total_usuarios;
+
+  printf("INFORME DE USUARIOS DADOS DE ALTA");
+
+  for (int i=1; i<=total_usuarios; i++){
+    printf("USUARIO %d", i);
+    printf("Elena Ginebra");
+    printf("1 libro");
+  }
+
+}
