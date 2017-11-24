@@ -9,7 +9,7 @@
 */
 
 #ifndef UTILITIES_H
-    #define UTILITES_H
+    #define UTILITIES_H
 
     int strip_char(char *source, char target);
     void log_msg(char *msg);
