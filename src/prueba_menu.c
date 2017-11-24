@@ -45,7 +45,7 @@ int main()
             switch (opcion_admin) {
                 
                 case 1: 
-		  menu_informe_prestamos (total_libros_prestamo);
+		  menu_informe_prestamos ();
                     break;
                     
                 case 2:
