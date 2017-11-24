@@ -276,7 +276,7 @@ void menu_registrar_libro(char *nombre_libro, char *nombre_autor, char *categori
 }
 
 
-void menu_informe_prestamos (void)
+void menu_informe_prestamos ()
 {
   //me falta hacer cosas aqui con variables
   printf("Número total de libros en préstamo");
