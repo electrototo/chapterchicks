@@ -13,7 +13,7 @@
 #include <menus.h>
 #include <utilities.h>
 
-#define CLS system("clear")
+#define CLS system ("clear")
 
 /*
  * Esta funcion imprime los nombres de los programadores
