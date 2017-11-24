@@ -37,7 +37,7 @@ int main()
     
     
     if (sino == 1){
-        menu_administrador_como();
+        opcion_acceso_admin = menu_administrador_como();
     
         if(opcion_acceso_admin == 1) {
             menu_administrador_general();
