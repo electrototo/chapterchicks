@@ -293,7 +293,9 @@ void menu_informe_prestamos ()
       printf("LIBRO #%d\n", i);
       printf("Fecha de préstamo 12/11/2017: \n");
       printf("Fecha de devolución: 30/11/2017\n");
-      printf("Días restantes apra su devolución:6\n");
+      printf("Días restantes para su devolución: 6\n");
+
     }
   
 }
+
