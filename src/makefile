@@ -1,8 +1,11 @@
 IDIR =../include
 CC=gcc
-CFLAGS=-I$(IDIR)
+LDIR =../lib
+CFLAGS=-I$(IDIR) -L$(LDIR)
 
 ODIR=obj
+
+LIBS=-lcrypto -lfastpbkdf2
 
 _DEPS = menus.h utilities.h estructuras.h
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
@@ -15,7 +18,7 @@ $(ODIR)/%.o: %.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
 $(name): $(OBJ)
-	gcc -o $@ $^ $(CFLAGS)
+	gcc -o $@ $^ $(CFLAGS) $(LIBS)
 
 .PHONY: clean
 
