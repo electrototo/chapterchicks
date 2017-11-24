@@ -44,50 +44,50 @@ int main()
         
             switch (opcion_admin) {
                 
-                case 1: 
-		  menu_informe_prestamos ();
-                    break;
-                    
-                case 2:
-		  menu_informe_usuarios();
-                    break;
-                    
-                case 3:
-                    menu_registrar_libro (nombre_libro,nombre_autor,categoria,isbn, costo_libro);
-                    break;
-                    
-                case 4:
-                    printf("\nDar de baja a un usuario\n");
-                    printf("Usuario: \n");
-                    break;
-                    
-                case 5:
-                    printf("\nCategoría mas popular: ");
-                    printf("\nAutor mas popular: ");
-                    printf("\nTítulo mas popular: ");
-                    break;
-                    
-                case 6:
-                    printf("\nAyuda\n");
-                    break;
-                    
-                case 7:
-                    return 0;
-                    break;
-
-                default:
-                    break;
+	    case 1: 
+	      menu_informe_prestamos ();
+	      break;
+              
+	    case 2:
+	      menu_informe_usuarios ();
+	      break;
+              
+	    case 3:
+	      menu_registrar_libro (nombre_libro,nombre_autor,categoria,isbn, costo_libro);
+	      break;
+              
+	    case 4:
+	      printf("\nDar de baja a un usuario\n");
+	      printf("Usuario: \n");
+	      break;
+              
+	    case 5:
+	      printf("\nCategoría mas popular: ");
+	      printf("\nAutor mas popular: ");
+	      printf("\nTítulo mas popular: ");
+	      break;
+              
+	    case 6:
+	      printf("\nAyuda\n");
+	      break;
+              
+	    case 7:
+	      return 0;
+	      break;
+	      
+	    default:
+	      break;
             }
         }
         else if (opcion_acceso_admin == 2){
-            menu_usuario();
+	  menu_usuario();
         }
     }
-
+    
     else if (sino == 2){
-        menu_usuario ();
+      menu_usuario ();
     }
-
+    
     return 0;    
     
 }    
