@@ -13,7 +13,7 @@
 
     int menu_principal();
     void menu_agregar_usuario(char *nombre_usuario, char *contrasena,
-        int *fecha, char *direccion);
+			      int *fecha, char *direccion, char *email);
     void menu_acceso(char *correo, char *password1);
     int menu_administrador_como();
     int menu_administrador_general();
