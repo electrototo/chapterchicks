@@ -307,12 +307,12 @@ void menu_informe_usuarios ()
 
   int total_usuarios;
 
-  printf("INFORME DE USUARIOS DADOS DE ALTA");
+  printf("INFORME DE USUARIOS DADOS DE ALTA\n");
 
   for (int i=1; i<=total_usuarios; i++){
-    printf("USUARIO %d", i);
-    printf("Elena Ginebra");
-    printf("1 libro");
+    printf("USUARIO %d\n", i);
+    printf("Elena Ginebra\n");
+    printf("1 libro\n");
   }
 
 }
