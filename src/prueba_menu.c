@@ -21,7 +21,7 @@ int main()
     }
 
     else {
-        menu_agregar_usuario(usuario, pwd, fecha, direccion);
+      menu_agregar_usuario(usuario, pwd, fecha, direccion, email);
     }
 
     //solo deberia imprimirse esto si el usuario
