@@ -30,7 +30,7 @@ void creditos() {
     printf("Fundamentos de Programacion\n\n");
 
     printf("Este programa fue desarrollado por:\n");
-    printf("\tElena Giebra\n");
+    printf("\tElena Ginebra\n");
     printf("\tGuillermo Ortega\n");
     printf("\tCristobal Liendo\n");
 
