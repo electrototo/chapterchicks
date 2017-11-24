@@ -138,7 +138,7 @@ void menu_agregar_usuario (char *nombre_usuario, char *contrasena,
 */
 
 void menu_acceso(char *correo, char *password1) {
-    printf("Ingresa tu correo:\n ");
+    printf("Ingresa tu correo: ");
     scanf("%s", correo);
     getchar();
 
