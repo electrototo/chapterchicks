@@ -9,7 +9,7 @@ int main()
     char nombre_libro [100],nombre_autor[50],categoria[50];
     char isbn[14];
 
-    int fecha[3], opcion_principal, opcion_acceso_admin, opcion_admin;
+    int fecha[3], opcion_principal, opcion_acceso_admin, opcion_admin, total_libros_prestamo;
     float *costo_libro;
 
     creditos();
