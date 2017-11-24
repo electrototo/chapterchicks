@@ -45,7 +45,7 @@ int main()
             switch (opcion_admin) {
                 
                 case 1: 
-                    printf("\nInforme de libros en préstamo\n");
+		  menu_informe_prestamos (total_libros_prestamo);
                     break;
                     
                 case 2:
