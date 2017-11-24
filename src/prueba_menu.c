@@ -84,7 +84,7 @@ int main()
         }
     }
 
-    else if (sino ==2){
+    else if (sino == 2){
         menu_usuario ();
     }
 
