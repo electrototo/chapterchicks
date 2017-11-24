@@ -42,18 +42,22 @@ int main()
     if (sino==1){
 
       menu_administrador_como ();
-      
+    }
+ 
+
+
+     /*      
       if(opcion_acceso_admin == 1)
 	{	  
 	  menu_administrador_general();
 	  
 	  switch (opcion_admin)
 	    {
-
+	      
 	    case 1: 
 	      printf("\nInforme de libros en préstamo\n");
 	      break;
-
+	      
 	    case 2:
 	      printf("\nInforme de usuarios y libros en préstamo\n");
 	      break;
@@ -72,32 +76,27 @@ int main()
 	      printf("\nAutor mas popular: ");
 	      printf("\nTítulo mas popular: ");
 	      break;	      
-
+	      
 	    case 6:
 	      printf("\nAyuda\n");
 	      break;
-	  
+	      
 	    case 7:
 	      return 0;
 	      break;
 	    }
-  
-	  if (opcion_admin>=7){
-	    return 0;
-	  }
 	}
-
+	  
       else if (opcion_acceso_admin ==2){
 	menu_usuario();
       }
-
     }
     
     else if (sino ==2){
       menu_usuario ();
     }
-    
-    //creditos();
+      */
+    creditos();
     
     return 0;    
     
