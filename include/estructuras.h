@@ -11,10 +11,46 @@
 
 #ifndef ESTRUCTURAS_H
     #define ESTRUCTURAS_H
-    
-    typedef struct Autor Autor;
-    typedef struct Categoria Categoria;
-    typedef struct Libro Libro;
-    typedef struct Usuario Usuario;
-    typedef struct Prestamo Prestamo;
+    typedef struct {
+        char nombre[50];
+        int prestados;
+    } Autor;
+
+    typedef struct {
+        char nombre[50];
+        int prestados;
+    } Categoria;
+
+    typedef struct {
+        int autor;
+        int categoria;
+
+        char titulo[50];
+        char ISBN13[14];
+        char ISBN10[11];
+        int costo;
+        int activo;
+        int prestamos;
+        int a_pub;
+        int id;
+    } Libro;
+
+    typedef struct {
+        int disponibles;
+        int tipo_usuario;
+        int activo;
+        int fecha_nacimiento[3];
+        char nombre[100];
+        char direccion[100];
+        char email[100];
+        char contrasena[258];
+        int id;
+    } Usuario; 
+
+    typedef struct {
+        int libro;
+        int usuario;
+        int fecha_prestamo;
+        int fecha_devolucion;
+    } Prestamo;
 #endif
