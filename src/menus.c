@@ -274,3 +274,15 @@ void menu_registrar_libro(char *nombre_libro, char *nombre_autor, char *categori
 
     CLS;
 }
+
+
+void menu_informe_prestamos (void)
+{
+  //me falta hacer cosas aqui con variables
+  printf("Número total de libros en préstamo");
+  printf("LIBRO #1\n");
+  printf("Fecha de préstamo: \n");
+  printf("Fecha de devolución: \n");
+  printf("Días restantes para la devolucio: ");
+
+}
