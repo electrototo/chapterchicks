@@ -5,7 +5,7 @@
 int main() 
 {
     char usuario[50], pwd[50], direccion[50];
-    char correo[254], password1[50], password2[50];
+    char email[254], password1[50], password2[50];
     char nombre_libro [100],nombre_autor[50],categoria[50];
     char isbn[14];
 
@@ -17,7 +17,7 @@ int main()
     opcion_principal = menu_principal();
 
     if (opcion_principal == 1) {
-        menu_acceso(correo, password1);
+        menu_acceso(email, password1);
     }
 
     else {
