@@ -2,7 +2,8 @@
 #include <menus.h>
 #include <utilities.h>
 
-int main() {
+int main() 
+{
     char usuario[50], pwd[50], direccion[50];
     char correo[254], password1[50], password2[50];
     char nombre_libro [100],nombre_autor[50],categoria[50];
@@ -23,6 +24,9 @@ int main() {
         menu_agregar_usuario (usuario, pwd, fecha, direccion);
     }
 
+    
+    //solo deberia imprimirse esto si el usuario
+    //ya tiene cuenta
     printf("Bienvenido de vuelta, %s.\n", usuario);
     
     
@@ -43,40 +47,53 @@ int main() {
 	{	  
 	  menu_administrador_general();
 	  
-	  if (opcion_admin == 1){
-	    printf("\nInforme de libros en préstamo\n");
-	  }
+	  switch (opcion_admin)
+	    {
+
+	    case 1: 
+	      printf("\nInforme de libros en préstamo\n");
+	      break;
+
+	    case 2:
+	      printf("\nInforme de usuarios y libros en préstamo\n");
+	      break;
+	      
+	    case 3:
+	      menu_registrar_libro (nombre_libro,nombre_autor,categoria,isbn, costo_libro);
+	      break;
+	      
+	    case 4:
+	      printf("\nDar de baja a un usuario\n");
+	      printf("Usuario: \n");
+	      break;	  
+	      
+	    case 5:
+	      printf("\nCategoría mas popular: ");
+	      printf("\nAutor mas popular: ");
+	      printf("\nTítulo mas popular: ");
+	      break;	      
+
+	    case 6:
+	      printf("\nAyuda\n");
+	      break;
 	  
-	  else if (opcion_admin==2){
-	    printf("\nInforme de usuarios y libros en préstamo\n");
-	  }
-	  
-	  else if (opcion_admin==3){
-	    menu_registrar_libro (nombre_libro,nombre_autor,categoria,isbn, costo_libro);
-	  } 
-	  
-	  else if (opcion_admin==4){
-	    printf("\nDar de baja a un usuario\n");
-	    printf("Usuario: \n");
-	  }
-	  
-	  else if (opcion_admin==5){
-	    printf("\nCategoría mas popular: ");
-	    printf("\nAutor mas popular: ");
-	    printf("\nTítulo mas popular: ");
-	  }
-	  
-	  else if (opcion_admin==6){
-	    printf("\nAyuda\n");
-	  }
-	  
-	  else if (opcion_admin>=7){
+	    case 7:
+	      return 0;
+	      break;
+	    }
+  
+	  if (opcion_admin>=7){
 	    return 0;
 	  }
 	}
+
+      else if (opcion_acceso_admin ==2){
+	menu_usuario();
+      }
+
     }
     
-    else if (opcion_acceso_admin ==2){
+    else if (sino ==2){
       menu_usuario ();
     }
     
