@@ -280,7 +280,7 @@ void menu_informe_prestamos ()
 {
   int total_libros_prestamo;
 
-  printf("Número total de libros en préstamo%d\n\n", total_libros_prestamo);
+  printf("Número total de libros en préstamo %d\n\n", total_libros_prestamo);
 
   for (int i=1; i<=total_libros_prestamo; i++)
     {
