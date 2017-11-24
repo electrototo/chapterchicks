@@ -288,7 +288,7 @@ void menu_informe_prestamos ()
       printf("LIBRO #%d\n", i);
       printf("Fecha de préstamo: \n");
       printf("Fecha de devolución: \n");
-      printf("Días restantes para la devolucón:\n ");
+      printf("Días restantes para la devoluicón:\n ");
     }
   
 }
