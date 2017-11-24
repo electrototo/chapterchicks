@@ -40,10 +40,9 @@ int main()
     
     
     if (sino==1){
-      menu_administrador_como();
-    }
- 
 
+      menu_administrador_como();
+    
       if(opcion_acceso_admin == 1)
 	{	  
 	  menu_administrador_general();
@@ -90,8 +89,9 @@ int main()
       else if (opcion_acceso_admin ==2){
 	menu_usuario();
       }
-    
-    if (sino ==2){
+    }
+
+    else if (sino ==2){
       menu_usuario ();
     }
 
