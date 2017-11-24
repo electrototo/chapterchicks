@@ -40,7 +40,6 @@ int main()
     
     
     if (sino==1){
-
       menu_administrador_como();
     }
  
