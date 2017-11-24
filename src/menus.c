@@ -276,13 +276,17 @@ void menu_registrar_libro(char *nombre_libro, char *nombre_autor, char *categori
 }
 
 
-void menu_informe_prestamos ()
+void menu_informe_prestamos (int *total_libros_prestamo)
 {
-  //me falta hacer cosas aqui con variables
-  printf("Número total de libros en préstamo");
-  printf("LIBRO #1\n");
-  printf("Fecha de préstamo: \n");
-  printf("Fecha de devolución: \n");
-  printf("Días restantes para la devolucio: ");
+  printf("Número total de libros en préstamo%d\n\n, total_libros_prestamo");
 
+  for (int i=0; i<=total_libros_prestamo; i++)
+    {
+
+      printf("LIBRO #%d\n", i);
+      printf("Fecha de préstamo: \n");
+      printf("Fecha de devolución: \n");
+      printf("Días restantes para la devolucón: ");
+    }
+  
 }
