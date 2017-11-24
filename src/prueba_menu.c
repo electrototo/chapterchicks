@@ -41,7 +41,7 @@ int main()
     
     if (sino==1){
 
-      menu_administrador_como ();
+      menu_administrador_como();
     }
  
 
@@ -81,6 +81,9 @@ int main()
 	      
 	    case 7:
 	      return 0;
+	      break;
+
+	    default:
 	      break;
 	    }
 	}
