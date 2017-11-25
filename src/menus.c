@@ -306,3 +306,38 @@ void menu_informe_usuarios() {
         printf("\tActivo\n");
     }
 }
+
+void baja_de_usuario(){
+
+  printf("\n");
+  printf("\n");
+  printf("\n");
+  printf("\n");
+}
+
+void popular(){
+
+  printf("MÁS DESTACADOS\n\n");
+  printf("CATEGORIA más popular: Fantasía\n");
+  printf("TÍTULO más popular: \n");
+  printf("AUTOR más popular: J. R. R. Tolkien\n");
+}
+
+void ayuda(){
+
+  int opcion_ayuda;
+
+  printf("AYUDA\n\n");
+  printf("Selecciona el número correspondiente para el tipo de ayuda que necessitas: \n");
+  printf("[1] Registro como usuario.\n");
+  printf("[2] Acceso al catálogo de librobos.\n"); 
+  printf("[3] Prétamos y devoluciones.\n"); 
+  printf("Opción:");
+  scanf("%d", opcion_ayuda);
+  printf("\n");
+
+  return opcion_ayuda;
+
+}
+
+void ayuda
