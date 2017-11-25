@@ -9,8 +9,9 @@
 
 #include <utilities.h>
 #include <stdio.h>
+#include <stdlib.h>
 
-FILE *log_file;
+FILE *log_file, *rand_file;
 
 /*
  * Esta funcion recibe como parametro un arreglo de caracteres
@@ -57,4 +58,20 @@ void log_msg(char *msg) {
     log_file = fopen("actividades.log", "a");
     fprintf(log_file, "%s\n", msg);
     fclose(log_file);
+}
+
+/*
+ * Esta funcion genera de manera aleatoria un salt para
+ * poder generar el hash de la contrasena mediante
+ * el algoritmo de pbkdf2
+ *
+ * @author Cristobal Liendo
+ * @param  length    Es la longitud en bytes del salt que se quiere generar
+ * @param  *salt     Es la direccion en memoria donde se guardan @p length bytes
+*/
+
+void generate_salt(int length, char *salt) {
+    rand_file = fopen("/dev/urandom", "r");
+    fread(salt, length, 1, rand_file);
+    fclose(rand_file);
 }
