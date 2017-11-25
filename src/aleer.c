@@ -3,6 +3,7 @@
 
 #include <menus.h>
 #include <estructuras.h>
+#include <utilities.h>
 
 #include "fastpbkdf2.h"
 
@@ -15,14 +16,21 @@ int main(int argc, char **argv) {
     int index;
     unsigned char password[256], hash[256];
 
+    unsigned char salt[] = "3r)9klkq#)7osmh83=#%%wkvc-bbc5!chz$g8!7ym%)*n9n06d";
+
+    char nombre[100], direccion[100], email[100];
+    int fecha_nac[3];
+
     usuarios_db = fopen("usuarios.dat", "r");
     if (usuarios_db == NULL) {
         usuarios_db = fopen("usuarios.dat", "w");
         usuarios.actual = 0;
         fwrite(&usuarios, sizeof(usuarios), 1, usuarios_db);
     }
-    else
+    else {
         fread(&usuarios, sizeof(usuarios), 1, usuarios_db);
+        printf("Se encontraron %d usuarios\n", usuarios.actual);
+    }
 
     fclose(usuarios_db);
 
@@ -34,13 +42,33 @@ int main(int argc, char **argv) {
             index = usuarios.actual;
 
             menu_agregar_usuario(
-                usuarios.usuarios[index].nombre,
+                nombre,
                 password,
-                usuarios.usuarios[index].fecha_nacimiento,
-                usuarios.usuarios[index].direccion,
-                usuarios.usuarios[index].email);
+                fecha_nac,
+                direccion,
+                email);
 
-            printf("Password: %s, hash: %s\n", password, hash);
+            fastpbkdf2_hmac_sha256(password, strlen(password), salt,
+                sizeof(salt), 1000, hash, 256);
+
+            strcpy(usuarios.usuarios[index].nombre, nombre);
+            strcpy(usuarios.usuarios[index].contrasena, hash);
+            strcpy(usuarios.usuarios[index].direccion, direccion);
+            strcpy(usuarios.usuarios[index].email, email);
+
+            usuarios.usuarios[index].activo = 1;
+            usuarios.usuarios[index].tipo_usuario = 1;
+            usuarios.usuarios[index].disponibles = 3;
+            usuarios.usuarios[index].id = index;
+
+            for (int i = 0; i < 3; i++)
+                usuarios.usuarios[index].fecha_nacimiento[i] = fecha_nac[i];
+
+            usuarios.actual++;
+
+            usuarios_db = fopen("usuarios.dat", "w");
+            fwrite(&usuarios, sizeof(usuarios), 1, usuarios_db);
+            fclose(usuarios_db);
         }
 
         else if (strcmp(argv[1], "-usu") == 0) {
