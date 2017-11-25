@@ -19,6 +19,8 @@ int main(int argc, char **argv) {
     char nombre[100], direccion[100], email[100];
     int fecha_nac[3];
 
+    int success = 0, login_index = 0;
+
     usuarios_db = fopen("usuarios.dat", "r");
     if (usuarios_db == NULL) {
         usuarios_db = fopen("usuarios.dat", "w");
@@ -47,7 +49,6 @@ int main(int argc, char **argv) {
                 email);
 
             strcpy(usuarios.usuarios[index].nombre, nombre);
-            strcpy(usuarios.usuarios[index].contrasena, hash);
             strcpy(usuarios.usuarios[index].direccion, direccion);
             strcpy(usuarios.usuarios[index].email, email);
 
@@ -61,6 +62,8 @@ int main(int argc, char **argv) {
 
             fastpbkdf2_hmac_sha256(password, strlen(password), salt,
                 128, 4096, hash, 256);
+
+            memcpy(usuarios.usuarios[index].contrasena, hash, 256);
 
             for (int i = 0; i < 3; i++)
                 usuarios.usuarios[index].fecha_nacimiento[i] = fecha_nac[i];
@@ -84,6 +87,34 @@ int main(int argc, char **argv) {
         }
 
         return 0;
+    }
+
+    while (!success) {
+        printf("Ingresa tu correo: ");
+        scanf("%s", email);
+        getchar();
+
+        printf("Ingresa tu contrasena: ");
+        fgets(password, 256, stdin);
+        strip_char(password, '\n');
+
+        for (int i = 0; i < usuarios.actual; i++) {
+            if(strcmp(usuarios.usuarios[i].email, email) == 0) {
+                printf("Usuario encontrado\n");
+
+                fastpbkdf2_hmac_sha256(password, strlen(password),
+                    usuarios.usuarios[i].salt, 128, 4096, hash, 256);
+
+                if (memcmp(usuarios.usuarios[i].contrasena, hash, 256) == 0) {
+                    success = 1;
+                    login_index = i;
+                }
+                else
+                    printf("\tLa contrarseña es incorrecta\n");
+            }
+            else
+                printf("\tEl usuario especificado no existe\n");
+        }
     }
 
     return 0;
