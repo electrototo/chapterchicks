@@ -4,6 +4,8 @@
 #include <menus.h>
 #include <estructuras.h>
 
+#include "fastpbkdf2.h"
+
 int main(int argc, char **argv) {
     FILE *usuarios_db;
     FILE *libros;
@@ -11,7 +13,7 @@ int main(int argc, char **argv) {
     ManejoUsuarios usuarios;
 
     int index;
-    char password[32];
+    unsigned char password[256], hash[256];
 
     usuarios_db = fopen("usuarios.dat", "r");
     if (usuarios_db == NULL) {
@@ -30,11 +32,15 @@ int main(int argc, char **argv) {
 
         else if (strcmp(argv[1], "-a") == 0) {
             index = usuarios.actual;
+
             menu_agregar_usuario(
                 usuarios.usuarios[index].nombre,
                 password,
                 usuarios.usuarios[index].fecha_nacimiento,
-                usuarios.usuarios[index].direccion);
+                usuarios.usuarios[index].direccion,
+                usuarios.usuarios[index].email);
+
+            printf("Password: %s, hash: %s\n", password, hash);
         }
 
         else if (strcmp(argv[1], "-usu") == 0) {
