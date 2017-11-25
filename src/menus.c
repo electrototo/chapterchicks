@@ -309,9 +309,20 @@ void menu_informe_usuarios() {
 
 void menu_baja_de_usuario(){
 
-  printf("\n");
-  printf("\n");
-  printf("\n");
+  int dar_de_baja_a;
+
+  printf("BAJA DE USUARIOS\n\n");
+  printf("¿Qué usuario quieres dar de baja?\n");
+
+  for (int i = 0; i < 1; i++){
+    printf("USUARIO #1");
+    printf("\tElena Ginebra\n");
+    printf("\telena@chapterchicks.com\n");
+    printf("Activo\n\n");
+  }
+
+  printf("Opción: ");
+  scanf("%d", &dar_de_baja_a);
   printf("\n");
 }
 
@@ -321,6 +332,7 @@ void menu_popular(){
   printf("CATEGORIA más popular: Fantasía\n");
   printf("TÍTULO más popular: \n");
   printf("AUTOR más popular: J. R. R. Tolkien\n");
+  printf("\n");
 }
 
 void menu_ayuda(){
@@ -328,18 +340,34 @@ void menu_ayuda(){
   int opcion_ayuda;
 
   printf("AYUDA\n\n");
-  printf("Selecciona el número correspondiente para el tipo de ayuda que necessitas: \n");
-  printf("[1] Registro como usuario.\n");
-  printf("[2] Acceso al catálogo de librobos.\n"); 
+  printf("Selecciona el número correspondiente para el tipo de ayuda que necesitas: \n");
+  printf("[1] Registros de usuarios\n");
+  printf("[2] Catálogo de lirbos.\n"); 
   printf("[3] Preśtamos y devoluciones.\n"); 
   printf("Opción:");
   scanf("%d", &opcion_ayuda);
-  printf("\n");
+  printf("\n\n");
 
-  return opcion_ayuda;
+  if(opcion_ayuda==1)
+    {
+      printf("Los usuarios tienen acceso a...");
+      printf("Para dar de baja un usuario...");
+      printf("etc.");
+      }
+
+  if(opcion_ayuda==2)
+    {
+      printf("El catálogo de libros consiste en...");
+      printf("Existen x catálogos...");
+      printf("etc.");
+    }
+
+  if(opcion_ayuda==3)
+    {
+      printf("Cada usuario tienen acceso a máximo 3 libros...");
+      printf("Los libros se pueden prestar hasta 30 días máximo...");
+      printf("etc.");
+    }
 
 }
 
-void ayuda_registro(){}
-void ayuda_acceso(){}
-void ayuda_prestamos(){}
