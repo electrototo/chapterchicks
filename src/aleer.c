@@ -13,10 +13,8 @@ int main(int argc, char **argv) {
 
     ManejoUsuarios usuarios;
 
+    unsigned char password[256], salt[128], hash[256];
     int index;
-    unsigned char password[256], hash[256];
-
-    unsigned char salt[] = "3r)9klkq#)7osmh83=#%%wkvc-bbc5!chz$g8!7ym%)*n9n06d";
 
     char nombre[100], direccion[100], email[100];
     int fecha_nac[3];
@@ -48,9 +46,6 @@ int main(int argc, char **argv) {
                 direccion,
                 email);
 
-            fastpbkdf2_hmac_sha256(password, strlen(password), salt,
-                sizeof(salt), 1000, hash, 256);
-
             strcpy(usuarios.usuarios[index].nombre, nombre);
             strcpy(usuarios.usuarios[index].contrasena, hash);
             strcpy(usuarios.usuarios[index].direccion, direccion);
@@ -60,6 +55,12 @@ int main(int argc, char **argv) {
             usuarios.usuarios[index].tipo_usuario = 1;
             usuarios.usuarios[index].disponibles = 3;
             usuarios.usuarios[index].id = index;
+
+            generate_salt(128, salt);
+            memcpy(usuarios.usuarios[index].salt, salt, 128);
+
+            fastpbkdf2_hmac_sha256(password, strlen(password), salt,
+                128, 4096, hash, 256);
 
             for (int i = 0; i < 3; i++)
                 usuarios.usuarios[index].fecha_nacimiento[i] = fecha_nac[i];

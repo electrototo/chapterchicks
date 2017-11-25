@@ -44,6 +44,7 @@
         char direccion[100];
         char email[100];
         char contrasena[256];
+        char salt[128];
         int id;
     } Usuario; 
 
