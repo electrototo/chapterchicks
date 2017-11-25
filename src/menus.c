@@ -265,20 +265,21 @@ int menu_usuario() {
 void menu_registrar_libro(char *nombre_libro, char *nombre_autor, char *categoria, char *isbn, float *costo_libro) {
     printf("Registrar nuevo libro:\n");
 
-    printf("Ingresa el título completo del libro: ");
+    printf("Ingresa el título completo del libro: \n");
     fgets(nombre_libro, 50, stdin);
 
-    printf("Ingresa el nombre completo del autor: ");
+    printf("Ingresa el nombre completo del autor: \n");
     fgets(nombre_autor, 50, stdin);
 
-    printf("Ingresa la categoría del libro: ");
+    printf("Ingresa la categoría del libro: \n");
     fgets(categoria, 50, stdin);
 
-    printf("Ingresa el ISBN del libro: ");
+    printf("Ingresa el ISBN del libro: \n");
     fgets(isbn, 50, stdin);
 
-    printf("Ingresa el costo del libro: ");
+    printf("Ingresa el costo del libro: \n");
     scanf("%f", costo_libro);
+    getchar();
 
     CLS;
 }
@@ -317,7 +318,7 @@ void menu_baja_de_usuario(){
   printf("¿Qué usuario quieres dar de baja?\n");
 
   for (int i = 0; i < 1; i++){
-    printf("USUARIO #1");
+    printf("USUARIO #1\n");
     printf("\tElena Ginebra\n");
     printf("\telena@chapterchicks.com\n");
     printf("Activo\n\n");
@@ -325,6 +326,7 @@ void menu_baja_de_usuario(){
 
   printf("Opción: ");
   scanf("%d", &dar_de_baja_a);
+  getchar();
   printf("\n");
 }
 
@@ -348,27 +350,28 @@ void menu_ayuda(){
   printf("[3] Preśtamos y devoluciones.\n"); 
   printf("Opción:");
   scanf("%d", &opcion_ayuda);
+  getchar();
   printf("\n\n");
 
   if(opcion_ayuda==1)
     {
-      printf("Los usuarios tienen acceso a...");
-      printf("Para dar de baja un usuario...");
-      printf("etc.");
+      printf("Los usuarios tienen acceso a...\n");
+      printf("Para dar de baja un usuario...\n");
+      printf("etc.\n\n");
       }
 
   if(opcion_ayuda==2)
     {
-      printf("El catálogo de libros consiste en...");
-      printf("Existen x catálogos...");
-      printf("etc.");
+      printf("El catálogo de libros consiste en...\n");
+      printf("Existen x catálogos...\n");
+      printf("etc.\n\n");
     }
 
   if(opcion_ayuda==3)
     {
-      printf("Cada usuario tienen acceso a máximo 3 libros...");
-      printf("Los libros se pueden prestar hasta 30 días máximo...");
-      printf("etc.");
+      printf("Cada usuario tienen acceso a máximo 3 libros...\n");
+      printf("Los libros se pueden prestar hasta 30 días máximo...\n");
+      printf("etc.\n\n");
     }
 
 }
