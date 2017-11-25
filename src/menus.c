@@ -348,11 +348,13 @@ void menu_ayuda(){
   printf("[1] Registros de usuarios\n");
   printf("[2] Catálogo de lirbos.\n"); 
   printf("[3] Preśtamos y devoluciones.\n"); 
+  printf("[4] Salir de ayuda");
   printf("Opción:");
   scanf("%d", &opcion_ayuda);
   getchar();
   printf("\n\n");
 
+  do{
   if(opcion_ayuda==1)
     {
       printf("Los usuarios tienen acceso a...\n");
@@ -373,6 +375,7 @@ void menu_ayuda(){
       printf("Los libros se pueden prestar hasta 30 días máximo...\n");
       printf("etc.\n\n");
     }
+  }while (opcion_ayuda!=4);
 
 }
 
