@@ -50,7 +50,7 @@ int main()
                     break;
                       
                 case 2:
-                    menu_informes_usuarios();
+                    menu_informe_usuarios();
                     break;
                       
                 case 3:
@@ -58,7 +58,7 @@ int main()
                     scanf("%d", &alta_o_baja);
                     
                     if (alta_o_baja == 1){
-                        menu_registrar_libro (nombre_libro,nombre_autor,categoria,isbn, costo_libro);
+                        menu_registrar_libro(nombre_libro,nombre_autor,categoria,isbn, costo_libro);
                     }
 
                     else {
