@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <menus.h>
 #include <utilities.h>
@@ -65,7 +66,7 @@ int main()
 
                     else {
 
-                        printf("LIBRO #1\n");
+                      printf("LIBRO #1\n");
 		      printf("Título: Harry Potter y la Piedra Filosofal\n");
 		      printf("Autor: J. K. Rowling\n");
 		      printf("Categoría: Fantasía\n\n");
