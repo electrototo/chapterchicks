@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
 #include <menus.h>
 #include <utilities.h>
 
@@ -281,39 +282,27 @@ void menu_registrar_libro(char *nombre_libro, char *nombre_autor, char *categori
 }
 
 
-void menu_informe_prestamos ()
-{
+void menu_informe_prestamos() {
+    printf("INFORME DE LIBROS EN PRÉSTAMO\n\n");
+    printf("Número total de libros en préstamo 1\n\n");
 
-
-  int total_libros_prestamo;
-
-  printf("INFORME DE LIBROS EN PRÉSTAMO");
-  printf("Número total de libros en préstamo %d\n\n", total_libros_prestamo);
-
-  for (int i=1; i<=total_libros_prestamo; i++)
-    {
-
-      printf("LIBRO #%d\n", i);
-      printf("Fecha de préstamo 12/11/2017: \n");
-      printf("Fecha de devolución: 30/11/2017\n");
-      printf("Días restantes para su devolución: 6\n");
-      printf("\n");
+    for (int i = 0; i < 1; i++) {
+        printf("\tHarry Potter y la Piedra Filosofal\n");
+        printf("\tFecha de préstamo: 12/11/2017\n");
+        printf("\tFecha de devolución: 30/11/2017\n");
+        printf("\n");
     }
   
 }
 
-void menu_informe_usuarios ()
-{
+void menu_informe_usuarios() {
+    printf("INFORME DE USUARIOS DADOS DE ALTA\n");
 
-  int total_usuarios;
-
-  printf("INFORME DE USUARIOS DADOS DE ALTA\n");
-
-  for (int i=1; i<=total_usuarios; i++){
-    printf("USUARIO %d\n", i);
-    printf("Elena Ginebra\n");
-    printf("1 libro\n");
-    printf("\n");
-  }
-
+    for (int i = 0; i < 1; i++){
+        printf("\tElena Ginebra\n");
+        printf("\telena@chapterchicks.com\n");
+        printf("\tLibros prestados: 1\n");
+        printf("\tAdministradora\n");
+        printf("\tActivo\n");
+    }
 }

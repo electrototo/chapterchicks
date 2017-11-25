@@ -21,5 +21,5 @@
     void menu_registrar_libro(char *nombre_libro, char *nombre_autor, char *categoria, char *isbn, float *costo_libro);
     void creditos();
     void menu_informe_prestamos();
-    void menu_informes_usuarios();
+    void menu_informe_usuarios();
 #endif
