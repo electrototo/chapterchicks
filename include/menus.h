@@ -22,7 +22,7 @@
     void creditos();
     void menu_informe_prestamos();
     void menu_informe_usuarios();
-    void baja_de_usuario();
-    void popular();
-    void ayuda();
+    void menu_baja_de_usuario();
+    void menu_popular();
+    void menu_ayuda();
 #endif
