@@ -197,6 +197,8 @@ int menu_administrador_como() {
  * @return int
 */
 int menu_administrador_general() {
+    CLS;
+
     int opcion_admin;
 
     printf("¿Qué quieres hacer?\n");
@@ -334,7 +336,7 @@ void menu_popular(){
 
   printf("MÁS DESTACADOS\n\n");
   printf("CATEGORIA más popular: Fantasía\n");
-  printf("TÍTULO más popular: \n");
+  printf("TÍTULO más popular: Dragon Rider\n");
   printf("AUTOR más popular: J. R. R. Tolkien\n");
   printf("\n");
 }
