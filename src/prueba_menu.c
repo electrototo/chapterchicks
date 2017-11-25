@@ -62,8 +62,8 @@ int main()
                     }
 
                     else {
-                        printf("Enlistar libros");
-                        printf("¿Qué libro quieres dar de bajar?");
+                        printf("Enlistar libros\n");
+                        printf("¿Qué libro quieres dar de bajar\n?");
                         printf("Opción: ");
                     }
                     //falta terminar esto
