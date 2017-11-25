@@ -5,12 +5,12 @@ CFLAGS=-I$(IDIR) -L$(LDIR)
 
 ODIR=obj
 
-LIBS=-lcrypto -lfastpbkdf2
+LIBS=-lcrypto
 
-_DEPS = menus.h utilities.h estructuras.h
+_DEPS = menus.h utilities.h estructuras.h fastpbkdf2.h
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 
-_OBJ = menus.o utilities.o estructuras.o $(name).o
+_OBJ = menus.o utilities.o estructuras.o fastpbkdf2.o $(name).o
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
 
@@ -19,8 +19,4 @@ $(ODIR)/%.o: %.c $(DEPS)
 
 $(name): $(OBJ)
 	gcc -o $@ $^ $(CFLAGS) $(LIBS)
-
-.PHONY: clean
-
-clean:
 	rm -f $(ODIR)/*.o

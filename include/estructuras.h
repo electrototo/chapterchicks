@@ -43,7 +43,7 @@
         char nombre[100];
         char direccion[100];
         char email[100];
-        char contrasena[258];
+        char contrasena[256];
         int id;
     } Usuario; 
 
