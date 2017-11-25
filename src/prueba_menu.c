@@ -25,9 +25,8 @@ int main()
       menu_agregar_usuario(usuario, pwd, fecha, direccion, email);
     }
 
-    //solo deberia imprimirse esto si el usuario
-    //ya tiene cuenta
-    printf("Bienvenido de vuelta, %s.\n", usuario);
+
+    printf("Bienvenid@ %s.\n", usuario);
     
     //aqui debería hacerse una validación para ver
     //si el usuario es admin o no, por el momento lo dejaré así
@@ -35,25 +34,26 @@ int main()
     printf("¿Eres admin? Nota*: Esta validación se realiza de manera automática\n[1]Si\n[2]No\n");
     scanf("%d", &sino);
     getchar();
-
+    
     int alta_o_baja;
     
     if (sino == 1){
-        opcion_acceso_admin = menu_administrador_como();
-    
+      opcion_acceso_admin = menu_administrador_como();
+      
+      do{    
         if(opcion_acceso_admin == 1) {
-            opcion_admin = menu_administrador_general();
-        
-            switch (opcion_admin) {
-                case 1: 
-                    menu_informe_prestamos();
-                    break;
-                      
-                case 2:
-                    menu_informe_usuarios();
-                    break;
-                      
-                case 3:
+	  opcion_admin = menu_administrador_general();
+	  
+	      switch (opcion_admin) {
+	          case 1: 
+		    menu_informe_prestamos();
+		    break;
+            
+	          case 2:
+		    menu_informe_usuarios();
+		    break;
+            
+	          case 3:
                     printf("¿Quieres dar de alta ó dar de baja un libro?\n[1]Alta\n[2]Baja\n");
                     scanf("%d", &alta_o_baja);
                     
@@ -62,8 +62,8 @@ int main()
                     }
 
                     else {
-                        printf("Enlistar libros");
-                        printf("¿Qué libro quieres dar de bajar?");
+                        printf("Enlistar libros\n");
+                        printf("¿Qué libro quieres dar de bajar\n?");
                         printf("Opción: ");
                     }
                     //falta terminar esto
@@ -88,14 +88,16 @@ int main()
                 default:
                     break;
             }
-        }
-        else if (opcion_acceso_admin == 2){
-            menu_usuario();
-        }
+	}
+        }while (opcion_admin!=7);
+
+      if (opcion_acceso_admin == 2){
+	menu_usuario();
+      }
     }
     
     else if (sino == 2){
-        menu_usuario ();
+      menu_usuario ();
     }
     
     return 0;    
