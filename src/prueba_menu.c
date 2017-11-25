@@ -7,10 +7,10 @@ int main()
 
     char usuario[50], pwd[50], direccion[50];
     char email[254], password1[50], password2[50];
-    char nombre_libro [100],nombre_autor[50],categoria[50];
+    char nombre_libro [100],nomb1re_autor[50],categoria[50];
     char isbn[14];
 
-    int fecha[3], opcion_principal, opcion_acceso_admin, opcion_admin, total_libros_prestamo;
+    int fecha[3], opcion_principal, opcion_acceso_admin, opcion_admin, total_libros_prestamo, opcion_ayuda;
     float *costo_libro;
 
     creditos();
@@ -78,7 +78,8 @@ int main()
                     break;
                     
                 case 6:
-		  menu_ayuda ();
+		  menu_ayuda();
+		  opcion_ayuda= menu_ayuda ();
                     break;
                     
                 case 7:
