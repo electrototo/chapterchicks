@@ -343,39 +343,44 @@ void menu_ayuda(){
 
   int opcion_ayuda;
 
+  CLS;
+ 
+ do{
   printf("AYUDA\n\n");
   printf("Selecciona el número correspondiente para el tipo de ayuda que necesitas: \n");
   printf("[1] Registros de usuarios\n");
   printf("[2] Catálogo de lirbos.\n"); 
   printf("[3] Preśtamos y devoluciones.\n"); 
-  printf("[4] Salir de ayuda");
+  printf("[4] Salir de ayuda\n");
   printf("Opción:");
   scanf("%d", &opcion_ayuda);
   getchar();
   printf("\n\n");
 
-  do{
-  if(opcion_ayuda==1)
-    {
-      printf("Los usuarios tienen acceso a...\n");
-      printf("Para dar de baja un usuario...\n");
-      printf("etc.\n\n");
+    if(opcion_ayuda==1)
+      {
+	printf("Los usuarios tienen acceso a...\n");
+	printf("Para dar de baja un usuario...\n");
+	printf("etc.\n\n");
+	
       }
-
-  if(opcion_ayuda==2)
-    {
-      printf("El catálogo de libros consiste en...\n");
-      printf("Existen x catálogos...\n");
-      printf("etc.\n\n");
-    }
-
-  if(opcion_ayuda==3)
-    {
-      printf("Cada usuario tienen acceso a máximo 3 libros...\n");
-      printf("Los libros se pueden prestar hasta 30 días máximo...\n");
-      printf("etc.\n\n");
-    }
+    
+    else if(opcion_ayuda==2)
+      {
+	printf("El catálogo de libros consiste en...\n");
+	printf("Existen x catálogos...\n");
+	printf("etc.\n\n");
+	
+      }
+    
+    else if(opcion_ayuda==3)
+      {
+	printf("Cada usuario tienen acceso a máximo 3 libros...\n");
+	printf("Los libros se pueden prestar hasta 30 días máximo...\n");
+	printf("etc.\n\n");
+      }
+    
   }while (opcion_ayuda!=4);
-
+  
 }
 
