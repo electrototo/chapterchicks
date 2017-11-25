@@ -247,6 +247,53 @@ int menu_usuario() {
         getchar();
     } while(opcion_usuario < 1 || opcion_usuario > 3);
 
+    if (opcion_usuario==1){
+      printf("LIBROS EN CATALOGO\n\n");
+      printf("FANTASÍA:\n");
+      printf("LIBRO #1\n");
+      printf("Título: Harry Potter y la Piedra Filosofal\n");
+      printf("Autor: J. K. Rowling\n\n");
+
+      printf("LIBRO #2\n");
+      printf("Título: El Señor de los Anillos\n");
+      printf("Autor: J. R. R. Tolkien\n");
+
+      printf("\n");
+      getchar();
+    }
+
+
+    if (opcion_usuario==2){
+      printf("LIBROS EN PRÉSTAMO\n\n");
+      printf("LIBRO #1\n");
+      printf("Título: Harry Potter y la Piedra Filosofal\n");
+      printf("Autor: J. K. Rowling\n");
+      printf("Categoría: Fantasía\n\n");
+      printf("LIBRO #2\n");
+      printf("Título: El Señor de los Anillos\n");
+      printf("Autor: J. R. R. Tolkien\n");
+      printf("Categoría: Fantasía\n");
+      printf("\n");
+      getchar();
+    }
+
+    if (opcion_usuario==3){
+      printf("DEVOLUCION\n\n");
+      printf("LIBRO #1\n");
+      printf("Título: Harry Potter y la Piedra Filosofal\n");
+      printf("Autor: J. K. Rowling\n");
+      printf("Categoría: Fantasía\n\n");
+      printf("LIBRO #2\n");
+      printf("Título: El Señor de los Anillos\n");
+      printf("Autor: J. R. R. Tolkien\n");
+      printf("Categoría: Fantasía\n");
+      printf("\n");
+      printf("¿Qué libro quieres dar de devolver?\n");
+      printf("Opción: 1");
+      getchar();
+    }
+
+
     CLS;
 
     return opcion_usuario;
