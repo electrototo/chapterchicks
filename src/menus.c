@@ -24,7 +24,9 @@
  * @return void
 */
 
-void creditos() {
+void creditos() { 
+    CLS;
+
     printf("Universidad Iberoamericana\n");
     printf("Fundamentos de Programacion\n\n");
 
