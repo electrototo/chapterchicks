@@ -316,21 +316,26 @@ void menu_registrar_libro(char *nombre_libro, char *nombre_autor, char *categori
 
     printf("Ingresa el título completo del libro: \n");
     fgets(nombre_libro, 50, stdin);
+    strip_char(nombre_libro, '\n');
 
     printf("Ingresa el nombre completo del autor: \n");
     fgets(nombre_autor, 50, stdin);
+    strip_char(nombre_autor, '\n');
 
     printf("Ingresa la categoría del libro: \n");
     fgets(categoria, 50, stdin);
+    strip_char(categoria, '\n');
 
     printf("Ingresa el ISBN del libro: \n");
     fgets(isbn, 50, stdin);
+    strip_char(isbn, '\n');
 
     printf("Ingresa el costo del libro: \n");
     scanf("%f", costo_libro);
     getchar();
 
     CLS;
+
 }
 
 
