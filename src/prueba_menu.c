@@ -62,13 +62,13 @@ int main() {
 
                         else {
                             printf("LIBRO #1\n");
-                            printf("Título: Harry Potter y la Piedra Filosofal\n");
-                            printf("Autor: J. K. Rowling\n");
-                            printf("Categoría: Fantasía\n\n");
-                            printf("LIBRO #2\n");
-                            printf("Título: El Señor de los Anillos\n");
-                            printf("Autor: J. R. R. Tolkien\n");
-                            printf("Categoría: Fantasía\n");
+                            printf("\tTítulo: Harry Potter y la Piedra Filosofal\n");
+                            printf("\tAutor: J. K. Rowling\n");
+                            printf("\tCategoría: Fantasía\n\n");
+                            printf("\tLIBRO #2\n");
+                            printf("\tTítulo: El Señor de los Anillos\n");
+                            printf("\tAutor: J. R. R. Tolkien\n");
+                            printf("\tCategoría: Fantasía\n");
                             printf("\n");
                             printf("¿Qué libro quieres dar de baja?\n");
                             printf("Opción: 1");
@@ -103,7 +103,7 @@ int main() {
         } while (opcion_admin != 7);
 
         if (opcion_acceso_admin == 2){
-            opcion_admin=menu_usuario();
+            opcion_admin = menu_usuario();
         }
     }
     

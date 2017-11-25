@@ -85,7 +85,7 @@ int menu_principal() {
 */
 
 void menu_agregar_usuario (char *nombre_usuario, char *contrasena,
-			   int *fecha, char *direccion, char *email) {
+               int *fecha, char *direccion, char *email) {
 
     char contrasena1[50];
     char contrasena2[50];
@@ -247,52 +247,49 @@ int menu_usuario() {
         getchar();
     } while(opcion_usuario < 1 || opcion_usuario > 3);
 
-    if (opcion_usuario==1){
-      printf("LIBROS EN CATALOGO\n\n");
-      printf("FANTASÍA:\n");
-      printf("LIBRO #1\n");
-      printf("Título: Harry Potter y la Piedra Filosofal\n");
-      printf("Autor: J. K. Rowling\n\n");
+    if (opcion_usuario == 1){
+        printf("LIBROS EN CATALOGO\n\n");
+        printf("\tLIBRO #1\n");
+        printf("\tTítulo: Harry Potter y la Piedra Filosofal\n");
+        printf("\tAutor: J. K. Rowling\n\n");
+        printf("\tLIBRO #2\n");
+        printf("\tTítulo: El Señor de los Anillos\n");
+        printf("\tAutor: J. R. R. Tolkien\n");
 
-      printf("LIBRO #2\n");
-      printf("Título: El Señor de los Anillos\n");
-      printf("Autor: J. R. R. Tolkien\n");
-
-      printf("\n");
-      getchar();
+        printf("\n");
+        getchar();
     }
 
 
-    if (opcion_usuario==2){
-      printf("LIBROS EN PRÉSTAMO\n\n");
-      printf("LIBRO #1\n");
-      printf("Título: Harry Potter y la Piedra Filosofal\n");
-      printf("Autor: J. K. Rowling\n");
-      printf("Categoría: Fantasía\n\n");
-      printf("LIBRO #2\n");
-      printf("Título: El Señor de los Anillos\n");
-      printf("Autor: J. R. R. Tolkien\n");
-      printf("Categoría: Fantasía\n");
-      printf("\n");
-      getchar();
+    if (opcion_usuario == 2) {
+        printf("LIBROS EN PRÉSTAMO\n\n");
+        printf("\tLIBRO #1\n");
+        printf("\tTítulo: Harry Potter y la Piedra Filosofal\n");
+        printf("\tAutor: J. K. Rowling\n");
+        printf("\tCategoría: Fantasía\n\n");
+        printf("\tLIBRO #2\n");
+        printf("\tTítulo: El Señor de los Anillos\n");
+        printf("\tAutor: J. R. R. Tolkien\n");
+        printf("\tCategoría: Fantasía\n");
+        printf("\n");
+        getchar();
     }
 
-    if (opcion_usuario==3){
-      printf("DEVOLUCION\n\n");
-      printf("LIBRO #1\n");
-      printf("Título: Harry Potter y la Piedra Filosofal\n");
-      printf("Autor: J. K. Rowling\n");
-      printf("Categoría: Fantasía\n\n");
-      printf("LIBRO #2\n");
-      printf("Título: El Señor de los Anillos\n");
-      printf("Autor: J. R. R. Tolkien\n");
-      printf("Categoría: Fantasía\n");
-      printf("\n");
-      printf("¿Qué libro quieres dar de devolver?\n");
-      printf("Opción: 1");
-      getchar();
+    if (opcion_usuario == 3) {
+        printf("DEVOLUCION\n\n");
+        printf("\tLIBRO #1\n");
+        printf("\tTítulo: Harry Potter y la Piedra Filosofal\n");
+        printf("\tAutor: J. K. Rowling\n");
+        printf("\tCategoría: Fantasía\n\n");
+        printf("\tLIBRO #2\n");
+        printf("\tTítulo: El Señor de los Anillos\n");
+        printf("\tAutor: J. R. R. Tolkien\n");
+        printf("\tCategoría: Fantasía\n");
+        printf("\n");
+        printf("¿Qué libro quieres dar de devolver?\n");
+        printf("Opción: 1");
+        getchar();
     }
-
 
     CLS;
 
@@ -365,76 +362,67 @@ void menu_informe_usuarios() {
 }
 
 void menu_baja_de_usuario(){
+    int dar_de_baja_a;
 
-  int dar_de_baja_a;
+    printf("BAJA DE USUARIOS\n\n");
+    printf("¿Qué usuario quieres dar de baja?\n");
 
-  printf("BAJA DE USUARIOS\n\n");
-  printf("¿Qué usuario quieres dar de baja?\n");
+    for (int i = 0; i < 1; i++) {
+        printf("USUARIO #1\n");
+        printf("\tElena Ginebra\n");
+        printf("\telena@chapterchicks.com\n");
+        printf("Activo\n\n");
+    }
 
-  for (int i = 0; i < 1; i++){
-    printf("USUARIO #1\n");
-    printf("\tElena Ginebra\n");
-    printf("\telena@chapterchicks.com\n");
-    printf("Activo\n\n");
-  }
-
-  printf("Opción: ");
-  scanf("%d", &dar_de_baja_a);
-  getchar();
-  printf("\n");
+    printf("Opción: ");
+    scanf("%d", &dar_de_baja_a);
+    getchar();
+    printf("\n");
 }
 
 void menu_popular(){
-
-  printf("MÁS DESTACADOS\n\n");
-  printf("CATEGORIA más popular: Fantasía\n");
-  printf("TÍTULO más popular: Dragon Rider\n");
-  printf("AUTOR más popular: J. R. R. Tolkien\n");
-  printf("\n");
+    printf("MÁS DESTACADOS\n\n");
+    printf("\tCategoría más popular: Fantasía\n");
+    printf("\tTítulo más popular: Dragon Rider\n");
+    printf("\tAutor más popular: J. R. R. Tolkien\n");
+    printf("\n");
 }
 
 void menu_ayuda(){
+    int opcion_ayuda;
 
-  int opcion_ayuda;
+    CLS;
+    
+    do{
+        printf("AYUDA\n\n");
+        printf("Selecciona el número correspondiente para el tipo de ayuda que necesitas: \n");
+        printf("[1] Registros de usuarios\n");
+        printf("[2] Catálogo de lirbos.\n"); 
+        printf("[3] Preśtamos y devoluciones.\n"); 
+        printf("[4] Salir de ayuda\n");
+        printf("Opción:");
+        scanf("%d", &opcion_ayuda);
+        getchar();
+        printf("\n\n");
 
-  CLS;
- 
- do{
-  printf("AYUDA\n\n");
-  printf("Selecciona el número correspondiente para el tipo de ayuda que necesitas: \n");
-  printf("[1] Registros de usuarios\n");
-  printf("[2] Catálogo de lirbos.\n"); 
-  printf("[3] Preśtamos y devoluciones.\n"); 
-  printf("[4] Salir de ayuda\n");
-  printf("Opción:");
-  scanf("%d", &opcion_ayuda);
-  getchar();
-  printf("\n\n");
-
-    if(opcion_ayuda==1)
-      {
-	printf("Los usuarios tienen acceso a...\n");
-	printf("Para dar de baja un usuario...\n");
-	printf("etc.\n\n");
-	
-      }
-    
-    else if(opcion_ayuda==2)
-      {
-	printf("El catálogo de libros consiste en...\n");
-	printf("Existen x catálogos...\n");
-	printf("etc.\n\n");
-	
-      }
-    
-    else if(opcion_ayuda==3)
-      {
-	printf("Cada usuario tienen acceso a máximo 3 libros...\n");
-	printf("Los libros se pueden prestar hasta 30 días máximo...\n");
-	printf("etc.\n\n");
-      }
-    
-  }while (opcion_ayuda!=4);
+        if(opcion_ayuda==1) {
+            printf("Los usuarios tienen acceso a...\n");
+            printf("Para dar de baja un usuario...\n");
+            printf("etc.\n\n");
+        }
+        
+        else if(opcion_ayuda == 2) {
+            printf("El catálogo de libros consiste en...\n");
+            printf("Existen x catálogos...\n");
+            printf("etc.\n\n");
+        }
+        
+        else if(opcion_ayuda == 3) {
+            printf("Cada usuario tienen acceso a máximo 3 libros...\n");
+            printf("Los libros se pueden prestar hasta 30 días máximo...\n");
+            printf("etc.\n\n");
+        }
+    } while (opcion_ayuda != 4);
   
 }
 
