@@ -32,7 +32,7 @@ void creditos() {
     printf("\tGuillermo Ortega\n");
     printf("\tCristobal Liendo\n");
 
-    printf("\n\nPresiona cualquier tecla para salir...");
+    printf("\n\nPresiona enter para entrar al sistema...");
 
     getchar();
 
