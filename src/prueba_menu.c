@@ -78,10 +78,10 @@ int main()
 		      printf("Opción: 1");
 		      getchar();
                     }
-                    //falta terminar esto
 
 		    getchar();
                     break;
+
                 case 4:
 		  menu_baja_de_usuario();
 		  getchar();
