@@ -47,10 +47,12 @@ int main()
 	      switch (opcion_admin) {
 	          case 1: 
 		    menu_informe_prestamos();
+		    getchar();
 		    break;
             
 	          case 2:
 		    menu_informe_usuarios();
+		    getchar();
 		    break;
             
 	          case 3:
@@ -62,19 +64,32 @@ int main()
                     }
 
                     else {
-                        printf("Enlistar libros\n");
-                        printf("¿Qué libro quieres dar de bajar\n?");
-                        printf("Opción: ");
+
+                        printf("LIBRO #1\n");
+		      printf("Título: Harry Potter y la Piedra Filosofal\n");
+		      printf("Autor: J. K. Rowling\n");
+		      printf("Categoría: Fantasía\n\n");
+		      printf("LIBRO #2\n");
+		      printf("Título: El Señor de los Anillos\n");
+		      printf("Autor: J. R. R. Tolkien\n");
+		      printf("Categoría: Fantasía\n");
+		      printf("\n");
+		      printf("¿Qué libro quieres dar de baja?\n");
+		      printf("Opción: 1");
+		      getchar();
                     }
                     //falta terminar esto
 
+		    getchar();
                     break;
                 case 4:
 		  menu_baja_de_usuario();
+		  getchar();
                     break;
                     
                 case 5:
 		  menu_popular();
+		  getchar();
                     break;
                     
                 case 6:
