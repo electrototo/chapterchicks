@@ -70,18 +70,15 @@ int main()
 
                     break;
                 case 4:
-                    printf("\nDar de baja a un usuario\n");
-                    printf("Usuario: \n");
+		  menu_baja_de_usuario();
                     break;
                     
                 case 5:
-                    printf("\nCategoría mas popular: ");
-                    printf("\nAutor mas popular: ");
-                    printf("\nTítulo mas popular: ");
+		  menu_popular();
                     break;
                     
                 case 6:
-                    printf("\nAyuda\n");
+		  menu_ayuda ();
                     break;
                     
                 case 7:
