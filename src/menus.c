@@ -333,7 +333,7 @@ void menu_ayuda(){
   printf("[2] Acceso al catálogo de librobos.\n"); 
   printf("[3] Preśtamos y devoluciones.\n"); 
   printf("Opción:");
-  scanf("%d", opcion_ayuda);
+  scanf("%d", &opcion_ayuda);
   printf("\n");
 
   return opcion_ayuda;
