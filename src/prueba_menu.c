@@ -107,7 +107,7 @@ int main()
         }while (opcion_admin!=7);
 
       if (opcion_acceso_admin == 2){
-	menu_usuario();
+	opcion_admin=menu_usuario();
       }
     }
     
