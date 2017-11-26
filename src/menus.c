@@ -37,7 +37,9 @@ void creditos() {
 
     printf("\n\nPresiona enter para entrar al sistema...");
 
+    disable_canonical();
     getchar();
+    enable_canonical();
 
     CLS;
 }
