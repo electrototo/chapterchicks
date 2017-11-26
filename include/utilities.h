@@ -14,4 +14,6 @@
     int strip_char(char *source, char target);
     void log_msg(char *msg);
     void generate_salt(int length, char *salt);
+    void disable_output();
+    void enable_output();
 #endif

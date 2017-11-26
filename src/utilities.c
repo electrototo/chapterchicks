@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <termios.h>
 
 FILE *log_file, *rand_file;
 
@@ -80,10 +81,44 @@ void log_msg(char *msg) {
  * @author Cristobal Liendo
  * @param  length    Es la longitud en bytes del salt que se quiere generar
  * @param  *salt     Es la direccion en memoria donde se guardan @p length bytes
+ * @return void
 */
 
 void generate_salt(int length, char *salt) {
     rand_file = fopen("/dev/urandom", "r");
     fread(salt, length, 1, rand_file);
     fclose(rand_file);
+}
+
+/*
+ * Esta funcion deshabilita la salida de texto en la
+ * terminal, para evitar que los passwords salgan
+ * impresos en pantalla
+ *
+ * @author Cristobal Liendo
+ * @return void
+*/
+
+struct termios original_f, modified_f;
+
+void disable_output() {
+    tcgetattr(fileno(stdin), &original_f);
+
+    modified_f = original_f;
+    modified_f.c_lflag &= ~ECHO;
+    modified_f.c_lflag |= ECHONL;
+
+    tcsetattr(fileno(stdin), TCSANOW, &modified_f);
+}
+
+/*
+ * Esta funcion habilta la salida de texto en pantalla,
+ * regresa a las opciones originales de termios.
+ *
+ * @author Cristobal Liendo
+ * @return void
+*/
+
+void enable_output() {
+    tcsetattr(fileno(stdin), TCSANOW, &original_f);
 }
