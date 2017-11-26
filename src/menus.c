@@ -397,8 +397,7 @@ void menu_baja_de_usuario(){
 void menu_popular(){
     printf("MÁS DESTACADOS\n\n");
     printf("\tCategoría más popular: Fantasía\n");
-    printf("\tTítulo más popular: Harry Potter y la Piedra Filosofal\n");
-    printf("\tAutor más popular: J. K. Rowling\n");
+    printf("\tTítulo más popular: Harry Potter y la Piedra Filosofal\n");    printf("\tAutor más popular: J. K. Rowling\n");
     printf("\n");
 }
 
@@ -411,7 +410,7 @@ void menu_ayuda(){
         printf("AYUDA\n\n");
         printf("Selecciona el número correspondiente para el tipo de ayuda que necesitas: \n");
         printf("[1] Registros de usuarios\n");
-        printf("[2] Catálogo de lrrbos.\n"); 
+	printf("[2] Catálogo de libros\n");
         printf("[3] Preśtamos y devoluciones.\n"); 
         printf("[4] Salir de ayuda\n");
         printf("Opción:");
