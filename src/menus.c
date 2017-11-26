@@ -309,25 +309,32 @@ int menu_usuario() {
  * @return void
 */
 void menu_registrar_libro(char *nombre_libro, char *nombre_autor, char *categoria, char *isbn, float *costo_libro) {
-    printf("Registrar nuevo libro:\n");
+
+  printf("ALTA\n\n");
+    printf("Registrar nuevo libro:\n\n");
 
     printf("Ingresa el título completo del libro: \n");
-    fgets(nombre_libro, 50, stdin);
-    strip_char(nombre_libro, '\n');
+    printf("Harry Potter y la Piedra Filosofal\n");
+    //    fgets(nombre_libro, 100, stdin);
+    //strip_char(nombre_libro, '\n');
 
     printf("Ingresa el nombre completo del autor: \n");
-    fgets(nombre_autor, 50, stdin);
-    strip_char(nombre_autor, '\n');
+    printf("J. K. Rowling\n");
+    //fgets(nombre_autor, 50, stdin);
+    //strip_char(nombre_autor, '\n');
 
     printf("Ingresa la categoría del libro: \n");
-    fgets(categoria, 50, stdin);
-    strip_char(categoria, '\n');
+    printf("Fantasía\n");
+    //    fgets(categoria, 50, stdin);
+    //strip_char(categoria, '\n');
 
     printf("Ingresa el ISBN del libro: \n");
-    fgets(isbn, 50, stdin);
-    strip_char(isbn, '\n');
+    printf("9788700631625\n");
+    //fgets(isbn, 14, stdin);
+    //strip_char(isbn, '\n');
 
     printf("Ingresa el costo del libro: \n");
+    printf("$250\n");
     scanf("%f", costo_libro);
     getchar();
 
@@ -384,7 +391,7 @@ void menu_baja_de_usuario(){
 void menu_popular(){
     printf("MÁS DESTACADOS\n\n");
     printf("\tCategoría más popular: Fantasía\n");
-    printf("\tTítulo más popular: Harry Potter y la Piedra Filosofa\n");
+    printf("\tTítulo más popular: Harry Potter y la Piedra Filosofal\n");
     printf("\tAutor más popular: J. K. Rowling\n");
     printf("\n");
 }
