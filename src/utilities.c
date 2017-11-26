@@ -10,6 +10,7 @@
 #include <utilities.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 FILE *log_file, *rand_file;
 
@@ -55,7 +56,18 @@ int strip_char(char *source, char target) {
 */
 
 void log_msg(char *msg) {
-    log_file = fopen("actividades.log", "a");
+    char timestamp[50];
+
+    time_t cur_time;
+    struct tm *loc_time;
+
+    cur_time = time (NULL);
+    loc_time = localtime (&cur_time);
+
+    log_file = fopen("bitacora.log", "a");
+    strftime(timestamp, 50, "[%d/%b/%C:%T] ", loc_time);
+
+    fprintf(log_file, "%s", timestamp);
     fprintf(log_file, "%s\n", msg);
     fclose(log_file);
 }
