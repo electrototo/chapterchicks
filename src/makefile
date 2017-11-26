@@ -18,6 +18,11 @@ _OBJ += fastpbkdf2.o
 $(info Se incluyo la libreria fastpbkdf2)
 endif
 
+ifeq ($(c), antares)
+$(info debes tener myapps en tu directorioo HOME con openssl instalado)
+CFLAGS += -I$(HOME)/myapps/include -L$(HOME)/myapps/lib
+endif
+
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 
