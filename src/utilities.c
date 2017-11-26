@@ -10,6 +10,7 @@
 #include <utilities.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>  // STDIN_FILENO
 #include <time.h>
 #include <termios.h>
 
@@ -121,4 +122,43 @@ void disable_output() {
 
 void enable_output() {
     tcsetattr(fileno(stdin), TCSANOW, &original_f);
+}
+
+/*
+ * Esta funcion deshabilita el modo canonico en la terminal,
+ * con el fin de evitar que se tenga que presionar enter
+ * en la pantalla principal. 
+ * 
+ * Precaucion: esta funcion no puede ser usada entre
+ * disable_output() y enable_output() debido a que rescribiria
+ * la configuracion por "default" de la terminal
+ *
+ * @author Cristobal Liendo
+ * @return void
+*/
+
+void disable_canonical() {
+    setbuf(stdout, NULL);
+    tcgetattr(STDIN_FILENO, &original_f);
+
+    modified_f = original_f;
+    modified_f.c_lflag &= ~(ICANON|ECHO);
+
+    tcsetattr(STDIN_FILENO, TCSANOW, &modified_f);
+}
+
+/*
+ * Esta funcion habilita el modo canonico en la terminal,
+ * para regresar al funcionamiento "normal" de esta
+ *
+ * @author cristobal Liendo
+ * @return void
+*/
+
+void enable_canonical() {
+    tcgetattr(STDIN_FILENO, &original_f);
+
+    original_f.c_lflag |= (ICANON|ECHO);
+
+    tcsetattr(STDIN_FILENO, TCSANOW, &original_f);
 }

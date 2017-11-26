@@ -16,4 +16,6 @@
     void generate_salt(int length, char *salt);
     void disable_output();
     void enable_output();
+    void disable_canonical();
+    void enable_canonical();
 #endif
