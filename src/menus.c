@@ -111,6 +111,7 @@ void menu_agregar_usuario (char *nombre_usuario, char *contrasena,
 
     strip_char(email, '\n');
 
+    disable_output();
     do {
         if (!wrong)
             wrong = 1;
@@ -123,6 +124,7 @@ void menu_agregar_usuario (char *nombre_usuario, char *contrasena,
         printf("Vuelve a ingresar tu contraseña: ");
         fgets(contrasena2, 50, stdin);
     } while (strcmp(contrasena1, contrasena2) != 0);
+    enable_output();
 
     strip_char(contrasena1, '\n');
     strcpy(contrasena, contrasena1);
@@ -150,8 +152,10 @@ void menu_acceso(char *email, char *password1) {
     scanf("%s", email);
     getchar();
 
+    disable_output();
     printf("Ingresa tu contraseña: ");
     fgets(password1, 50, stdin);
+    enable_output();
 
     CLS;
 }
