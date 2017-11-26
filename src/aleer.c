@@ -14,6 +14,8 @@ int main(int argc, char **argv) {
     ManejoUsuarios usuarios;
 
     unsigned char password[256], salt[128], hash[256];
+    unsigned char msg[200];
+
     int index;
 
     char nombre[100], direccion[100], email[100];
@@ -25,6 +27,10 @@ int main(int argc, char **argv) {
     if (usuarios_db == NULL) {
         usuarios_db = fopen("usuarios.dat", "w");
         usuarios.actual = 0;
+
+        sprintf(msg, "Creacion de base de datos para usuarios");
+        log_msg(msg);
+
         fwrite(&usuarios, sizeof(usuarios), 1, usuarios_db);
     }
     else {
@@ -70,6 +76,9 @@ int main(int argc, char **argv) {
 
             usuarios.actual++;
 
+            sprintf(msg, "Creacion de administrador %s", email);
+            log_msg(msg);
+
             usuarios_db = fopen("usuarios.dat", "w");
             fwrite(&usuarios, sizeof(usuarios), 1, usuarios_db);
             fclose(usuarios_db);
@@ -108,12 +117,21 @@ int main(int argc, char **argv) {
                 if (memcmp(usuarios.usuarios[i].contrasena, hash, 256) == 0) {
                     success = 1;
                     login_index = i;
+
+                    sprintf(msg, "Login exitoso para %s", email);
+                    log_msg(msg);
+
                 }
-                else
-                    printf("\tLa contrarseña es incorrecta\n");
+                else {
+                    sprintf(msg, "Contrasena incorrecta para %s", email);
+                    log_msg(msg);
+
+                    printf("\tLa contraseña es incorrecta\n");
+                }
             }
-            else
+            else {
                 printf("\tEl usuario especificado no existe\n");
+            }
         }
     }
 
