@@ -411,7 +411,7 @@ void menu_ayuda(){
         printf("AYUDA\n\n");
         printf("Selecciona el número correspondiente para el tipo de ayuda que necesitas: \n");
         printf("[1] Registros de usuarios\n");
-        printf("[2] Catálogo de lirbos.\n"); 
+        printf("[2] Catálogo de lrrbos.\n"); 
         printf("[3] Preśtamos y devoluciones.\n"); 
         printf("[4] Salir de ayuda\n");
         printf("Opción:");
