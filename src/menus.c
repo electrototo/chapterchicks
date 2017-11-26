@@ -248,7 +248,7 @@ int menu_usuario() {
     } while(opcion_usuario < 1 || opcion_usuario > 3);
 
     if (opcion_usuario == 1){
-        printf("LIBROS EN CATALOGO\n\n");
+        printf("LIBROS EN CATÁLOGO\n\n");
         printf("\tLIBRO #1\n");
         printf("\tTítulo: Harry Potter y la Piedra Filosofal\n");
         printf("\tAutor: J. K. Rowling\n\n");
@@ -276,7 +276,7 @@ int menu_usuario() {
     }
 
     if (opcion_usuario == 3) {
-        printf("DEVOLUCION\n\n");
+        printf("DEVOLUCIÓN\n\n");
         printf("\tLIBRO #1\n");
         printf("\tTítulo: Harry Potter y la Piedra Filosofal\n");
         printf("\tAutor: J. K. Rowling\n");
@@ -286,7 +286,7 @@ int menu_usuario() {
         printf("\tAutor: J. R. R. Tolkien\n");
         printf("\tCategoría: Fantasía\n");
         printf("\n");
-        printf("¿Qué libro quieres dar de devolver?\n");
+        printf("¿Qué libro deseas devolver?\n");
         printf("Opción: 1");
         getchar();
     }
@@ -309,25 +309,32 @@ int menu_usuario() {
  * @return void
 */
 void menu_registrar_libro(char *nombre_libro, char *nombre_autor, char *categoria, char *isbn, float *costo_libro) {
-    printf("Registrar nuevo libro:\n");
+
+  printf("ALTA\n\n");
+    printf("Registrar nuevo libro:\n\n");
 
     printf("Ingresa el título completo del libro: \n");
-    fgets(nombre_libro, 50, stdin);
-    strip_char(nombre_libro, '\n');
+    printf("Harry Potter y la Piedra Filosofal\n");
+    //    fgets(nombre_libro, 100, stdin);
+    //strip_char(nombre_libro, '\n');
 
     printf("Ingresa el nombre completo del autor: \n");
-    fgets(nombre_autor, 50, stdin);
-    strip_char(nombre_autor, '\n');
+    printf("J. K. Rowling\n");
+    //fgets(nombre_autor, 50, stdin);
+    //strip_char(nombre_autor, '\n');
 
     printf("Ingresa la categoría del libro: \n");
-    fgets(categoria, 50, stdin);
-    strip_char(categoria, '\n');
+    printf("Fantasía\n");
+    //    fgets(categoria, 50, stdin);
+    //strip_char(categoria, '\n');
 
     printf("Ingresa el ISBN del libro: \n");
-    fgets(isbn, 50, stdin);
-    strip_char(isbn, '\n');
+    printf("9788700631625\n");
+    //fgets(isbn, 14, stdin);
+    //strip_char(isbn, '\n');
 
     printf("Ingresa el costo del libro: \n");
+    printf("$250\n");
     scanf("%f", costo_libro);
     getchar();
 
@@ -345,6 +352,7 @@ void menu_informe_prestamos() {
         printf("\tFecha de préstamo: 12/11/2017\n");
         printf("\tFecha de devolución: 30/11/2017\n");
         printf("\n");
+	printf("Días faltantes para su devolución: 3");
     }
   
 }
@@ -383,8 +391,8 @@ void menu_baja_de_usuario(){
 void menu_popular(){
     printf("MÁS DESTACADOS\n\n");
     printf("\tCategoría más popular: Fantasía\n");
-    printf("\tTítulo más popular: Dragon Rider\n");
-    printf("\tAutor más popular: J. R. R. Tolkien\n");
+    printf("\tTítulo más popular: Harry Potter y la Piedra Filosofal\n");
+    printf("\tAutor más popular: J. K. Rowling\n");
     printf("\n");
 }
 
