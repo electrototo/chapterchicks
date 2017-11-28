@@ -47,12 +47,26 @@ int main(int argc, char **argv) {
         else if (strcmp(argv[1], "-a") == 0) {
             index = usuarios.actual;
 
-            menu_agregar_usuario(
-                nombre,
-                password,
-                fecha_nac,
-                direccion,
-                email);
+            while (!success) {
+                // suponemos que el correo es unico
+                success = 1;
+
+                menu_agregar_usuario(
+                    nombre,
+                    password,
+                    fecha_nac,
+                    direccion,
+                    email);
+
+                for (int i = 0; i < usuarios.actual; i++) {
+                    // Se encontro un usuario
+                    if (strcmp(usuarios.usuarios[i].email, email) == 0)
+                        success = 0;
+                }
+
+                if (!success)
+                    printf("\tYa existe un usuario registrado con el mismo correo electronico\n");
+            }
 
             strcpy(usuarios.usuarios[index].nombre, nombre);
             strcpy(usuarios.usuarios[index].direccion, direccion);
@@ -100,6 +114,7 @@ int main(int argc, char **argv) {
 
     creditos();
 
+    success = 0;
     while (!success) {
         menu_acceso(email, password);
 
