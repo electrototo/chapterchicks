@@ -98,14 +98,10 @@ int main(int argc, char **argv) {
         return 0;
     }
 
-    while (!success) {
-        printf("Ingresa tu correo: ");
-        scanf("%s", email);
-        getchar();
+    creditos();
 
-        printf("Ingresa tu contrasena: ");
-        fgets(password, 256, stdin);
-        strip_char(password, '\n');
+    while (!success) {
+        menu_acceso(email, password);
 
         for (int i = 0; i < usuarios.actual; i++) {
             if(strcmp(usuarios.usuarios[i].email, email) == 0) {
