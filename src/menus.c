@@ -159,6 +159,8 @@ void menu_acceso(char *email, char *password1) {
     fgets(password1, 50, stdin);
     enable_output();
 
+    strip_char(password1, '\n');
+
     CLS;
 }
 
