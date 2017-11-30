@@ -29,6 +29,8 @@ int main(int argc, char **argv) {
 
     int success = 0, login_index = 0, found = 0;
 
+    int eleccion;
+
     usuarios_db = fopen("usuarios.dat", "r");
     if (usuarios_db == NULL) {
         usuarios_db = fopen("usuarios.dat", "w");
@@ -70,40 +72,64 @@ int main(int argc, char **argv) {
 
     creditos();
 
-    success = 0;
-    while (!success) {
-        menu_acceso(email, password);
+    eleccion = menu_principal();
 
-        for (int i = 0; i < usuarios.actual; i++) {
-            if(strcmp(usuarios.usuarios[i].email, email) == 0) {
-                found = 1;
+    if (eleccion == 1) {
+        success = 0;
+        while (!success) {
+            menu_acceso(email, password);
 
-                printf("Usuario encontrado\n");
+            for (int i = 0; i < usuarios.actual; i++) {
+                if(strcmp(usuarios.usuarios[i].email, email) == 0) {
+                    found = 1;
 
-                fastpbkdf2_hmac_sha256(password, strlen(password),
-                    usuarios.usuarios[i].salt, 128, 4096, hash, 256);
+                    fastpbkdf2_hmac_sha256(password, strlen(password),
+                        usuarios.usuarios[i].salt, 128, 4096, hash, 256);
 
-                if (memcmp(usuarios.usuarios[i].contrasena, hash, 256) == 0) {
-                    success = 1;
-                    login_index = i;
+                    if (memcmp(usuarios.usuarios[i].contrasena, hash, 256) == 0) {
+                        success = 1;
+                        login_index = i;
 
-                    sprintf(msg, "Login exitoso para %s", email);
-                    log_msg(msg);
+                        sprintf(msg, "Login exitoso para %s", email);
+                        log_msg(msg);
 
+                    }
+                    else {
+                        sprintf(msg, "Contrasena incorrecta para %s", email);
+                        log_msg(msg);
+
+                        printf("\tLa contraseña es incorrecta\n");
+                    }
+
+                    break;
                 }
-                else {
-                    sprintf(msg, "Contrasena incorrecta para %s", email);
-                    log_msg(msg);
-
-                    printf("\tLa contraseña es incorrecta\n");
-                }
-
-                break;
             }
-        }
 
-        if (!found)
-            printf("\n\tEl usuario especificado no existe\n\n");
+            if (!found)
+                printf("\n\tEl usuario especificado no existe\n\n");
+        }
+    }
+    else
+        login_index = add_user(&usuarios, MORTAL);
+
+    if (!usuarios.usuarios[login_index].activo) {
+        printf("\nLo lamentamos, tu cuenta fue desactivada\n\n");
+
+        return 1;
+    }
+
+    eleccion = 0; 
+    if (usuarios.usuarios[login_index].tipo_usuario == ADMIN)
+        eleccion = menu_administrador_como();
+
+    // el administrador decidio entrar como administrador
+    if (eleccion == 1) {
+        while ((eleccion = menu_administrador_general()) != 7) {
+        }
+    }
+    // el administrador decidio como usuario o la cuenta es de tipo
+    // usuario
+    else if (eleccion == 2 || usuarios.usuarios[login_index].tipo_usuario == MORTAL) {
     }
 
     return 0;
