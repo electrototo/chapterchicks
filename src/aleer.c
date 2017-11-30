@@ -13,6 +13,7 @@
 int main(int argc, char **argv) {
     FILE *usuarios_db;
     FILE *libros;
+    FILE *users_export;
 
     ManejoUsuarios usuarios;
     Usuario usuario;
@@ -44,7 +45,7 @@ int main(int argc, char **argv) {
     }
     else {
         fread(&usuarios, sizeof(usuarios), 1, usuarios_db);
-        printf("Se encontraron %d usuarios\n", usuarios.actual);
+        printf("Se encontraron %d usuarios\n\n", usuarios.actual);
     }
 
     fclose(usuarios_db);
@@ -58,12 +59,30 @@ int main(int argc, char **argv) {
         }
 
         else if (strcmp(argv[1], "-usu") == 0) {
-	  for (int i=0;i<usuarios.actual;i++){
-	    printf("Usuario: %s\n", usuarios.usuarios[i].nombre);
-	    printf("Email: %s\n", usuarios.usuarios[i].email);
-	    printf("Actividad: %d\n", usuarios.usuarios[i].activo);
-	    printf("\n");
-	  }
+            if (argc == 3) {
+                if (strcmp(argv[2], "csv") == 0) {
+                    users_export = fopen("usuarios.csv", "w");
+
+                    fprintf(users_export, "Nombre del usuario,Correo electronico,Activo\n");
+
+                    for (int i=0; i < usuarios.actual; i++)
+                        fprintf(users_export, "%s,%s,%d\n", usuarios.usuarios[i].nombre, usuarios.usuarios[i].email, usuarios.usuarios[i].activo);
+
+                    fclose(users_export);
+                }
+            }
+
+            for (int i=0; i < usuarios.actual; i++){
+                printf("Usuario: %s\n", usuarios.usuarios[i].nombre);
+                printf("Email: %s\n", usuarios.usuarios[i].email);
+
+                if (usuarios.usuarios[i].activo)
+                    printf("El usuario se encuentra activo\n");
+                else
+                    printf("El usuario se encuentra desactivo\n");
+
+                printf("\n");
+            }
         }
 
         else {
