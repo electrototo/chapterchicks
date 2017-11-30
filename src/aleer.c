@@ -15,6 +15,7 @@ int main(int argc, char **argv) {
     FILE *libros;
 
     ManejoUsuarios usuarios;
+    Usuario usuario;
 
     unsigned char password[256], salt[128], hash[256];
     unsigned char msg[200];
@@ -55,6 +56,12 @@ int main(int argc, char **argv) {
         }
 
         else if (strcmp(argv[1], "-usu") == 0) {
+	  for (int i=0;i<usuarios.actual;i++){
+	    printf("Usuario: %s\n", usuarios.usuarios[i].nombre);
+	    printf("Email: %s\n", usuarios.usuarios[i].email);
+	    printf("Actividad: %d\n", usuarios.usuarios[i].activo);
+	    printf("\n");
+	  }
         }
 
         else {
