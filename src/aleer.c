@@ -7,6 +7,9 @@
 
 #include "fastpbkdf2.h"
 
+#define ADMIN 1
+#define MORTAL 0
+
 int main(int argc, char **argv) {
     FILE *usuarios_db;
     FILE *libros;
@@ -24,7 +27,7 @@ int main(int argc, char **argv) {
     char nombre[100], direccion[100], email[100];
     int fecha_nac[3];
 
-    int success = 0, login_index = 0;
+    int success = 0, login_index = 0, found = 0;
 
     usuarios_db = fopen("usuarios.dat", "r");
     if (usuarios_db == NULL) {
@@ -48,73 +51,7 @@ int main(int argc, char **argv) {
         }
 
         else if (strcmp(argv[1], "-a") == 0) {
-            index = usuarios.actual;
-
-            while (!success) {
-                // suponemos que el correo es unico
-                success = 1;
-
-                menu_agregar_usuario(
-                    nombre,
-                    password,
-                    fecha_nac,
-                    direccion,
-                    email,
-                    a_credito
-                );
-
-                for (int i = 0; i < usuarios.actual; i++) {
-                    // Se encontro un usuario
-                    if (strcmp(usuarios.usuarios[i].email, email) == 0)
-                        success = 0;
-                }
-
-                if (!success)
-                    printf("\tYa existe un usuario registrado con el mismo correo electronico\n");
-            }
-
-            strcpy(usuarios.usuarios[index].nombre, nombre);
-            strcpy(usuarios.usuarios[index].direccion, direccion);
-            strcpy(usuarios.usuarios[index].email, email);
-
-            usuarios.usuarios[index].activo = 1;
-            usuarios.usuarios[index].tipo_usuario = 1;
-            usuarios.usuarios[index].disponibles = 3;
-            usuarios.usuarios[index].id = index;
-
-            // se deberia llevar una bitacora de transacciones
-            usuarios.usuarios[index].credito = credito;
-
-            // genera el salt del credito
-            generate_salt(128, salt);
-            memcpy(usuarios.usuarios[index].c_salt, salt, 128);
-
-            // genera el hash del credito actual
-            sscanf(a_credito, "%f", &credito);
-            fastpbkdf2_hmac_sha256(a_credito, strlen(a_credito), salt,
-                128, 4096, hash, 256);
-
-            memcpy(usuarios.usuarios[index].c_hash, hash, 256);
-
-            generate_salt(128, salt);
-            memcpy(usuarios.usuarios[index].salt, salt, 128);
-
-            fastpbkdf2_hmac_sha256(password, strlen(password), salt,
-                128, 4096, hash, 256);
-
-            memcpy(usuarios.usuarios[index].contrasena, hash, 256);
-
-            for (int i = 0; i < 3; i++)
-                usuarios.usuarios[index].fecha_nacimiento[i] = fecha_nac[i];
-
-            usuarios.actual++;
-
-            sprintf(msg, "Creacion de administrador %s", email);
-            log_msg(msg);
-
-            usuarios_db = fopen("usuarios.dat", "w");
-            fwrite(&usuarios, sizeof(usuarios), 1, usuarios_db);
-            fclose(usuarios_db);
+            add_user(&usuarios, ADMIN);
         }
 
         else if (strcmp(argv[1], "-usu") == 0) {
@@ -139,6 +76,8 @@ int main(int argc, char **argv) {
 
         for (int i = 0; i < usuarios.actual; i++) {
             if(strcmp(usuarios.usuarios[i].email, email) == 0) {
+                found = 1;
+
                 printf("Usuario encontrado\n");
 
                 fastpbkdf2_hmac_sha256(password, strlen(password),
@@ -158,11 +97,13 @@ int main(int argc, char **argv) {
 
                     printf("\tLa contraseña es incorrecta\n");
                 }
-            }
-            else {
-                printf("\tEl usuario especificado no existe\n");
+
+                break;
             }
         }
+
+        if (!found)
+            printf("\n\tEl usuario especificado no existe\n\n");
     }
 
     return 0;
