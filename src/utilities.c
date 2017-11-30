@@ -8,11 +8,17 @@
 */
 
 #include <utilities.h>
+#include <estructuras.h>
+#include <menus.h>
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>  // STDIN_FILENO
 #include <time.h>
 #include <termios.h>
+#include <string.h>
+
+#include <fastpbkdf2.h>
 
 FILE *log_file, *rand_file;
 
@@ -161,4 +167,86 @@ void enable_canonical() {
     original_f.c_lflag |= (ICANON|ECHO);
 
     tcsetattr(STDIN_FILENO, TCSANOW, &original_f);
+}
+
+void add_user(ManejoUsuarios *usuarios, int type) {
+    int index = usuarios->actual;
+    int success = 0;
+
+    unsigned char password[256], salt[128], hash[256];
+    unsigned char msg[200], a_credito[10];
+
+    char nombre[100], direccion[100], email[100];
+    int fecha_nac[3];
+
+    float credito;
+
+    while (!success) {
+        // suponemos que el correo es unico
+        success = 1;
+
+        menu_agregar_usuario(
+            nombre,
+            password,
+            fecha_nac,
+            direccion,
+            email,
+            a_credito
+        );
+
+        for (int i = 0; i < usuarios->actual; i++) {
+            // Se encontro un usuario
+            if (strcmp(usuarios->usuarios[i].email, email) == 0)
+                success = 0;
+        }
+
+        if (!success)
+            printf("\tYa existe un usuario registrado con el mismo correo electronico\n");
+    }
+
+    strcpy(usuarios->usuarios[index].nombre, nombre);
+    strcpy(usuarios->usuarios[index].direccion, direccion);
+    strcpy(usuarios->usuarios[index].email, email);
+
+    usuarios->usuarios[index].activo = 1;
+
+    usuarios->usuarios[index].tipo_usuario = type;
+    usuarios->usuarios[index].disponibles = 3;
+    usuarios->usuarios[index].id = index;
+
+    // se deberia llevar una bitacora de transacciones
+    usuarios->usuarios[index].credito = credito;
+
+    // genera el salt del credito
+    generate_salt(128, salt);
+    memcpy(usuarios->usuarios[index].c_salt, salt, 128);
+
+    // genera el hash del credito actual
+    sscanf(a_credito, "%f", &credito);
+    fastpbkdf2_hmac_sha256(a_credito, strlen(a_credito), salt,
+        128, 4096, hash, 256);
+
+    memcpy(usuarios->usuarios[index].c_hash, hash, 256);
+
+    generate_salt(128, salt);
+    memcpy(usuarios->usuarios[index].salt, salt, 128);
+
+    fastpbkdf2_hmac_sha256(password, strlen(password), salt,
+        128, 4096, hash, 256);
+
+    memcpy(usuarios->usuarios[index].contrasena, hash, 256);
+
+    for (int i = 0; i < 3; i++)
+        usuarios->usuarios[index].fecha_nacimiento[i] = fecha_nac[i];
+
+    usuarios->actual++;
+
+    sprintf(msg, "Creacion de administrador %s", email);
+    log_msg(msg);
+
+    FILE *usuarios_db;
+
+    usuarios_db = fopen("usuarios.dat", "w");
+    fwrite(usuarios, sizeof(*usuarios), 1, usuarios_db);
+    fclose(usuarios_db);
 }
