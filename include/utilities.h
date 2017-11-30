@@ -7,6 +7,7 @@
  * @author Cristobal Liendo
  * @date 20/11/17
 */
+#include <estructuras.h>
 
 #ifndef UTILITIES_H
     #define UTILITIES_H
@@ -18,4 +19,6 @@
     void enable_output();
     void disable_canonical();
     void enable_canonical();
+
+    void add_user(ManejoUsuarios *usuarios, int type);
 #endif
