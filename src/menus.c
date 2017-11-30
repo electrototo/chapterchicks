@@ -251,56 +251,13 @@ int menu_usuario() {
     printf("[1] Accesar al catálogo de libros\n");
     printf("[2] Mostrar libros en préstamo\n");
     printf("[3] Devolución de libros\n");
+    printf("[4] Salir del sistema\n");
 
     do{
         printf("Opción: ");
         scanf("%d", &opcion_usuario);
         getchar();
-    } while(opcion_usuario < 1 || opcion_usuario > 3);
-
-    if (opcion_usuario == 1){
-        printf("LIBROS EN CATÁLOGO\n\n");
-        printf("\tLIBRO #1\n");
-        printf("\tTítulo: Harry Potter y la Piedra Filosofal\n");
-        printf("\tAutor: J. K. Rowling\n\n");
-        printf("\tLIBRO #2\n");
-        printf("\tTítulo: El Señor de los Anillos\n");
-        printf("\tAutor: J. R. R. Tolkien\n");
-
-        printf("\n");
-        getchar();
-    }
-
-
-    if (opcion_usuario == 2) {
-        printf("LIBROS EN PRÉSTAMO\n\n");
-        printf("\tLIBRO #1\n");
-        printf("\tTítulo: Harry Potter y la Piedra Filosofal\n");
-        printf("\tAutor: J. K. Rowling\n");
-        printf("\tCategoría: Fantasía\n\n");
-        printf("\tLIBRO #2\n");
-        printf("\tTítulo: El Señor de los Anillos\n");
-        printf("\tAutor: J. R. R. Tolkien\n");
-        printf("\tCategoría: Fantasía\n");
-        printf("\n");
-        getchar();
-    }
-
-    if (opcion_usuario == 3) {
-        printf("DEVOLUCIÓN\n\n");
-        printf("\tLIBRO #1\n");
-        printf("\tTítulo: Harry Potter y la Piedra Filosofal\n");
-        printf("\tAutor: J. K. Rowling\n");
-        printf("\tCategoría: Fantasía\n\n");
-        printf("\tLIBRO #2\n");
-        printf("\tTítulo: El Señor de los Anillos\n");
-        printf("\tAutor: J. R. R. Tolkien\n");
-        printf("\tCategoría: Fantasía\n");
-        printf("\n");
-        printf("¿Qué libro deseas devolver?\n");
-        printf("Opción: 1");
-        getchar();
-    }
+    } while(opcion_usuario < 1 || opcion_usuario > 4);
 
     CLS;
 
@@ -321,31 +278,22 @@ int menu_usuario() {
 */
 void menu_registrar_libro(char *nombre_libro, char *nombre_autor, char *categoria, char *isbn, float *costo_libro) {
 
-  printf("ALTA\n\n");
+    printf("ALTA\n\n");
     printf("Registrar nuevo libro:\n\n");
 
-    printf("Ingresa el título completo del libro: \n");
-    printf("Harry Potter y la Piedra Filosofal\n");
-    //    fgets(nombre_libro, 100, stdin);
-    //strip_char(nombre_libro, '\n');
+    fgets(nombre_libro, 100, stdin);
+    strip_char(nombre_libro, '\n');
 
-    printf("Ingresa el nombre completo del autor: \n");
-    printf("J. K. Rowling\n");
-    //fgets(nombre_autor, 50, stdin);
-    //strip_char(nombre_autor, '\n');
+    fgets(nombre_autor, 50, stdin);
+    strip_char(nombre_autor, '\n');
 
-    printf("Ingresa la categoría del libro: \n");
-    printf("Fantasía\n");
-    //    fgets(categoria, 50, stdin);
-    //strip_char(categoria, '\n');
+    fgets(categoria, 50, stdin);
+    strip_char(categoria, '\n');
 
-    printf("Ingresa el ISBN del libro: \n");
-    printf("9788700631625\n");
-    //fgets(isbn, 14, stdin);
-    //strip_char(isbn, '\n');
+    fgets(isbn, 14, stdin);
+    strip_char(isbn, '\n');
 
     printf("Ingresa el costo del libro: \n");
-    printf("$250\n");
     scanf("%f", costo_libro);
     getchar();
 
