@@ -59,7 +59,7 @@ int menu_principal() {
     int opcion_principal;
     printf("BIENVENIDO\n\n");
     printf("[1] Entrar\n");
-    printf("[2] Agregar nueva cuenta\n");
+    printf("[2] Crear una nueva cuenta\n");
 
     do {
         printf("Opción: ");
