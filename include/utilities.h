@@ -20,5 +20,5 @@
     void disable_canonical();
     void enable_canonical();
 
-    void add_user(ManejoUsuarios *usuarios, int type);
+    int add_user(ManejoUsuarios *usuarios, int type);
 #endif

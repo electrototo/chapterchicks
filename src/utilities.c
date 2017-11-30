@@ -169,7 +169,21 @@ void enable_canonical() {
     tcsetattr(STDIN_FILENO, TCSANOW, &original_f);
 }
 
-void add_user(ManejoUsuarios *usuarios, int type) {
+/*
+ * Esta funcion creau un usuario de tipo "type" y regresa
+ * el indice de la posicion en la que se encuentra el usuario 
+ * dentro del arreglo de usuarios
+ *
+ * @author Cristobal Liendo
+ * @param *usuarios    es el apuntador a una estructura de tipo
+ *                     ManejoUsuarios
+ * @param type         es un entero que indica el tipo de usuario.
+ *                     por el momento los dos tipos de usuarios que
+ *                     pueden haber es ADMIN y MORTAL definidos en
+ *                     aleer.c
+*/
+
+int add_user(ManejoUsuarios *usuarios, int type) {
     int index = usuarios->actual;
     int success = 0;
 
@@ -249,4 +263,6 @@ void add_user(ManejoUsuarios *usuarios, int type) {
     usuarios_db = fopen("usuarios.dat", "w");
     fwrite(usuarios, sizeof(*usuarios), 1, usuarios_db);
     fclose(usuarios_db);
+
+    return index;
 }
