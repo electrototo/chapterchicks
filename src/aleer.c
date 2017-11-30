@@ -151,11 +151,51 @@ int main(int argc, char **argv) {
     // el administrador decidio entrar como administrador
     if (eleccion == 1) {
         while ((eleccion = menu_administrador_general()) != 7) {
+            switch (eleccion) {
+                case 1:
+                    break;
+
+                case 2:
+                    break;
+
+                case 3:
+                    break;
+
+                case 4:
+                    break;
+
+                case 5:
+                    break;
+
+                case 6:
+                    break;
+
+                case 7:
+                    break;
+
+                default:
+                    break;
+            }
         }
     }
     // el administrador decidio como usuario o la cuenta es de tipo
     // usuario
     else if (eleccion == 2 || usuarios.usuarios[login_index].tipo_usuario == MORTAL) {
+        while((eleccion = menu_usuario()) != 4){
+            switch(eleccion) {
+                case 1:
+                    break;
+
+                case 2:
+                    break;
+
+                case 3:
+                    break;
+
+                default:
+                    break;
+            }
+        }
     }
 
     return 0;
