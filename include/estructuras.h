@@ -45,6 +45,11 @@
         char email[100];
         char contrasena[256];
         char salt[128];
+        float credito;
+
+        char c_hash[256];
+        char c_salt[128];
+
         int id;
     } Usuario; 
 

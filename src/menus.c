@@ -87,7 +87,7 @@ int menu_principal() {
 */
 
 void menu_agregar_usuario (char *nombre_usuario, char *contrasena,
-               int *fecha, char *direccion, char *email) {
+               int *fecha, char *direccion, char *email, char *credito) {
 
     char contrasena1[50];
     char contrasena2[50];
@@ -130,6 +130,9 @@ void menu_agregar_usuario (char *nombre_usuario, char *contrasena,
 
     strip_char(contrasena1, '\n');
     strcpy(contrasena, contrasena1);
+
+    printf("Ingresa el credito inicial: ");
+    scanf("%s", credito);
 
     CLS;
 }

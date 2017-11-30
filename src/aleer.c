@@ -16,6 +16,9 @@ int main(int argc, char **argv) {
     unsigned char password[256], salt[128], hash[256];
     unsigned char msg[200];
 
+    float credito = 0;
+    unsigned char a_credito[10];
+
     int index;
 
     char nombre[100], direccion[100], email[100];
@@ -56,7 +59,9 @@ int main(int argc, char **argv) {
                     password,
                     fecha_nac,
                     direccion,
-                    email);
+                    email,
+                    a_credito
+                );
 
                 for (int i = 0; i < usuarios.actual; i++) {
                     // Se encontro un usuario
@@ -76,6 +81,20 @@ int main(int argc, char **argv) {
             usuarios.usuarios[index].tipo_usuario = 1;
             usuarios.usuarios[index].disponibles = 3;
             usuarios.usuarios[index].id = index;
+
+            // se deberia llevar una bitacora de transacciones
+            usuarios.usuarios[index].credito = credito;
+
+            // genera el salt del credito
+            generate_salt(128, salt);
+            memcpy(usuarios.usuarios[index].c_salt, salt, 128);
+
+            // genera el hash del credito actual
+            sscanf(a_credito, "%f", &credito);
+            fastpbkdf2_hmac_sha256(a_credito, strlen(a_credito), salt,
+                128, 4096, hash, 256);
+
+            memcpy(usuarios.usuarios[index].c_hash, hash, 256);
 
             generate_salt(128, salt);
             memcpy(usuarios.usuarios[index].salt, salt, 128);
