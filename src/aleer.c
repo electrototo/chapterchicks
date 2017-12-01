@@ -7,10 +7,6 @@
 
 #include "fastpbkdf2.h"
 
-// definicion del tipo de usuarios
-#define ADMIN 1
-#define MORTAL 0
-
 int main(int argc, char **argv) {
     // archivos en los que se almacenan las bases de datos
     FILE *usuarios_db;
@@ -95,8 +91,8 @@ int main(int argc, char **argv) {
                     export = 1;
 
             if (export) {
-                fprintf(users_export, "Nombre del usuario,Correo electronico,Activo\n");
                 users_export = fopen("usuarios.csv", "w");
+                fprintf(users_export, "Nombre del usuario,Correo electronico,Activo\n");
             }
 
             for (int i=0; i < usuarios.actual; i++){
@@ -236,7 +232,7 @@ int main(int argc, char **argv) {
             }
         }
     }
-    // el administrador decidio entrar como usuario o la cuenta es de tipo
+    // el administrador decidio como usuario o la cuenta es de tipo
     // usuario
     else if (eleccion == 2 || usuario->tipo_usuario == MORTAL) {
         while((eleccion = menu_usuario()) != 4){
