@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 #include <menus.h>
 #include <utilities.h>
@@ -87,8 +88,9 @@ int menu_principal() {
 */
 
 void menu_agregar_usuario (char *nombre_usuario, char *contrasena,
-               int *fecha, char *direccion, char *email, char *credito) {
+    int *fecha, int *edad,char *direccion, char *email, char *credito) {
 
+  
     char contrasena1[50];
     char contrasena2[50];
 
@@ -107,6 +109,8 @@ void menu_agregar_usuario (char *nombre_usuario, char *contrasena,
     printf("Ingresa tu fecha de nacimiento [dd/mm/aaaa]: ");
     scanf("%d/%d/%d", &fecha[0], &fecha[1], &fecha[2]);
     getchar();
+
+    edad = calcular_edad(fecha[0],fecha[1],fecha[2]);
 
     printf("Ingresa tu correo: ");
     fgets(email, 50, stdin);
@@ -300,6 +304,18 @@ void menu_registrar_libro(char *nombre_libro, char *nombre_autor, char *categori
     CLS;
 
 }
+
+void calcular_edad(int dia,int mes,int anyo){
+  //calcula la fecha actual
+  time_t tiempo;
+  struct tm *tmPtr;
+  tiempo = time(NULL);
+  tmPtr = localtime(&tiempo);
+
+  int anyo_actual,mes_actual,dia_actual;
+  
+}
+  
 
 
 void menu_informe_prestamos() {
