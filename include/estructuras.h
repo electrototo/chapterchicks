@@ -45,6 +45,7 @@
         int tipo_usuario;
         int activo;
         int fecha_nacimiento[3];
+        int edad;
         char nombre[100];
         char direccion[100];
         char email[100];
