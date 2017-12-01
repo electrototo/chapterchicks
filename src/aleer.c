@@ -176,6 +176,24 @@ int main(int argc, char **argv) {
     // acceder a la informacion del usuario actual
     usuario = &usuarios.usuarios[login_index];
 
+    // hay que comprobar si no hubo tampering con el credito de la
+    // persona
+    sprintf(a_credito, "%f", usuario->credito);
+    fastpbkdf2_hmac_sha256(a_credito, strlen(a_credito), usuario->c_salt,
+        128, 4096, hash, 256);
+
+    if (memcmp(hash, usuario->c_hash, 256) != 0) {
+        // hubo tampering de data
+        usuario->activo = 0;
+
+        sprintf(msg, "Tampering de data encontrado con el usuario %s", usuario->email);
+        log_msg(msg);
+
+        usuarios_db = fopen("usuarios.dat", "w");
+        fwrite(&usuarios, sizeof(usuarios), 1, usuarios_db);
+        fclose(usuarios_db);
+    }
+
     // como usuario es un apuntador a una estructura, sus atributos
     // ya no se acceden con puntitos, sino que con flechas
     if (!usuario->activo) {
