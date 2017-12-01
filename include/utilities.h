@@ -9,6 +9,9 @@
 */
 #include <estructuras.h>
 
+#define ADMIN 1
+#define MORTAL 0
+
 #ifndef UTILITIES_H
     #define UTILITIES_H
 

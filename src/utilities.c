@@ -255,7 +255,11 @@ int add_user(ManejoUsuarios *usuarios, int type) {
 
     usuarios->actual++;
 
-    sprintf(msg, "Creacion de administrador %s", email);
+    if (type == ADMIN)
+        sprintf(msg, "Creacion de administrador %s", email);
+    else
+        sprintf(msg, "Creacion de usuario %s", email);
+
     log_msg(msg);
 
     FILE *usuarios_db;
