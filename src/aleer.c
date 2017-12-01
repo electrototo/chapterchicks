@@ -60,9 +60,9 @@ int main(int argc, char **argv) {
 
     // carga de la base de datos de libros en la memoria
     // (puede ser eficientizado)
-    biblioteca_db = fopen("libros.dat", "r");
+    biblioteca_db = fopen("biblioteca.dat", "r");
     if (biblioteca_db == NULL) {
-        biblioteca_db = fopen("libros.dat", "w");
+        biblioteca_db = fopen("biblioteca.dat", "w");
         biblioteca.actual = 0;
 
         sprintf(msg, "Creacion de base de datos para libros");
@@ -202,7 +202,7 @@ int main(int argc, char **argv) {
     if (usuario->tipo_usuario == ADMIN)
         eleccion = menu_administrador_como();
 
-    // el administrador decidio entrar como administrador
+    // el administrador decidió entrar como administrador
     if (eleccion == 1) {
         while ((eleccion = menu_administrador_general()) != 7) {
             switch (eleccion) {
@@ -213,13 +213,21 @@ int main(int argc, char **argv) {
                     break;
 
                 case 3:
-		  if (biblioteca.actual !>0 || biblioteca.actual !<0){
-                    biblioteca.actual = 0
-		      }
+		    menu_registrar_libro(
+		        biblioteca.libro[biblioteca.actual].titulo, 
+			biblioteca.libro[biblioteca.actual].autor, 
+		       	biblioteca.libro[biblioteca.actual].categoria, 
+			biblioteca.libro[biblioteca.actual].ISBN10, 
+		        biblioteca.libro[biblioteca.actual].ISBN13, 
+			biblioteca.libro[biblioteca.actual].costo, 
+		        biblioteca.libro[biblioteca.actual].a_pub
+			);
 
-		  menu_registrar_libro(biblioteca.libro [biblioteca.actual].titulo, biblioteca.libro [biblioteca.actual].autor, biblioteca.libro[biblioteca.actual].categoria, biblioteca.libro[actual].ISBN10, biblioteca.libro[actual].ISBN13, biblioteca.libro[actual].costo, biblioteca.libro[actual].a_pub);
+		    biblioteca_db = fopen("biblioteca.dat", "w");
+		    fwrite(&biblioteca, sizeof(biblioteca), 1, biblioteca_db);
 
-		  biblioteca.actual++;
+		    fclose(biblioteca_db);
+		    biblioteca.actual++;
                     break;
 
                 case 4:
