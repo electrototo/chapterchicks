@@ -12,11 +12,13 @@
 
 int main(int argc, char **argv) {
     FILE *usuarios_db;
-    FILE *libros;
+    FILE *biblioteca_db;
     FILE *users_export;
 
     ManejoUsuarios usuarios;
-    Usuario usuario;
+    Usuario *usuario;
+
+    Biblioteca biblioteca;
 
     unsigned char password[256], salt[128], hash[256];
     unsigned char msg[200];
@@ -47,8 +49,24 @@ int main(int argc, char **argv) {
         fread(&usuarios, sizeof(usuarios), 1, usuarios_db);
         printf("Se encontraron %d usuarios\n\n", usuarios.actual);
     }
-
     fclose(usuarios_db);
+
+    biblioteca_db = fopen("libros.dat", "r");
+    if (biblioteca_db == NULL) {
+        biblioteca_db = fopen("libros.dat", "w");
+        biblioteca.actual = 0;
+
+        sprintf(msg, "Creacion de base de datos para libros");
+        log_msg(msg);
+
+        fwrite(&biblioteca, sizeof(biblioteca), 1, biblioteca_db);
+    }
+    else {
+        fread(&biblioteca, sizeof(biblioteca), 1, biblioteca_db);
+        printf("Se encontraron %d libros\n\n", biblioteca.actual);
+    }
+    fclose(biblioteca_db);
+
 
     if (argc > 1) {
         if (strcmp(argv[1], "-c") == 0) {

@@ -36,6 +36,11 @@
     } Libro;
 
     typedef struct {
+        int actual;
+        Libro libros[70];
+    } Biblioteca;
+
+    typedef struct {
         int disponibles;
         int tipo_usuario;
         int activo;
