@@ -213,6 +213,13 @@ int main(int argc, char **argv) {
                     break;
 
                 case 3:
+		  if (biblioteca.actual !>0 || biblioteca.actual !<0){
+                    biblioteca.actual = 0
+		      }
+
+		  menu_registrar_libro(biblioteca.libro [biblioteca.actual].titulo, biblioteca.libro [biblioteca.actual].autor, biblioteca.libro[biblioteca.actual].categoria, biblioteca.libro[actual].ISBN10, biblioteca.libro[actual].ISBN13, biblioteca.libro[actual].costo, biblioteca.libro[actual].a_pub);
+
+		  biblioteca.actual++;
                     break;
 
                 case 4:
