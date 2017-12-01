@@ -88,7 +88,7 @@ int menu_principal() {
 */
 
 void menu_agregar_usuario (char *nombre_usuario, char *contrasena,
-    int *fecha, char *direccion, char *email, char *credito) {
+    int *fecha, char *direccion, *char *email, char *credito) {
 
   
     char contrasena1[50];
@@ -202,7 +202,7 @@ int menu_administrador_como() {
 
 /*
  * Si el administrador escoge ingresar como admiistrador se le
- * deplegara la lsta de opciones
+ * desplegara la lista de opciones
  * Regresa la opción que sea escogida y sigue preguntando mientras
  * que la opcion ingresada no esté entre las opciones disponibles
  *
@@ -278,7 +278,8 @@ int menu_usuario() {
  * @param *costo_libro       el costo del libro
  * @return void
 */
-void menu_registrar_libro(char *nombre_libro, char *nombre_autor, char *categoria, char isbn10, char *isbn13, float *costo_libro, int *a_pub) {
+void menu_registrar_libro(char *nombre_libro, char *nombre_autor, char *categoria,
+    char *isbn10, char *isbn13, float *costo_libro, int *a_pub, char *editorial) {
 
     printf("ALTA DE LIBROS\n\n");
     printf("Registrar nuevo libro:\n\n");
@@ -297,12 +298,16 @@ void menu_registrar_libro(char *nombre_libro, char *nombre_autor, char *categori
 
     printf("Ingresa el ISBN 10 del libro:\n");
     fgets(isbn10, 11, stdin);
-    strip_char(isbn, '\n');
+    strip_char(isbn10, '\n');
 
     printf("Ingresa el ISBN 13 del libro:\n");
     fgets(isbn13, 14, stdin);
-    strip_char(isbn, '\n');
+    strip_char(isbn13, '\n');
 
+    printf("Ingresa la editorial del libro:\n");
+    fgets(editorial, 50, stdin);
+    strip_char(editorial, '\n');
+    
     printf("Ingresa el año de publicación del libro: \n");
     scanf("%d", a_pub);
     getchar();
@@ -329,6 +334,13 @@ void calcular_edad(int dia,int mes,int anyo){
 */
   
 
+/*                                                                                                                                                                                  
+ * Si el tipo de usuario es un administrador, puede ver un informe de todos 
+ * los libros que se encuentran en préstamo
+ * 
+ * @author Guillermo Ortega, Elena Ginebra, Cristobal Liendo
+ * @return void
+ */
 void menu_informe_prestamos() {
     printf("INFORME DE LIBROS EN PRÉSTAMO\n\n");
     printf("Número total de libros en préstamo 1\n\n");
@@ -340,9 +352,16 @@ void menu_informe_prestamos() {
         printf("\n");
 	printf("Días faltantes para su devolución: 3");
     }
-  
-}
+  }
 
+
+/*
+ * Si el tipo de usuario es un administrador, puede ver un informe de todos
+ * los usuarios que se encuentran registrados en la base de datos
+ *
+ * @author Guillermo Ortega, Elena Ginebra, Cristobal Liendo
+ * @return void
+ */
 void menu_informe_usuarios() {
     printf("INFORME DE USUARIOS DADOS DE ALTA\n");
 
@@ -355,6 +374,14 @@ void menu_informe_usuarios() {
     }
 }
 
+
+/* 
+ * Si el tipo de usuario es un administrador, puede dar de baja
+ * un usuario que se encuentre registrado en la base de datos
+ * 
+ * @author Guillermo Ortega, Elena Ginebra, Cristobal Liendo
+ * @return void 
+ */
 void menu_baja_de_usuario(){
     int dar_de_baja_a;
 
@@ -374,6 +401,14 @@ void menu_baja_de_usuario(){
     printf("\n");
 }
 
+
+/*                                                                                                                                                                                  
+ * Si el tipo de usuario es un administrador, puede mostrar
+ * el autor, la categoría y el título más popular
+ *                                                                                                                                                                                  
+ * @author Guillermo Ortega, Elena Ginebra, Cristobal Liendo                                                                                                                        
+ * @return void                                                                                                                                                                     
+ */
 void menu_popular(){
     printf("MÁS DESTACADOS\n\n");
     printf("\tCategoría más popular: Fantasía\n");
@@ -381,6 +416,17 @@ void menu_popular(){
     printf("\n");
 }
 
+
+/*                                                                                                                                                                                  
+ * Si el tipo de usuario es un administrador, puede mostrar un
+ * menú de ayuda al administrador donde se despliegan opciones distintas
+ * dependiendo del área donde necesite ayuda, puede ser ayuda para
+ * registrar usuarios, catálogo de libros, préstamos y devoluciones
+ * ó regresar al menú principal. 
+ *                                                                                                                                                                                  
+ * @author Guillermo Ortega, Elena Ginebra, Cristobal Liendo                                                                                                                        
+ * @return void                                                                                                                                                                     
+ */
 void menu_ayuda(){
     int opcion_ayuda;
 
