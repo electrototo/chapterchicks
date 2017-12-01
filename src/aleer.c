@@ -236,7 +236,7 @@ int main(int argc, char **argv) {
             }
         }
     }
-    // el administrador decidio como usuario o la cuenta es de tipo
+    // el administrador decidio entrar como usuario o la cuenta es de tipo
     // usuario
     else if (eleccion == 2 || usuario->tipo_usuario == MORTAL) {
         while((eleccion = menu_usuario()) != 4){
