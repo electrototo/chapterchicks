@@ -33,7 +33,7 @@ int main(int argc, char **argv) {
 
     int success = 0, login_index = 0, found = 0;
 
-    int eleccion;
+    int eleccion, export;
 
     usuarios_db = fopen("usuarios.dat", "r");
     if (usuarios_db == NULL) {
@@ -72,25 +72,23 @@ int main(int argc, char **argv) {
         if (strcmp(argv[1], "-c") == 0) {
         }
 
-        else if (strcmp(argv[1], "-a") == 0) {
+        else if (strcmp(argv[1], "-a") == 0)
             add_user(&usuarios, ADMIN);
-        }
 
         else if (strcmp(argv[1], "-usu") == 0) {
-            if (argc == 3) {
-                if (strcmp(argv[2], "csv") == 0) {
-                    users_export = fopen("usuarios.csv", "w");
+            if (argc == 3)
+                if (strcmp(argv[2], "csv") == 0)
+                    export = 1;
 
-                    fprintf(users_export, "Nombre del usuario,Correo electronico,Activo\n");
-
-                    for (int i=0; i < usuarios.actual; i++)
-                        fprintf(users_export, "%s,%s,%d\n", usuarios.usuarios[i].nombre, usuarios.usuarios[i].email, usuarios.usuarios[i].activo);
-
-                    fclose(users_export);
-                }
+            if (export) {
+                fprintf(users_export, "Nombre del usuario,Correo electronico,Activo\n");
+                users_export = fopen("usuarios.csv", "w");
             }
 
             for (int i=0; i < usuarios.actual; i++){
+                if (export)
+                    fprintf(users_export, "%s,%s,%d\n", usuarios.usuarios[i].nombre, usuarios.usuarios[i].email, usuarios.usuarios[i].activo);
+
                 printf("Usuario: %s\n", usuarios.usuarios[i].nombre);
                 printf("Email: %s\n", usuarios.usuarios[i].email);
 
@@ -101,6 +99,9 @@ int main(int argc, char **argv) {
 
                 printf("\n");
             }
+
+            if (export)
+                fclose(users_export);
         }
 
         else {
@@ -136,8 +137,8 @@ int main(int argc, char **argv) {
 
                         sprintf(msg, "Login exitoso para %s", email);
                         log_msg(msg);
-
                     }
+
                     else {
                         sprintf(msg, "Contrasena incorrecta para %s", email);
                         log_msg(msg);
@@ -156,14 +157,16 @@ int main(int argc, char **argv) {
     else
         login_index = add_user(&usuarios, MORTAL);
 
-    if (!usuarios.usuarios[login_index].activo) {
+    usuario = &usuarios.usuarios[login_index];
+
+    if (!usuario->activo) {
         printf("\nLo lamentamos, tu cuenta fue desactivada\n\n");
 
         return 1;
     }
 
     eleccion = 0; 
-    if (usuarios.usuarios[login_index].tipo_usuario == ADMIN)
+    if (usuario->tipo_usuario == ADMIN)
         eleccion = menu_administrador_como();
 
     // el administrador decidio entrar como administrador
@@ -198,7 +201,7 @@ int main(int argc, char **argv) {
     }
     // el administrador decidio como usuario o la cuenta es de tipo
     // usuario
-    else if (eleccion == 2 || usuarios.usuarios[login_index].tipo_usuario == MORTAL) {
+    else if (eleccion == 2 || usuario->tipo_usuario == MORTAL) {
         while((eleccion = menu_usuario()) != 4){
             switch(eleccion) {
                 case 1:
