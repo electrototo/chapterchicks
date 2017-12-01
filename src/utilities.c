@@ -236,7 +236,7 @@ int add_user(ManejoUsuarios *usuarios, int type) {
     memcpy(usuarios->usuarios[index].c_salt, salt, 128);
 
     // genera el hash del credito actual
-    sscanf(a_credito, "%f", &credito);
+    sprintf(a_credito, "%f", credito);
     fastpbkdf2_hmac_sha256(a_credito, strlen(a_credito), salt,
         128, 4096, hash, 256);
 
