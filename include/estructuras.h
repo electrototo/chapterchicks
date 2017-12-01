@@ -25,6 +25,7 @@
         int autor;
         int categoria;
 
+        char editorial;
         char titulo[50];
         char ISBN13[14];
         char ISBN10[11];
