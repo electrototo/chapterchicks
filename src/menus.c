@@ -88,7 +88,7 @@ int menu_principal() {
 */
 
 void menu_agregar_usuario (char *nombre_usuario, char *contrasena,
-    int *fecha, int *edad,char *direccion, char *email, char *credito) {
+    int *fecha, char *direccion, char *email, char *credito) {
 
   
     char contrasena1[50];
@@ -109,8 +109,6 @@ void menu_agregar_usuario (char *nombre_usuario, char *contrasena,
     printf("Ingresa tu fecha de nacimiento [dd/mm/aaaa]: ");
     scanf("%d/%d/%d", &fecha[0], &fecha[1], &fecha[2]);
     getchar();
-
-    edad = calcular_edad(fecha[0],fecha[1],fecha[2]);
 
     printf("Ingresa tu correo: ");
     fgets(email, 50, stdin);
@@ -305,6 +303,7 @@ void menu_registrar_libro(char *nombre_libro, char *nombre_autor, char *categori
 
 }
 
+/*
 void calcular_edad(int dia,int mes,int anyo){
   //calcula la fecha actual
   time_t tiempo;
@@ -315,8 +314,8 @@ void calcular_edad(int dia,int mes,int anyo){
   int anyo_actual,mes_actual,dia_actual;
   
 }
+*/
   
-
 
 void menu_informe_prestamos() {
     printf("INFORME DE LIBROS EN PRÉSTAMO\n\n");
