@@ -7,10 +7,12 @@
 
 #include "fastpbkdf2.h"
 
+// definicion del tipo de usuarios
 #define ADMIN 1
 #define MORTAL 0
 
 int main(int argc, char **argv) {
+    // archivos en los que se almacenan las bases de datos
     FILE *usuarios_db;
     FILE *biblioteca_db;
     FILE *users_export;
@@ -20,6 +22,7 @@ int main(int argc, char **argv) {
 
     Biblioteca biblioteca;
 
+    // variables para la creacion de un usuario
     unsigned char password[256], salt[128], hash[256];
     unsigned char msg[200];
 
@@ -28,13 +31,21 @@ int main(int argc, char **argv) {
 
     int index;
 
+    // variables para el registro del usuario
     char nombre[100], direccion[100], email[100];
     int fecha_nac[3];
 
+    // variables para el registro de un libro
+    char nombre_libro[100], nombre_autor[50], categoria[50], isbn[14];
+    float precio;
+
+    // variables que lleva el flujo de las elecciones del usuario
     int success = 0, login_index = 0, found = 0;
 
     int eleccion, export;
 
+    // carga de la base de datos de usuarios en la memoria
+    // (puede ser eficientizado)
     usuarios_db = fopen("usuarios.dat", "r");
     if (usuarios_db == NULL) {
         usuarios_db = fopen("usuarios.dat", "w");
@@ -51,6 +62,8 @@ int main(int argc, char **argv) {
     }
     fclose(usuarios_db);
 
+    // carga de la base de datos de libros en la memoria
+    // (puede ser eficientizado)
     biblioteca_db = fopen("libros.dat", "r");
     if (biblioteca_db == NULL) {
         biblioteca_db = fopen("libros.dat", "w");
@@ -68,6 +81,7 @@ int main(int argc, char **argv) {
     fclose(biblioteca_db);
 
 
+    // si al momento de ejecutar el codigo hubieron argumentos
     if (argc > 1) {
         if (strcmp(argv[1], "-c") == 0) {
         }
@@ -157,8 +171,13 @@ int main(int argc, char **argv) {
     else
         login_index = add_user(&usuarios, MORTAL);
 
+    // esto serivira a futura para no tener que escribir
+    // usuarios.usuarios[login_index] cada vez que se quiera
+    // acceder a la informacion del usuario actual
     usuario = &usuarios.usuarios[login_index];
 
+    // como usuario es un apuntador a una estructura, sus atributos
+    // ya no se acceden con puntitos, sino que con flechas
     if (!usuario->activo) {
         printf("\nLo lamentamos, tu cuenta fue desactivada\n\n");
 
