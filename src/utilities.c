@@ -198,9 +198,7 @@ int add_user(ManejoUsuarios *usuarios, int type) {
 
     while (!success) {
         // suponemos que el correo es unico
-        success = 1;
-
-        menu_agregar_usuario(
+        success = menu_agregar_usuario(
             nombre,
             password,
             fecha_nac,
@@ -208,6 +206,9 @@ int add_user(ManejoUsuarios *usuarios, int type) {
             email,
             a_credito
         );
+
+        if (success == -1)
+            return -1;
 
         for (int i = 0; i < usuarios->actual; i++) {
             // Se encontro un usuario
@@ -286,14 +287,14 @@ int add_user(ManejoUsuarios *usuarios, int type) {
  * @return int
 */
 
-int legal(Usuario *usuario) {
+int legal(int *fecha_nacimiento) {
     struct tm dob;
     time_t now, dob2;
 
     dob.tm_sec = 0;
-    dob.tm_year = usuario->fecha_nacimiento[2] - 1900;
-    dob.tm_mon = usuario->fecha_nacimiento[1] - 1;
-    dob.tm_mday = usuario->fecha_nacimiento[0];
+    dob.tm_year = fecha_nacimiento[2] - 1900;
+    dob.tm_mon = fecha_nacimiento[1] - 1;
+    dob.tm_mday = fecha_nacimiento[0];
     dob.tm_hour = 0;
     dob.tm_min = 0;
     dob.tm_sec = 0; 
@@ -316,7 +317,7 @@ int legal(Usuario *usuario) {
  * @param *name        Nombre de la base de datos
 */
 
-void save_db(void *structure, size_t size, char *name) {
+void save_db(void *structure, unsigned int size, char *name) {
     FILE *db;
 
     db = fopen(name, "w");

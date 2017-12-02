@@ -24,5 +24,6 @@
     void enable_canonical();
 
     int add_user(ManejoUsuarios *usuarios, int type);
-    void save_db(void *structure, size_t size, char *name);
+    void save_db(void *structure, unsigned int size, char *name);
+    int legal(int *fecha_nac);
 #endif

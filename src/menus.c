@@ -87,7 +87,7 @@ int menu_principal() {
  * @return void
 */
 
-void menu_agregar_usuario (char *nombre_usuario, char *contrasena,
+int menu_agregar_usuario (char *nombre_usuario, char *contrasena,
     int *fecha, char *direccion, char *email, char *credito) {
   
     char contrasena1[50];
@@ -108,6 +108,9 @@ void menu_agregar_usuario (char *nombre_usuario, char *contrasena,
     printf("Ingresa tu fecha de nacimiento [dd/mm/aaaa]: ");
     scanf("%d/%d/%d", &fecha[0], &fecha[1], &fecha[2]);
     getchar();
+
+    if (!legal(fecha))
+        return -1;
 
     printf("Ingresa tu correo: ");
     fgets(email, 50, stdin);
@@ -136,6 +139,8 @@ void menu_agregar_usuario (char *nombre_usuario, char *contrasena,
     scanf("%s", credito);
 
     CLS;
+
+    return 1;
 }
 
 /*

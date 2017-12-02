@@ -125,8 +125,10 @@ int main(int argc, char **argv) {
         if (strcmp(argv[1], "-c") == 0) {
         }
 
-        else if (strcmp(argv[1], "-a") == 0)
-            add_user(&usuarios, ADMIN);
+        else if (strcmp(argv[1], "-a") == 0) {
+            if(add_user(&usuarios, ADMIN) == -1)
+                printf("\t Debes ser mayor de edad para poder hacer uso del sistema\n");
+        }
 
         else if (strcmp(argv[1], "-usu") == 0) {
             if (argc == 3)
@@ -207,8 +209,15 @@ int main(int argc, char **argv) {
                 printf("\n\tEl usuario especificado no existe\n\n");
         }
     }
-    else
+    else {
         login_index = add_user(&usuarios, MORTAL);
+
+        if (login_index == -1) {
+            printf("\t Debes ser mayor de edad para poder hacer uso del sistema\n");
+
+            return 1;
+        }
+    }
 
     // esto serivira a futura para no tener que escribir
     // usuarios.usuarios[login_index] cada vez que se quiera
