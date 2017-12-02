@@ -467,7 +467,7 @@ void menu_ayuda(){
         else if(opcion_ayuda == 3) {
             printf("Cada usuario tiene acceso a pedir prestado un máximo de 3 libros en un determinado momento (al mismo tiempo).\n");
             printf("Los libros se pueden prestar hasta un máximo de 30 días, la cuenta empieza desde el día que se pidió prestado hasta que termine este mismo periodo.\n");
-	    printf("Si el usuario termina un libro antes de la fecha de devolución ó desea regresarlo antes del periodo de préstamo, tendrá la opción de hacerlo.");
+	    printf("Si el usuario termina un libro antes de la fecha de devolución ó desea regresarlo antes del periodo de préstamo, tendrá la opción de hacerlo.\n");
             printf("\nSi el administrador utiliza el modo de ejecucion que implica usar \"-c\", se despliega un informe de todos los usuarios y libros correspondientes que se encuentran en su posesión en ese momento determinado.\n\n");
         }
     } while (opcion_ayuda != 4);

@@ -245,13 +245,29 @@ int main(int argc, char **argv) {
     if (usuario->tipo_usuario == ADMIN)
         eleccion = menu_administrador_como();
 
+    //    int eleccion2;
+    
     // el administrador decidió entrar como administrador
     if (eleccion == 1) {
         while ((eleccion = menu_administrador_general()) != 7) {
-            switch (eleccion) {
-                case 1:
-                    //informe de libros en préstamo
-                    break;
+
+	    switch (eleccion) {
+	        case 1:
+		  //informe de libros en préstamo
+		  //no estoy imprimiendo los prestamos
+		  //NO LOGRO HACER QUE META A ESTA FUNCION PARA PROBAR LAS IMPRESIONES
+		  printf("AQUI ESTOY\n");
+		  for (int i = 0; i < biblioteca.actual; i++) {
+		      printf("Título: %s\n", biblioteca.libros[i].titulo);
+		      printf("Autor: %c\n", *autores.autores[i].nombre);
+		      printf("Categoría: %c\n", *categorias.categorias[i].nombre);
+		      printf("ISBN 10: %s\n", biblioteca.libros[i].ISBN10);
+		      printf("ISBN 13: %s\n", biblioteca.libros[i].ISBN13);
+		      printf("Costo: %f\n", biblioteca.libros[i].costo);
+		      printf("Año de publicación: %d\n", biblioteca.libros[i].a_pub);
+		      printf("Editorial: %s\n", biblioteca.libros[i].editorial);
+		  }
+		    break;
 
                 case 2:
                     //Informe de usuarios dados de alta y libros en préstamo
@@ -301,8 +317,40 @@ int main(int argc, char **argv) {
                     biblioteca.libros[biblioteca.actual].autor = lookup_id;
 
                     // busca si existe el genero especificado para el libro
-                    // elena, completa la funcion
+		    // elena, completa la funcion
 
+    		    // busca si existe la categoria específica
+		    success = 0;
+		    for (int i = 0; i < categorias.actual; i++) {
+		      if (strcmp(categorias.categorias[i].nombre, categoria) == 0) {
+			lookup_id = categorias.categorias[i].id;
+			success = 1;
+			// ya no es necesario seguir buscando
+			break;
+		      }
+		    }
+
+		    // no se encontro la categoria, por lo tanto se deberia crear
+		    if (!success) {
+		      strcpy(categorias.categorias[categorias.actual].nombre, categoria);
+		      categorias.categorias[categorias.actual].id = categorias.actual;
+
+		      categorias.actual++;
+
+		      sprintf(msg, "Creacion del la categoría %s", categoria);
+		      log_msg(msg);
+
+		      // guarda la categoria, porque actualmente no existe en la
+		      // base de datos
+		      categorias_db = fopen("categorias.dat", "w");
+		      fwrite(&categorias, sizeof(categorias), 1, categorias_db);
+		      fclose(categorias_db);
+		    }
+
+		    biblioteca.libros[biblioteca.actual].categoria = lookup_id;
+
+
+		    
                     biblioteca.actual++;
 
                     // guarda los cambios que se crearon en la biblioteca
