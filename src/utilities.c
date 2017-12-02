@@ -305,3 +305,21 @@ int legal(Usuario *usuario) {
 
     return (difftime(now, dob2) >= 60*60*24*365*18);
 }
+
+/*
+ * Esta funcion sirve para guardar los datos de @p struct en la base
+ * de datos @p name, de tamaño @p size
+ *
+ * @author Cristobal Liendo
+ * @param structure    Los datos a guardar
+ * @param size         Tamaño en bytes de @p structure
+ * @param *name        Nombre de la base de datos
+*/
+
+void save_db(void *structure, size_t size, char *name) {
+    FILE *db;
+
+    db = fopen(name, "w");
+    fwrite(structure, size, 1, db);
+    fclose(db);
+}
