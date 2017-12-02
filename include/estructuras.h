@@ -13,23 +13,35 @@
     #define ESTRUCTURAS_H
     typedef struct {
         char nombre[50];
+        int id;
         int prestados;
     } Autor;
 
     typedef struct {
+        int actual;
+        Autor autores[70];
+    } ManejoAutor;
+
+    typedef struct {
         char nombre[50];
+        int id;
         int prestados;
     } Categoria;
+
+    typedef struct {
+        int actual;
+        Categoria categorias[70];
+    } ManejoCategoria;
 
     typedef struct {
         int autor;
         int categoria;
 
-        char editorial;
+        char editorial[100];
         char titulo[50];
         char ISBN13[14];
         char ISBN10[11];
-        int costo;
+        float costo;
         int activo;
         int prestamos;
         int a_pub;
