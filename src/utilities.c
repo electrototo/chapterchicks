@@ -229,10 +229,12 @@ int add_user(ManejoUsuarios *usuarios, int type) {
     usuarios->usuarios[index].disponibles = 3;
     usuarios->usuarios[index].id = index;
 
+    sscanf(a_credito, "%f", &credito);
+
     // se deberia llevar una bitacora de transacciones
     usuarios->usuarios[index].credito = credito;
 
-    sprintf(msg, "Adición de crédito %.3f de usuario: %s", credito,  usuarios->usuarios[index].nombre);
+    sprintf(msg, "Adición de crédito %.2f de usuario: %s", credito,  usuarios->usuarios[index].nombre);
     log_msg(msg);
     
     // genera el salt del credito
