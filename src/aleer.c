@@ -228,9 +228,7 @@ int main(int argc, char **argv) {
         sprintf(msg, "Tampering de data encontrado con el usuario %s", usuario->email);
         log_msg(msg);
 
-        usuarios_db = fopen("usuarios.dat", "w");
-        fwrite(&usuarios, sizeof(usuarios), 1, usuarios_db);
-        fclose(usuarios_db);
+        save_db(&usuarios, sizeof(usuarios), "usuarios.dat");
     }
 
     // como usuario es un apuntador a una estructura, sus atributos
@@ -298,9 +296,7 @@ int main(int argc, char **argv) {
 
                         // guarda el autor, porque actualmente no existe en la
                         // base de datos
-                        autores_db = fopen("autores.dat", "w");
-                        fwrite(&autores, sizeof(autores), 1, autores_db);
-                        fclose(autores_db);
+                        save_db(&autores, sizeof(autores), "autores.dat");
                     }
 
                     biblioteca.libros[biblioteca.actual].autor = lookup_id;
@@ -331,9 +327,7 @@ int main(int argc, char **argv) {
 
                         // guarda la categoria, porque actualmente no existe en la
                         // base de datos
-                        categorias_db = fopen("categorias.dat", "w");
-                        fwrite(&categorias, sizeof(categorias), 1, categorias_db);
-                        fclose(categorias_db);
+                        save_db(&categorias, sizeof(categorias), "categorias.dat");
                     }
 
                     biblioteca.libros[biblioteca.actual].categoria = lookup_id;
@@ -341,9 +335,7 @@ int main(int argc, char **argv) {
                     biblioteca.actual++;
 
                     // guarda los cambios que se crearon en la biblioteca
-                    biblioteca_db = fopen("biblioteca.dat", "w");
-                    fwrite(&biblioteca, sizeof(biblioteca), 1, biblioteca_db);
-                    fclose(biblioteca_db);
+                    save_db(&biblioteca, sizeof(biblioteca), "biblioteca.dat");
 
                     break;
 
@@ -364,9 +356,7 @@ int main(int argc, char **argv) {
                             usuarios.usuarios[i].activo = 0;
 
                             // guarda los usuarios
-                            usuarios_db = fopen("usuarios.dat", "w");
-                            fwrite(&usuarios, sizeof(usuarios), 1, usuarios_db);
-                            fclose(usuarios_db);
+                            save_db(&usuarios, sizeof(usuarios), "usuarios.dat");
 
                             break;
                         }
@@ -404,6 +394,7 @@ int main(int argc, char **argv) {
                     // accesar al catalogo de libros
                     // aqui se podria mejorar mostrando un menu que pregunte por
                     // la categoria en vez de mostrar todos los libros
+                    // TODO: Preguntar que libro quiere pedir prestado
                     for (int i = 0; i < biblioteca.actual; i++) {
                         printf("Título: %s\n", biblioteca.libros[i].titulo);
                         printf("\tAutor: %c\n", *autores.autores[i].nombre);
