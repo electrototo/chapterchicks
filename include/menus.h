@@ -18,7 +18,8 @@
     int menu_administrador_como();
     int menu_administrador_general();
     int menu_usuario();
-void menu_registrar_libro(char *nombre_libro, char *nombre_autor, char *categoria, char *isbn10, char isbn13, float *costo_libro, int *a_pub);
+    void menu_registrar_libro(char *titulo, int *autor, int *categoria,
+		  char *isbn10, char *isbn13, float *costo_libro, int *a_pub, char *editorial);
     void creditos();
     void menu_informe_prestamos();
     void menu_informe_usuarios();
