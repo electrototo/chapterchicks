@@ -181,6 +181,7 @@ void enable_canonical() {
  *                     por el momento los dos tipos de usuarios que
  *                     pueden haber es ADMIN y MORTAL definidos en
  *                     aleer.c
+ * @return int
 */
 
 int add_user(ManejoUsuarios *usuarios, int type) {
@@ -272,4 +273,33 @@ int add_user(ManejoUsuarios *usuarios, int type) {
     fclose(usuarios_db);
 
     return index;
+}
+
+/*
+ * Esta funcion determina si el usuario es mayor de edad o no
+ * regresa verdadero si lo es, y falso si no lo es
+ *
+ * @author Cristobal Liendo, Guillermo Ortega
+ * @param *usuario      un apuntador al usuario que se esta checando la edad
+ * @return int
+*/
+
+int legal(Usuario *usuario) {
+    struct tm dob;
+    time_t now, dob2;
+
+    dob.tm_sec = 0;
+    dob.tm_year = usuario->fecha_nacimiento[2] - 1900;
+    dob.tm_mon = usuario->fecha_nacimiento[1] - 1;
+    dob.tm_mday = usuario->fecha_nacimiento[0];
+    dob.tm_hour = 0;
+    dob.tm_min = 0;
+    dob.tm_sec = 0; 
+    dob.tm_isdst = -1;
+
+    dob2 = mktime(&dob);
+
+    time(&now);
+
+    return (difftime(now, dob2) >= 60*60*24*365*18);
 }
