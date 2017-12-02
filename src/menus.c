@@ -465,3 +465,24 @@ void menu_ayuda(){
     } while (opcion_ayuda != 4);
   
 }
+
+int menu_categorias() {
+  int opcion_categorias;
+
+  printf("¿Qué quieres hacer?\n");
+  printf("[1] Mostrar todo el catálogo de libros\n");
+  printf("[2] Elegir de las categorías existentes\n");
+  printf("[3] Mostrar los libros más destacados\n");
+  printf("[4] Mostrar sugerencias\n");
+  printf("[5] Salir de biblioteca\n");
+
+  do{
+    printf("Opción: ");
+    scanf("%d", &opcion_categorias);
+    getchar();
+  } while(opcion_categorias < 1 || opcion_categorias > 5);
+
+  CLS;
+
+  return opcion_categorias;
+}
