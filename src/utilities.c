@@ -231,6 +231,9 @@ int add_user(ManejoUsuarios *usuarios, int type) {
     // se deberia llevar una bitacora de transacciones
     usuarios->usuarios[index].credito = credito;
 
+    sprintf(msg, "Adición de crédito %.3f de usuario: %s", credito,  usuarios->usuarios[index].nombre);
+    log_msg(msg);
+    
     // genera el salt del credito
     generate_salt(128, salt);
     memcpy(usuarios->usuarios[index].c_salt, salt, 128);
@@ -270,3 +273,4 @@ int add_user(ManejoUsuarios *usuarios, int type) {
 
     return index;
 }
+c
