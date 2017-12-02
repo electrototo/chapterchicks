@@ -20,6 +20,7 @@
     int menu_administrador_como();
     int menu_administrador_general();
     int menu_usuario();
+    int menu_categorias();
 
     void menu_registrar_libro(char *titulo, char *autor, char *categoria,
         char *isbn10, char *isbn13, float *costo_libro, int *a_pub, char *editorial);
