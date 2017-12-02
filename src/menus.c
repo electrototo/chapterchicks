@@ -435,7 +435,7 @@ void menu_ayuda(){
     
     do{
         printf("AYUDA\n\n");
-        printf("Selecciona el número correspondiente para el tipo de ayuda que necesitas: \n");
+        printf("Selecciona el número correspondiente para el tipo de información que necesitas: \n");
         printf("[1] Registros de usuarios\n");
 	printf("[2] Catálogo de libros\n");
         printf("[3] Preśtamos y devoluciones.\n"); 
@@ -446,23 +446,30 @@ void menu_ayuda(){
         printf("\n\n");
 
         if(opcion_ayuda==1) {
-            printf("Los usuarios tienen acceso a...\n");
-            printf("Para dar de baja un usuario...\n");
-            printf("etc.\n\n");
+	    printf("El sistema debe permitir las siguientes facilidades al usuario/cliente del servicio:\n");
+	    printf("\t1.- Pre-acceso para auto-registrarse como usuario del servicio, en este módulo permitirá a un usuario darse de alta con sus datos fundamentales:\n");
+	    printf("\t\t• Nombre completo\n\t\t• Dirección\n\t\t• Fecha de nacimiento (tendrá que tener al menos 18 años de edad cumplidas)\n\t\t• Correo electrónico\n");
+	    printf("\t2.- Acceso como usuario registrado al catálogo de libros para selección de un máximo de 3 libros.\n");
+	    printf("\t3.- Devolución de libros\n");
+	    printf("Una vez creada un usuario, estará activo por \"default\" sin embargo ésta se puede dar de baja a partir del menú general de administrador o lo puede realizar el mismo usuario si así lo desea.\n");
+	    printf("Cada usuario deberá tener un correo único y no podrá registrarse más de una sola vez.\n");
+            printf("\nSi el administrador utiliza el modo de ejecucion que implica usar el parámetro\"-usu\" despliega el listado de todos los usuarios del servicio catalogados y muestra su alta y baja.\n");   
+            printf("El administador no tendrá acceso a las contraseñas de los usuarios. Tampoco podrá acceder ni modificar el crédito de ninguno de ellos\n\n");
         }
         
         else if(opcion_ayuda == 2) {
-            printf("El catálogo de libros consiste en...\n");
-            printf("Existen x catálogos...\n");
-            printf("etc.\n\n");
+            printf("Una categoría de libros consiste en hacer una selección que agrupa todos los libros que tratan del mismo tema o uno similar para así facilitar y sugerir al usuario libros que le convengan leer, dependiendo de sus gustos e intereses.\n");
+            printf("Las categorías se crean desde que uno registra el libro y se agrupan de manera automatizada con todos los libros que hayan sido ingresados con la misma categoría.\n");;
+	    printf("El usuario tendrá acceso a cada una de éstas categorías y podrá elegir cualquier libro de ellos (con la condición de que no tenga ya tres libros rentados en su cuenta al momento de querer pedir prestado.\n)");
+	    printf("Un libro NO puede pertenecer a más de una categoría\n\n");
         }
         
         else if(opcion_ayuda == 3) {
-            printf("Cada usuario tienen acceso a máximo 3 libros...\n");
-            printf("Los libros se pueden prestar hasta 30 días máximo...\n");
-            printf("etc.\n\n");
+            printf("Cada usuario tiene acceso a pedir prestado un máximo de 3 libros en un determinado momento (al mismo tiempo).\n");
+            printf("Los libros se pueden prestar hasta un máximo de 30 días, la cuenta empieza desde el día que se pidió prestado hasta que termine este mismo periodo.\n");
+	    printf("Si el usuario termina un libro antes de la fecha de devolución ó desea regresarlo antes del periodo de préstamo, tendrá la opción de hacerlo.");
+            printf("\nSi el administrador utiliza el modo de ejecucion que implica usar \"-c\", se despliega un informe de todos los usuarios y libros correspondientes que se encuentran en su posesión en ese momento determinado.\n\n");
         }
     } while (opcion_ayuda != 4);
   
 }
-
