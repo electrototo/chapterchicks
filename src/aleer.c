@@ -214,18 +214,18 @@ int main(int argc, char **argv) {
 
                 case 3:
 		    menu_registrar_libro(
-		        biblioteca.libro[biblioteca.actual].titulo, 
-			biblioteca.libro[biblioteca.actual].autor, 
-		       	biblioteca.libro[biblioteca.actual].categoria, 
-			biblioteca.libro[biblioteca.actual].ISBN10, 
-		        biblioteca.libro[biblioteca.actual].ISBN13, 
-			biblioteca.libro[biblioteca.actual].costo, 
-		        biblioteca.libro[biblioteca.actual].a_pub
+		        biblioteca.libros[biblioteca.actual].titulo, 
+	       	        biblioteca.libros[biblioteca.actual].autor, 
+		        biblioteca.libros[biblioteca.actual].categoria, 
+			biblioteca.libros[biblioteca.actual].ISBN10, 
+		        biblioteca.libros[biblioteca.actual].ISBN13, 
+			biblioteca.libros[biblioteca.actual].costo, 
+		        biblioteca.libros[biblioteca.actual].a_pub,
+			biblioteca.libros[biblioteca.actual].editorial
 			);
 
 		    biblioteca_db = fopen("biblioteca.dat", "w");
 		    fwrite(&biblioteca, sizeof(biblioteca), 1, biblioteca_db);
-
 		    fclose(biblioteca_db);
 		    biblioteca.actual++;
                     break;
@@ -234,6 +234,8 @@ int main(int argc, char **argv) {
                     break;
 
                 case 5:
+		  //aquí meter lo del autor int y el autor
+		  menu_popular();
                     break;
 
                 case 6:
