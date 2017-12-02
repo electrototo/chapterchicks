@@ -207,12 +207,15 @@ int main(int argc, char **argv) {
         while ((eleccion = menu_administrador_general()) != 7) {
             switch (eleccion) {
                 case 1:
+		    //informe de libros en préstamo
                     break;
 
                 case 2:
+		    //Informe de usuarios dados de alta y libros en préstamo
                     break;
 
                 case 3:
+		    //me falta arreglar esto que namas no
 		    menu_registrar_libro(
 		        biblioteca.libros[biblioteca.actual].titulo, 
 	       	        biblioteca.libros[biblioteca.actual].autor, 
@@ -231,14 +234,16 @@ int main(int argc, char **argv) {
                     break;
 
                 case 4:
+		    //baja de un cliente
                     break;
 
                 case 5:
-		  //aquí meter lo del autor int y el autor
-		  menu_popular();
+		    //aquí meter lo del autor int y el autor char
+		    menu_popular();
                     break;
 
                 case 6:
+		    menu_ayuda();
                     break;
 
                 case 7:
