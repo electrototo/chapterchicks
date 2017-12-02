@@ -273,4 +273,3 @@ int add_user(ManejoUsuarios *usuarios, int type) {
 
     return index;
 }
-c
