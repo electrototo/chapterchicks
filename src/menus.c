@@ -88,8 +88,7 @@ int menu_principal() {
 */
 
 void menu_agregar_usuario (char *nombre_usuario, char *contrasena,
-    int *fecha, char *direccion, *char *email, char *credito) {
-
+    int *fecha, char *direccion, char *email, char *credito) {
   
     char contrasena1[50];
     char contrasena2[50];
@@ -278,24 +277,26 @@ int menu_usuario() {
  * @param *costo_libro       el costo del libro
  * @return void
 */
-void menu_registrar_libro(char *nombre_libro, char *nombre_autor, char *categoria,
+void menu_registrar_libro(char *titulo, int *autor, int *categoria,
     char *isbn10, char *isbn13, float *costo_libro, int *a_pub, char *editorial) {
+
+    char char_autor, char_categoria;
 
     printf("ALTA DE LIBROS\n\n");
     printf("Registrar nuevo libro:\n\n");
 
     printf("Ingresa el nombre del libro:\n");
     fgets(nombre_libro, 100, stdin);
-    strip_char(nombre_libro, '\n');
+    strip_char(titulo, '\n');
 
     printf("Ingresa el autor del libro:\n");
     fgets(nombre_autor, 50, stdin);
-    strip_char(nombre_autor, '\n');
-
+    strip_char(char_autor, '\n');
+    
     printf("Ingresa el la categoría del libro:\n");
     fgets(categoria, 50, stdin);
-    strip_char(categoria, '\n');
-
+    strip_char(char_categoria, '\n');
+    
     printf("Ingresa el ISBN 10 del libro:\n");
     fgets(isbn10, 11, stdin);
     strip_char(isbn10, '\n');
