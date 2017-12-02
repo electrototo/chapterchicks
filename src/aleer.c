@@ -43,7 +43,7 @@ int main(int argc, char **argv) {
     // variables que lleva el flujo de las elecciones del usuario
     int success = 0, login_index = 0, found = 0;
 
-    int eleccion, export;
+    int eleccion, eleccion2, export;
 
     int lookup_id;
 
@@ -262,7 +262,7 @@ int main(int argc, char **argv) {
             switch (eleccion) {
                 case 1:
                     //informe de libros en préstamo
-                    //no estoy imprimiendo los prestamos
+ 
                     break;
 
                 case 2:
@@ -331,7 +331,7 @@ int main(int argc, char **argv) {
 
                         categorias.actual++;
 
-                        sprintf(msg, "Creacion del la categoría %s", categoria);
+                        sprintf(msg, "Creacion de la categoría %s", categoria);
                         log_msg(msg);
 
                         // guarda la categoria, porque actualmente no existe en la
@@ -396,6 +396,8 @@ int main(int argc, char **argv) {
     }
     // el administrador decidio como usuario o la cuenta es de tipo
     // usuario
+
+      
     else if (eleccion == 2 || usuario->tipo_usuario == MORTAL) {
         while((eleccion = menu_usuario()) != 4){
             switch(eleccion) {
@@ -403,18 +405,59 @@ int main(int argc, char **argv) {
                     // accesar al catalogo de libros
                     // aqui se podria mejorar mostrando un menu que pregunte por
                     // la categoria en vez de mostrar todos los libros
-                    // TODO: Preguntar que libro quiere pedir prestado
-                    for (int i = 0; i < biblioteca.actual; i++) {
-                        printf("Título: %s\n", biblioteca.libros[i].titulo);
-                        printf("\tAutor: %c\n", *autores.autores[i].nombre);
-                        printf("\tCategoría: %c\n", *categorias.categorias[i].nombre);
-                        printf("\tISBN 10: %s\n", biblioteca.libros[i].ISBN10);
-                        printf("\tISBN 13: %s\n", biblioteca.libros[i].ISBN13);
-                        printf("\tCosto: %.2f\n", biblioteca.libros[i].costo);
-                        printf("\tAño de publicación: %d\n", biblioteca.libros[i].a_pub);
-                        printf("\tEditorial: %s\n\n", biblioteca.libros[i].editorial);
-                    }
-                    break;
+		    // TODO: Preguntar que libro quiere pedir prestado
+
+		  while ((eleccion2 = menu_categorias()) != 5) {
+       		      switch (eleccion2){
+		            case 1:
+			        for (int i = 0; i < biblioteca.actual; i++) {
+				    printf("Título: %s\n", biblioteca.libros[i].titulo);
+				    printf("\tAutor: %c\n", *autores.autores[i].nombre);
+			            printf("\tCategoría: %c\n", *categorias.categorias[i].nombre);
+				    printf("\tISBN 10: %s\n", biblioteca.libros[i].ISBN10);
+				    printf("\tISBN 13: %s\n", biblioteca.libros[i].ISBN13);
+				    printf("\tCosto: %.2f\n", biblioteca.libros[i].costo);
+				    printf("\tAño de publicación: %d\n", biblioteca.libros[i].a_pub);
+				    printf("\tEditorial: %s\n\n", biblioteca.libros[i].editorial);
+				}
+			      	printf("Presione enter para salir de la lista...");
+				getchar();
+			        system("clear");
+				break;
+				
+			    case 2:
+     			        //char categoria_deseada [50];
+			    
+			        printf("CATEGORÍAS EXISTENTES:\n\n");
+				
+			        for (int i = 0; i <= categorias.actual; i++){       
+				    printf("%c\n", *categorias.categorias[i].nombre);        
+				    }
+				
+				printf("Ingresa el nombre de la categoría que deseas ver: ");
+				//fgets(categoria_deseada, bla bla);
+				//hacer un strcmp con todas las categorias para ver si existe
+				//mostrar sólo libros de esa categoria
+				printf("\nPresione enter para salir de la lista...");
+				getchar();
+				system("clear");
+			        break;
+			    
+		            case 3:
+			      //más destacados
+			        break;
+			    
+		            case 4:
+			      //sugerencias
+			        break;
+			    
+		            default:
+			        break;
+			}
+			
+		  }
+		    
+		    break;
 
                 case 2:
                     // mostrar los libros en prestamo
