@@ -11,9 +11,14 @@ int main(int argc, char **argv) {
     // archivos en los que se almacenan las bases de datos
     FILE *usuarios_db;
     FILE *biblioteca_db;
+    FILE *autores_db;
+    FILE *categorias_db;
     FILE *users_export;
 
     ManejoUsuarios usuarios;
+    ManejoAutor autores;
+    ManejoCategoria categorias;
+
     Usuario *usuario;
 
     Biblioteca biblioteca;
@@ -40,6 +45,10 @@ int main(int argc, char **argv) {
 
     int eleccion, export;
 
+    int lookup_id;
+
+    // aqui se pueden crear funciones
+
     // carga de la base de datos de usuarios en la memoria
     // (puede ser eficientizado)
     usuarios_db = fopen("usuarios.dat", "r");
@@ -54,7 +63,7 @@ int main(int argc, char **argv) {
     }
     else {
         fread(&usuarios, sizeof(usuarios), 1, usuarios_db);
-        printf("Se encontraron %d usuarios\n\n", usuarios.actual);
+        printf("Se encontraron %d usuarios\n", usuarios.actual);
     }
     fclose(usuarios_db);
 
@@ -72,9 +81,43 @@ int main(int argc, char **argv) {
     }
     else {
         fread(&biblioteca, sizeof(biblioteca), 1, biblioteca_db);
-        printf("Se encontraron %d libros\n\n", biblioteca.actual);
+        printf("Se encontraron %d libros\n", biblioteca.actual);
     }
     fclose(biblioteca_db);
+
+    // carga de la base de datos de autores en la memoria
+    autores_db = fopen("autores.dat", "r");
+    if(autores_db == NULL) {
+        autores_db = fopen("autores.dat", "w");
+        autores.actual = 0;
+
+        sprintf(msg, "Creacion de base de datos para autores");
+        log_msg(msg);
+
+        fwrite(&autores, sizeof(autores), 1, autores_db);
+    }
+    else {
+        fread(&autores, sizeof(autores), 1, autores_db);
+        printf("Se encontraron %d autores\n", autores.actual);
+    }
+    fclose(autores_db);
+
+    // carga de la base de datos de categorias
+    categorias_db = fopen("categorias.dat", "r");
+    if(categorias_db == NULL) {
+        categorias_db = fopen("categorias.dat", "w");
+        categorias.actual = 0;
+
+        sprintf(msg, "Creacion de base de datos para categorias");
+        log_msg(msg);
+
+        fwrite(&categorias, sizeof(categorias), 1, categorias_db);
+    }
+    else {
+        fread(&categorias, sizeof(categorias), 1, categorias_db);
+        printf("Se encontraron %d categorias\n\n", categorias.actual);
+    }
+    fclose(categorias_db);
 
 
     // si al momento de ejecutar el codigo hubieron argumentos
@@ -207,43 +250,78 @@ int main(int argc, char **argv) {
         while ((eleccion = menu_administrador_general()) != 7) {
             switch (eleccion) {
                 case 1:
-		    //informe de libros en préstamo
+                    //informe de libros en préstamo
                     break;
 
                 case 2:
-		    //Informe de usuarios dados de alta y libros en préstamo
+                    //Informe de usuarios dados de alta y libros en préstamo
                     break;
 
                 case 3:
-		    //me falta arreglar esto que namas no
-		    menu_registrar_libro(
-		        biblioteca.libros[biblioteca.actual].titulo, 
-	       	        biblioteca.libros[biblioteca.actual].autor, 
-		        biblioteca.libros[biblioteca.actual].categoria, 
-			biblioteca.libros[biblioteca.actual].ISBN10, 
-		        biblioteca.libros[biblioteca.actual].ISBN13, 
-			biblioteca.libros[biblioteca.actual].costo, 
-		        biblioteca.libros[biblioteca.actual].a_pub,
-			biblioteca.libros[biblioteca.actual].editorial
-			);
+                    menu_registrar_libro(
+                        biblioteca.libros[biblioteca.actual].titulo, 
+                        nombre_autor,
+                        categoria,
+                        biblioteca.libros[biblioteca.actual].ISBN10, 
+                        biblioteca.libros[biblioteca.actual].ISBN13, 
+                        &biblioteca.libros[biblioteca.actual].costo, 
+                        &biblioteca.libros[biblioteca.actual].a_pub,
+                        biblioteca.libros[biblioteca.actual].editorial
+                    );
 
-		    biblioteca_db = fopen("biblioteca.dat", "w");
-		    fwrite(&biblioteca, sizeof(biblioteca), 1, biblioteca_db);
-		    fclose(biblioteca_db);
-		    biblioteca.actual++;
+                    // busca si existe el autor especificado para el libro
+                    // asumimos que el autor existe para el libro
+                    success = 0;
+                    for (int i = 0; i < autores.actual; i++) {
+                        if (strcmp(autores.autores[i].nombre, nombre_autor) == 0) {
+                            lookup_id = autores.autores[i].id;
+                            success = 1;
+                            // ya no es necesario seguir buscando
+                            break;
+                        }
+                    }
+                    
+                    // no se encontro el autor, por lo tanto se deberia crear
+                    if (!success) {
+                        strcpy(autores.autores[autores.actual].nombre, nombre_autor);
+                        autores.autores[autores.actual].id = autores.actual;
+
+                        autores.actual++;
+
+                        sprintf(msg, "Creacion del autor %s", nombre_autor);
+                        log_msg(msg);
+
+                        // guarda el autor, porque actualmente no existe en la
+                        // base de datos
+                        autores_db = fopen("autores.dat", "w");
+                        fwrite(&autores, sizeof(autores), 1, autores_db);
+                        fclose(autores_db);
+                    }
+
+                    biblioteca.libros[biblioteca.actual].autor = lookup_id;
+
+                    // busca si existe el genero especificado para el libro
+                    // elena, completa la funcion
+
+                    biblioteca.actual++;
+
+                    // guarda los cambios que se crearon en la biblioteca
+                    biblioteca_db = fopen("biblioteca.dat", "w");
+                    fwrite(&biblioteca, sizeof(biblioteca), 1, biblioteca_db);
+                    fclose(biblioteca_db);
+
                     break;
 
                 case 4:
-		    //baja de un cliente
+                    //baja de un cliente
                     break;
 
                 case 5:
-		    //aquí meter lo del autor int y el autor char
-		    menu_popular();
+                    menu_popular();
                     break;
 
                 case 6:
-		    menu_ayuda();
+                    menu_ayuda();
                     break;
 
                 case 7:
