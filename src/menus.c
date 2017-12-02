@@ -209,8 +209,6 @@ int menu_administrador_como() {
  * @return int
 */
 int menu_administrador_general() {
-    CLS;
-
     int opcion_admin;
 
     printf("¿Qué quieres hacer?\n");
@@ -383,23 +381,12 @@ void menu_informe_usuarios() {
  * @author Guillermo Ortega, Elena Ginebra, Cristobal Liendo
  * @return void 
  */
-void menu_baja_de_usuario(){
-    int dar_de_baja_a;
-
-    printf("BAJA DE USUARIOS\n\n");
-    printf("¿Qué usuario quieres dar de baja?\n");
-
-    for (int i = 0; i < 1; i++) {
-        printf("USUARIO #1\n");
-        printf("\tElena Ginebra\n");
-        printf("\telena@chapterchicks.com\n");
-        printf("Activo\n\n");
-    }
-
-    printf("Opción: ");
-    scanf("%d", &dar_de_baja_a);
+void menu_baja_de_usuario(char *usuario_baja){
+    printf("Ingresa el correo del usuario: ");
+    scanf("%s", usuario_baja);
     getchar();
-    printf("\n");
+
+    CLS;
 }
 
 

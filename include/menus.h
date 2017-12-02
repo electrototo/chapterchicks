@@ -27,7 +27,7 @@
     void creditos();
     void menu_informe_prestamos();
     void menu_informe_usuarios();
-    void menu_baja_de_usuario();
+    void menu_baja_de_usuario(char *usuario_baja);
     void menu_popular();
     void menu_ayuda();
 #endif
