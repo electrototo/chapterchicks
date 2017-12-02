@@ -250,28 +250,17 @@ int main(int argc, char **argv) {
     // el administrador decidió entrar como administrador
     if (eleccion == 1) {
         while ((eleccion = menu_administrador_general()) != 7) {
+            printf("eleccion: %d\n", eleccion);
 
-	    switch (eleccion) {
-	        case 1:
-		  //informe de libros en préstamo
-		  //no estoy imprimiendo los prestamos
-		  //NO LOGRO HACER QUE META A ESTA FUNCION PARA PROBAR LAS IMPRESIONES
-		  printf("AQUI ESTOY\n");
-		  for (int i = 0; i < biblioteca.actual; i++) {
-		      printf("Título: %s\n", biblioteca.libros[i].titulo);
-		      printf("Autor: %c\n", *autores.autores[i].nombre);
-		      printf("Categoría: %c\n", *categorias.categorias[i].nombre);
-		      printf("ISBN 10: %s\n", biblioteca.libros[i].ISBN10);
-		      printf("ISBN 13: %s\n", biblioteca.libros[i].ISBN13);
-		      printf("Costo: %f\n", biblioteca.libros[i].costo);
-		      printf("Año de publicación: %d\n", biblioteca.libros[i].a_pub);
-		      printf("Editorial: %s\n", biblioteca.libros[i].editorial);
-		  }
-		    break;
+            switch (eleccion) {
+                case 1:
+                    //informe de libros en préstamo
+                    //no estoy imprimiendo los prestamos
+                    break;
 
                 case 2:
-                    //Informe de usuarios dados de alta y libros en préstamo
-                    break;
+                //Informe de usuarios dados de alta y libros en préstamo
+                break;
 
                 case 3:
                     menu_registrar_libro(
@@ -317,40 +306,38 @@ int main(int argc, char **argv) {
                     biblioteca.libros[biblioteca.actual].autor = lookup_id;
 
                     // busca si existe el genero especificado para el libro
-		    // elena, completa la funcion
+                    // elena, completa la funcion
 
-    		    // busca si existe la categoria específica
-		    success = 0;
-		    for (int i = 0; i < categorias.actual; i++) {
-		      if (strcmp(categorias.categorias[i].nombre, categoria) == 0) {
-			lookup_id = categorias.categorias[i].id;
-			success = 1;
-			// ya no es necesario seguir buscando
-			break;
-		      }
-		    }
+                    // busca si existe la categoria específica
+                    success = 0;
+                    for (int i = 0; i < categorias.actual; i++) {
+                        if (strcmp(categorias.categorias[i].nombre, categoria) == 0) {
+                            lookup_id = categorias.categorias[i].id;
+                            success = 1;
+                            // ya no es necesario seguir buscando
+                            break;
+                        }
+                    }
 
-		    // no se encontro la categoria, por lo tanto se deberia crear
-		    if (!success) {
-		      strcpy(categorias.categorias[categorias.actual].nombre, categoria);
-		      categorias.categorias[categorias.actual].id = categorias.actual;
+                    // no se encontro la categoria, por lo tanto se deberia crear
+                    if (!success) {
+                        strcpy(categorias.categorias[categorias.actual].nombre, categoria);
+                        categorias.categorias[categorias.actual].id = categorias.actual;
 
-		      categorias.actual++;
+                        categorias.actual++;
 
-		      sprintf(msg, "Creacion del la categoría %s", categoria);
-		      log_msg(msg);
+                        sprintf(msg, "Creacion del la categoría %s", categoria);
+                        log_msg(msg);
 
-		      // guarda la categoria, porque actualmente no existe en la
-		      // base de datos
-		      categorias_db = fopen("categorias.dat", "w");
-		      fwrite(&categorias, sizeof(categorias), 1, categorias_db);
-		      fclose(categorias_db);
-		    }
+                        // guarda la categoria, porque actualmente no existe en la
+                        // base de datos
+                        categorias_db = fopen("categorias.dat", "w");
+                        fwrite(&categorias, sizeof(categorias), 1, categorias_db);
+                        fclose(categorias_db);
+                    }
 
-		    biblioteca.libros[biblioteca.actual].categoria = lookup_id;
-
-
-		    
+                    biblioteca.libros[biblioteca.actual].categoria = lookup_id;
+            
                     biblioteca.actual++;
 
                     // guarda los cambios que se crearon en la biblioteca
@@ -362,6 +349,34 @@ int main(int argc, char **argv) {
 
                 case 4:
                     //baja de un cliente
+                    menu_baja_de_usuario(email);
+
+                    // busca el usuario para darlo de baja
+                    found = 0;
+                    for (int i = 0; i < usuarios.actual; i++) {
+                        if (strcmp(usuarios.usuarios[i].email, email) == 0) {
+                            found = 1;
+
+                            sprintf(msg, "Se dio de baja el usuario %s por el administrador %s", email, usuario->nombre);
+                            log_msg(msg);
+
+                            // pone la bandera de activo en falso
+                            usuarios.usuarios[i].activo = 0;
+
+                            // guarda los usuarios
+                            usuarios_db = fopen("usuarios.dat", "w");
+                            fwrite(&usuarios, sizeof(usuarios), 1, usuarios_db);
+                            fclose(usuarios_db);
+
+                            break;
+                        }
+                    }
+
+                    if (!found)
+                        printf("\tEl usuario especificado no existe\n");
+                    else
+                        printf("\tEl usuario fue exitosamente dado de baja\n");
+
                     break;
 
                 case 5:
@@ -386,12 +401,27 @@ int main(int argc, char **argv) {
         while((eleccion = menu_usuario()) != 4){
             switch(eleccion) {
                 case 1:
+                    // accesar al catalogo de libros
+                    // aqui se podria mejorar mostrando un menu que pregunte por
+                    // la categoria en vez de mostrar todos los libros
+                    for (int i = 0; i < biblioteca.actual; i++) {
+                        printf("Título: %s\n", biblioteca.libros[i].titulo);
+                        printf("\tAutor: %c\n", *autores.autores[i].nombre);
+                        printf("\tCategoría: %c\n", *categorias.categorias[i].nombre);
+                        printf("\tISBN 10: %s\n", biblioteca.libros[i].ISBN10);
+                        printf("\tISBN 13: %s\n", biblioteca.libros[i].ISBN13);
+                        printf("\tCosto: %.2f\n", biblioteca.libros[i].costo);
+                        printf("\tAño de publicación: %d\n", biblioteca.libros[i].a_pub);
+                        printf("\tEditorial: %s\n\n", biblioteca.libros[i].editorial);
+                    }
                     break;
 
                 case 2:
+                    // mostrar los libros en prestamo
                     break;
 
                 case 3:
+                    // devolver un libro
                     break;
 
                 default:
