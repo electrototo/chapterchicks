@@ -21,7 +21,6 @@ int main(int argc, char **argv) {
     ManejoAutor autores;
     ManejoCategoria categorias;
     ManejoPrestamo prestamos;
-    Biblioteca libros;
 
     Usuario *usuario;
 
@@ -246,7 +245,7 @@ int main(int argc, char **argv) {
         }
     }
 
-    // esto serivira a futura para no tener que escribir
+    // esto serivirá a futura para no tener que escribir
     // usuarios.usuarios[login_index] cada vez que se quiera
     // acceder a la informacion del usuario actual
     usuario = &usuarios.usuarios[login_index];
@@ -316,6 +315,7 @@ int main(int argc, char **argv) {
 
 	        case 3:
 		  //Se pueden dar de alta o de baja los libros
+
 		  do {
 		      eleccion = menu_alta_o_baja ();
 		  
@@ -324,30 +324,49 @@ int main(int argc, char **argv) {
 		     }
 
 		     if (eleccion == 2){
-		     //FALTA DAR DE BAJA LIBRO
-		     
+		       
+		       for (int i = 0; i < biblioteca.actual; i++) {
+			 printf("Título: %s\n", biblioteca.libros[i].titulo);
+			 printf("\tAutor: %s\n", autores.autores[i].nombre);
+			 printf("\tCategoría: %s\n", categorias.categorias[i].nombre);
+			 printf("\tISBN 10: %s\n", biblioteca.libros[i].ISBN10);
+			 printf("\tISBN 13: %s\n", biblioteca.libros[i].ISBN13);
+			 printf("\tCosto: $%.2f\n", biblioteca.libros[i].costo);
+			 printf("\tAño de publicación: %d\n", biblioteca.libros[i].a_pub);
+			 printf("\tEditorial: %s\n\n", biblioteca.libros[i].editorial);
 		         found = 0;
+		       }
+		       
+		       menu_baja_de_libros(nombre_libro);
+			 
 		         for (int i = 0; i < biblioteca.actual; i++) {
-			     if (strcmp(libros.libros[i].titulo, nombre_libro) == 0) {
+			     if (strcmp(biblioteca.libros[i].titulo, nombre_libro) == 0) {
 			         found = 1;
- 
+				 //escribe en bitácora
   			         sprintf(msg, "Se dió de baja el libro %s por el administrador %s", nombre_libro, usuario->nombre);
 			         log_msg(msg);
 
-			         // guarda los libros
-			         save_db(&libros, sizeof(libros), "biblioteca.dat");
+				 // pone la bandera de activo en falso
+				 biblioteca.libros[i].activo = 0;
+
+       			         // guardar los libros
+     			         save_db(&biblioteca, sizeof(biblioteca), "biblioteca.dat");
+
+				 break;
 			     }
+			     
 			 }
-		     }
+		     
+		 	 		  
 		       if (!found)
 			   printf("\tEl libro especificado no existe\n");
 		       else
 			   printf("\tEl libro fue exitosamente dado de baja\n");
-		       
+		     }  
 		   } while(eleccion != 3);
-		  
+	   		  
                     break;
-
+      
                 case 4:
                     //baja de un cliente
                     menu_baja_de_usuario(email);
@@ -430,9 +449,9 @@ int main(int argc, char **argv) {
 
                 default:
                     break;
-            }
-        }
-    }
+	    }
+	}
+    }    
 
     // el administrador decidio como usuario o la cuenta es de tipo
     // usuario
