@@ -429,20 +429,16 @@ int main(int argc, char **argv) {
                     printf("\tCantidad de veces rentado: %d\n", libro.prestamos);
                     printf("\n");
 
-
                     break;
 
                 case 6:
                     menu_ayuda();
                     break;
 
-                case 7:
-                    break;
-
                 default:
                     break;
+            }
         }
-    }
     }
 
     // el administrador decidio como usuario o la cuenta es de tipo
@@ -532,10 +528,45 @@ int main(int argc, char **argv) {
 
                             case 3:
                                 //más destacados
-                                break;
+                                max = 0;
+                                // obtiene la categoria mas popular
+                                for (int i = 0; i < categorias.actual; i++) {
+                                    if (categorias.categorias[i].prestados > max) {
+                                        max = categorias.categorias[i].prestados;
+                                        categoria_popular = categorias.categorias[i];
+                                    }
+                                }
 
-                            case 4:
-                                //sugerencias
+                                printf("Categoría más popular: %s\n", categoria_popular.nombre);
+                                printf("\tLibros prestados de la misma categoría: %d\n", categoria_popular.prestados);
+                                printf("\n");
+
+                                max = 0;
+                                // obtiene el autor mas popular
+                                for(int i = 0; i < autores.actual; i++) {
+                                    if (autores.autores[i].prestados > max) {
+                                        max = autores.autores[i].prestados;
+                                        autor_popular = autores.autores[i];
+                                    }
+                                }
+
+                                printf("Autor más popular: %s\n", autor_popular.nombre);
+                                printf("\tLibros prestados del mismo autor: %d\n", autor_popular.prestados);
+                                printf("\n");
+
+                                max = 0;
+                                // obtiene el libro mas popular
+                                for (int i = 0; i < biblioteca.actual; i++) {
+                                    if (biblioteca.libros[i].prestamos > max) {
+                                        max = biblioteca.libros[i].prestamos;
+                                        libro = biblioteca.libros[i];
+                                    }
+                                }
+
+                                printf("Libro más popular:\n");
+                                format_book(libro, &autores, &categorias, 0);
+                                printf("\tCantidad de veces rentado: %d\n", libro.prestamos);
+                                printf("\n");
                                 break;
 
                             default:
@@ -620,5 +651,5 @@ int main(int argc, char **argv) {
         }
     }
 
-        return 0;
+    return 0;
 }
