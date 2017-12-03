@@ -595,3 +595,29 @@ Usuario find_user_by_id(int id, ManejoUsuarios *users) {
             return users->usuarios[i];
     }
 }
+
+/*
+ * Esta funcion sirve para ordenar los usuarios de manera alfabetica
+ * guarda los resultados en sorted
+ *
+ * @author Cristobal Liendo
+ * @param *users             son los usuarios que se desean ordenar
+*/
+
+void insertion_sort(ManejoUsuarios *users) {
+    Usuario key, tmp;
+
+    int k;
+    for (int i = 1; i < users->actual; i++) {
+        k = i - 1;
+        key = users->usuarios[i];
+
+        while (strcmp(users->usuarios[k].nombre, key.nombre) > 0 && k >= 0) {
+            tmp = users->usuarios[k];
+            users->usuarios[k] = users->usuarios[k + 1];
+            users->usuarios[k + 1] = tmp;
+
+            k--;
+        }
+    }
+}

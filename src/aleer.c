@@ -17,7 +17,7 @@ int main(int argc, char **argv) {
     FILE *prestamos_db;
     FILE *users_export;
 
-    ManejoUsuarios usuarios;
+    ManejoUsuarios usuarios, usuarios_cpy;
     ManejoAutor autores;
     ManejoCategoria categorias;
     ManejoPrestamo prestamos;
@@ -302,6 +302,15 @@ int main(int argc, char **argv) {
 
                 case 2:
                     //Informe de usuarios dados de alta y libros en préstamo
+                    memcpy(&usuarios_cpy, &usuarios, sizeof(usuarios));
+                    insertion_sort(&usuarios_cpy);
+
+                    for (int i = 0; i < usuarios_cpy.actual; i++) {
+                        printf("Nombre del usuario: %s\n", usuarios_cpy.usuarios[i].nombre);
+                        printf("\tNúmero de libros que ha pedido prestado: %d\n", 3 - usuarios_cpy.usuarios[i].disponibles);
+                        printf("\n");
+                    }
+
                     break;
 
                 case 3:
@@ -348,7 +357,7 @@ int main(int argc, char **argv) {
                         }
                     }
 
-                    printf("Categoría más poular: %s\n", categoria_popular.nombre);
+                    printf("Categoría más popular: %s\n", categoria_popular.nombre);
                     printf("\tLibros prestados de la misma categoría: %d\n", categoria_popular.prestados);
                     printf("\n");
 
