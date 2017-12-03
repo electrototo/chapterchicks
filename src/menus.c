@@ -304,7 +304,7 @@ void menu_registrar_libro(char *titulo, char *autor, char *categoria,
  * Si el tipo de usuario es un administrador, puede ver un informe de todos 
  * los libros que se encuentran en préstamo
  * 
- * @author Guillermo Ortega, Elena Ginebra, Cristobal Liendo
+ * @author Elena Ginebra
  * @return void
  */
 void menu_informe_prestamos() {
@@ -325,7 +325,7 @@ void menu_informe_prestamos() {
  * Si el tipo de usuario es un administrador, puede ver un informe de todos
  * los usuarios que se encuentran registrados en la base de datos
  *
- * @author Guillermo Ortega, Elena Ginebra, Cristobal Liendo
+ * @author Elena Ginebra
  * @return void
  */
 void menu_informe_usuarios() {
@@ -345,7 +345,7 @@ void menu_informe_usuarios() {
  * Si el tipo de usuario es un administrador, puede dar de baja
  * un usuario que se encuentre registrado en la base de datos
  * 
- * @author Guillermo Ortega, Elena Ginebra, Cristobal Liendo
+ * @author Elena Ginebra, Cristobal Liendo
  * @return void 
  */
 void menu_baja_de_usuario(char *usuario_baja){
@@ -408,7 +408,7 @@ void menu_ayuda(){
         printf("\t3.- Devolución de libros\n");
         printf("Una vez creada un usuario, estará activo por \"default\" sin embargo ésta se puede dar de baja a partir del menú general de administrador o lo puede realizar el mismo usuario si así lo desea.\n");
         printf("Cada usuario deberá tener un correo único y no podrá registrarse más de una sola vez.\n");
-            printf("\nSi el administrador utiliza el modo de ejecucion que implica usar el parámetro\"-usu\" despliega el listado de todos los usuarios del servicio catalogados y muestra su alta y baja.\n");   
+        printf("\nSi el administrador utiliza el modo de ejecucion que implica usar el parámetro\"-usu\" despliega el listado de todos los usuarios del servicio catalogados y muestra su alta y baja.\n");   
             printf("El administador no tendrá acceso a las contraseñas de los usuarios. Tampoco podrá acceder ni modificar el crédito de ninguno de ellos\n\n");
         }
         
@@ -500,3 +500,46 @@ int menu_rentar_libro(char *name) {
 
     return eleccion;
 }
+
+/*                           
+* Este menu le pregunta al administrador si desea dar de                                                                                                                  
+* alta un libro o dar un libro de baja
+*                                                                                                                                                                               
+* @author Elena Ginebra                                                                                                                                                    
+* @return int                                                                                                                                                             
+*/
+int menu_alta_o_baja(){
+  
+  int opcion_alta_o_baja;
+  
+      printf("¿Qué quieres hacer?\n");
+      printf("[1] Alta de un libro\n");
+      printf("[2] Baja de un libro\n");
+      printf("[3] Salir\n");
+      printf("Opción: ");
+
+  do {
+    scanf("%d", &opcion_alta_o_baja);
+    getchar();
+  } while (opcion_alta_o_baja<1 || opcion_alta_o_baja >3);
+
+  CLS;
+  
+    return opcion_alta_o_baja;
+}
+
+/*                                                                                        
+ * Si el tipo de usuario es un administrador, puede dar de baja                           
+ * un libro que se encuentre registrado en la base de datos                             
+ *                                                                                        
+ * @author Elena Ginebra
+ * @return void                                                                           
+ */
+void menu_baja_de_libros(char *libro_baja) {
+  printf("Ingresa el titulo del libro: ");
+  scanf("%s", libro_baja);
+  getchar();
+
+  CLS;
+}
+
