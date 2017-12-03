@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <time.h>
 
 #include <menus.h>
 #include <estructuras.h>
@@ -25,6 +26,8 @@ int main(int argc, char **argv) {
 
     Biblioteca biblioteca;
 
+    Libro libro;
+
     // variables para la creacion de un usuario
     unsigned char password[256], salt[128], hash[256];
     unsigned char msg[200];
@@ -48,6 +51,8 @@ int main(int argc, char **argv) {
     int eleccion, eleccion2, export;
 
     int lookup_id;
+
+    time_t diferencia;
 
     // aqui se pueden crear funciones
 
@@ -271,20 +276,31 @@ int main(int argc, char **argv) {
     if (usuario->tipo_usuario == ADMIN)
         eleccion = menu_administrador_como();
 
-    //    int eleccion2;
-    
     // el administrador decidió entrar como administrador
     if (eleccion == 1) {
         while ((eleccion = menu_administrador_general()) != 7) {
             switch (eleccion) {
                 case 1:
-                    //informe de libros en préstamo
- 
+                    for (int i = 0; i < prestamos.actual; i++) {
+                        libro = find_book_by_id(prestamos.prestamos[i].libro, &biblioteca);
+
+                        diferencia = difftime(prestamos.prestamos[i].fecha_devolucion, time(0));
+
+                        printf("Nombre del libro: %s\n", libro.titulo);
+                        printf("\tUsuario:            %s\n", find_user_by_id(prestamos.prestamos[i].usuario, &usuarios).email);
+                        printf("\tDía de préstamo:    %s", ctime(&prestamos.prestamos[i].fecha_prestamo));
+                        printf("\tDía de devolución:  %s", ctime(&prestamos.prestamos[i].fecha_devolucion));
+                        printf("\tDías restantes:     %ld\n", diferencia / 86400);
+                        printf("\n");
+                    }
+
+                    printf("\n\n");
+
                     break;
 
                 case 2:
-                //Informe de usuarios dados de alta y libros en préstamo
-                break;
+                    //Informe de usuarios dados de alta y libros en préstamo
+                    break;
 
                 case 3:
                     menu_registrar_libro(
@@ -357,6 +373,7 @@ int main(int argc, char **argv) {
                     }
 
                     biblioteca.libros[biblioteca.actual].categoria = lookup_id;
+                    biblioteca.libros[biblioteca.actual].id = biblioteca.actual;
             
                     biblioteca.actual++;
 
@@ -416,6 +433,7 @@ int main(int argc, char **argv) {
     // usuario
     else if (eleccion == 2 || usuario->tipo_usuario == MORTAL) {
         while((eleccion = menu_usuario()) != 4){
+            printf("ELECCION: %d\n", eleccion);
             switch(eleccion) {
                 case 1:
                     // accesar al catalogo de libros
@@ -444,7 +462,6 @@ int main(int argc, char **argv) {
                                             success = add_book(usuario, &biblioteca, &autores,
                                                 &categorias, &prestamos);
 
-                                            save_db(&usuarios, sizeof(usuarios), "usuarios.dat");
 
                                             if (success == 1)
                                                 printf("La renta fue exitosa, credito restante: %.2f\n", usuario->credito);
@@ -476,9 +493,10 @@ int main(int argc, char **argv) {
                                             printf("No existe el libro seleccionado\n");
                                         else if(success == 4)
                                             printf("Ya no puedes rentar mas libros\n");
-
                                     }
                                 }
+
+                                save_db(&usuarios, sizeof(usuarios), "usuarios.dat");
 
                                 printf("Presione enter para salir de la lista...");
                                 getchar();
@@ -518,6 +536,17 @@ int main(int argc, char **argv) {
 
                 case 2:
                     // mostrar los libros en prestamo
+                    printf("Libros prestados: %d\n", 3 - usuario->disponibles);
+
+                    for (int i = 0; i < 3 - usuario->disponibles; i++) {
+                        // puede ser optimizado
+                        libro = find_book_by_id(usuario->libros[i], &biblioteca);
+
+                        printf("\tNombre del libro: \"%s\"\n", libro.titulo);
+                    }
+
+                    printf("\n\n");
+
                     break;
 
                 case 3:
