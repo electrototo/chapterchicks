@@ -519,7 +519,8 @@ int menu_alta_o_baja(){
       printf("Opción: ");
 
   do {
-      scanf("%d", &opcion_alta_o_baja);
+    scanf("%d", &opcion_alta_o_baja);
+    getchar();
   } while (opcion_alta_o_baja<1 || opcion_alta_o_baja >3);
 
   CLS;
