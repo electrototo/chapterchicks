@@ -408,7 +408,7 @@ void menu_ayuda(){
         printf("\t3.- Devolución de libros\n");
         printf("Una vez creada un usuario, estará activo por \"default\" sin embargo ésta se puede dar de baja a partir del menú general de administrador o lo puede realizar el mismo usuario si así lo desea.\n");
         printf("Cada usuario deberá tener un correo único y no podrá registrarse más de una sola vez.\n");
-            printf("\nSi el administrador utiliza el modo de ejecucion que implica usar el parámetro\"-usu\" despliega el listado de todos los usuarios del servicio catalogados y muestra su alta y baja.\n");   
+        printf("\nSi el administrador utiliza el modo de ejecucion que implica usar el parámetro\"-usu\" despliega el listado de todos los usuarios del servicio catalogados y muestra su alta y baja.\n");   
             printf("El administador no tendrá acceso a las contraseñas de los usuarios. Tampoco podrá acceder ni modificar el crédito de ninguno de ellos\n\n");
         }
         
@@ -527,3 +527,19 @@ int menu_alta_o_baja(){
   
     return opcion_alta_o_baja;
 }
+
+/*                                                                                        
+ * Si el tipo de usuario es un administrador, puede dar de baja                           
+ * un libro que se encuentre registrado en la base de datos                             
+ *                                                                                        
+ * @author Elena Ginebra
+ * @return void                                                                           
+ */
+void menu_baja_de_libros(char *libro_baja) {
+  printf("Ingresa el titulo del libro: ");
+  scanf("%s", libro_baja);
+  getchar();
+
+  CLS;
+}
+
