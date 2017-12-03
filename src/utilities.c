@@ -279,12 +279,103 @@ int add_user(ManejoUsuarios *usuarios, int type) {
 }
 
 /*
- * Esta funcion determina si el usuario es mayor de edad o no
- * regresa verdadero si lo es, y falso si no lo es
+ * Esta funcion registra un nuevo libro en la base de datos
+ * crea la categoria y el autor si es que estos no existen
  *
- * @author Cristobal Liendo, Guillermo Ortega
- * @param *usuario      un apuntador al usuario que se esta checando la edad
- * @return int
+ * @author Cristobal Liendo
+ * @param *biblioteca   apuntador a una estructura Biblioteca; se guardan los libros aqui
+ * @param *autores      apuntador a una estrcutura ManejoAutor; se guardan los autores aqui
+ * @param *categorias   apuntador a una estructura ManejoCategoria; se guardan las categorias aqui
+*/
+
+void register_book(Biblioteca *biblioteca, ManejoAutor *autores, ManejoCategoria *categorias) {
+    char nombre_autor[100], categoria[100], msg[100];
+
+    menu_registrar_libro(
+        biblioteca->libros[biblioteca->actual].titulo, 
+        nombre_autor,
+        categoria,
+        biblioteca->libros[biblioteca->actual].ISBN10, 
+        biblioteca->libros[biblioteca->actual].ISBN13, 
+        &biblioteca->libros[biblioteca->actual].costo, 
+        &biblioteca->libros[biblioteca->actual].a_pub,
+        biblioteca->libros[biblioteca->actual].editorial
+    );
+
+    // busca si existe el autor especificado para el libro
+    // asumimos que el autor existe para el libro
+    int success = 0, lookup_id;
+    for (int i = 0; i < autores->actual; i++) {
+        if (strcmp(autores->autores[i].nombre, nombre_autor) == 0) {
+            lookup_id = autores->autores[i].id;
+            success = 1;
+            // ya no es necesario seguir buscando
+            break;
+        }
+    }
+    
+    // no se encontro el autor, por lo tanto se deberia crear
+    if (!success) {
+        strcpy(autores->autores[autores->actual].nombre, nombre_autor);
+        autores->autores[autores->actual].id = autores->actual;
+
+        autores->actual++;
+
+        sprintf(msg, "Creacion del autor %s", nombre_autor);
+        log_msg(msg);
+
+        // guarda el autor, porque actualmente no existe en la
+        // base de datos
+        save_db(autores, sizeof(*autores), "autores.dat");
+    }
+
+    biblioteca->libros[biblioteca->actual].autor = lookup_id;
+
+    // busca si existe el genero especificado para el libro
+    // elena, completa la funcion
+
+    // busca si existe la categoria específica
+    success = 0;
+    for (int i = 0; i < categorias->actual; i++) {
+        if (strcmp(categorias->categorias[i].nombre, categoria) == 0) {
+            lookup_id = categorias->categorias[i].id;
+            success = 1;
+            // ya no es necesario seguir buscando
+            break;
+        }
+    }
+
+    // no se encontro la categoria, por lo tanto se deberia crear
+    if (!success) {
+        strcpy(categorias->categorias[categorias->actual].nombre, categoria);
+        categorias->categorias[categorias->actual].id = categorias->actual;
+
+        categorias->actual++;
+
+        sprintf(msg, "Creacion de la categoría %s", categoria);
+        log_msg(msg);
+
+        // guarda la categoria, porque actualmente no existe en la
+        // base de datos
+        save_db(categorias, sizeof(*categorias), "categorias.dat");
+    }
+
+    biblioteca->libros[biblioteca->actual].categoria = lookup_id;
+    biblioteca->libros[biblioteca->actual].id = biblioteca->actual;
+
+    biblioteca->actual++;
+
+    // guarda los cambios que se crearon en la biblioteca
+    save_db(biblioteca, sizeof(*biblioteca), "biblioteca.dat");
+}
+
+/*
+* Esta funcion determina si el usuario es mayor de edad o no
+* regresa verdadero si lo es, y falso si no lo es
+*
+* @author Cristobal Liendo, Guillermo Ortega
+* @param *usuario      un apuntador al usuario que se esta checando la edad
+* @return int
 */
 
 int legal(int *fecha_nacimiento) {
@@ -308,11 +399,11 @@ int legal(int *fecha_nacimiento) {
 }
 
 /*
- * Esta funcion sirve para guardar los datos de @p struct en la base
- * de datos @p name, de tamaño @p size
- *
- * @author Cristobal Liendo
- * @param structure    Los datos a guardar
+* Esta funcion sirve para guardar los datos de @p struct en la base
+* de datos @p name, de tamaño @p size
+*
+* @author Cristobal Liendo
+* @param structure    Los datos a guardar
  * @param size         Tamaño en bytes de @p structure
  * @param *name        Nombre de la base de datos
 */

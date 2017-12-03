@@ -33,4 +33,5 @@
 
     Libro find_book_by_id(int id, Biblioteca *bib);
     Usuario find_user_by_id(int id, ManejoUsuarios *users);
+    void register_book(Biblioteca *biblioteca, ManejoAutor *autores, ManejoCategoria *categorias);
 #endif
