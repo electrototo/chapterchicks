@@ -27,6 +27,8 @@ int main(int argc, char **argv) {
     Biblioteca biblioteca;
 
     Libro libro;
+    Categoria categoria_popular;
+    Autor autor_popular;
 
     // variables para la creacion de un usuario
     unsigned char password[256], salt[128], hash[256];
@@ -50,7 +52,7 @@ int main(int argc, char **argv) {
 
     int eleccion, eleccion2, export;
 
-    int lookup_id;
+    int lookup_id, max = 0;
 
     time_t diferencia;
 
@@ -272,7 +274,7 @@ int main(int argc, char **argv) {
         return 1;
     }
 
-    eleccion = 0; 
+    eleccion = 0;
     if (usuario->tipo_usuario == ADMIN)
         eleccion = menu_administrador_como();
 
@@ -337,7 +339,46 @@ int main(int argc, char **argv) {
                     break;
 
                 case 5:
-                    menu_popular();
+                    max = 0;
+                    // obtiene la categoria mas popular
+                    for (int i = 0; i < categorias.actual; i++) {
+                        if (categorias.categorias[i].prestados > max) {
+                            max = categorias.categorias[i].prestados;
+                            categoria_popular = categorias.categorias[i];
+                        }
+                    }
+
+                    printf("Categoría más poular: %s\n", categoria_popular.nombre);
+                    printf("\tLibros prestados de la misma categoría: %d\n", categoria_popular.prestados);
+                    printf("\n");
+
+                    max = 0;
+                    // obtiene el autor mas popular
+                    for(int i = 0; i < autores.actual; i++) {
+                        if (autores.autores[i].prestados > max) {
+                            max = autores.autores[i].prestados;
+                            autor_popular = autores.autores[i];
+                        }
+                    }
+
+                    printf("Autor más popular: %s\n", autor_popular.nombre);
+                    printf("\tLibros prestados del mismo autor: %d\n", autor_popular.prestados);
+                    printf("\n");
+
+                    max = 0;
+                    // obtiene el libro mas popular
+                    for (int i = 0; i < biblioteca.actual; i++) {
+                        if (biblioteca.libros[i].prestamos > max) {
+                            max = biblioteca.libros[i].prestamos;
+                            libro = biblioteca.libros[i];
+                        }
+                    }
+
+                    printf("Libro más popular: %s\n", libro.titulo);
+                    printf("\tCantidad de veces rentado: %d\n", libro.prestamos);
+                    printf("\n");
+
+
                     break;
 
                 case 6:
@@ -426,14 +467,14 @@ int main(int argc, char **argv) {
                                 getchar();
                                 system("clear");
                                 break;
-                    
+
                             case 2:
                                 printf("CATEGORÍAS EXISTENTES:\n\n");
-                    
-                                for (int i = 0; i <= categorias.actual; i++){       
-                                    printf("%s\n", categorias.categorias[i].nombre);        
+
+                                for (int i = 0; i <= categorias.actual; i++){
+                                    printf("%s\n", categorias.categorias[i].nombre);
                                 }
-                    
+
                                 printf("Ingresa el nombre de la categoría que deseas ver: ");
                                 //fgets(categoria_deseada, bla bla);
                                 //hacer un strcmp con todas las categorias para ver si existe
@@ -442,19 +483,19 @@ int main(int argc, char **argv) {
                                 getchar();
                                 system("clear");
                                 break;
-                    
+
                             case 3:
                                 //más destacados
                                 break;
-                    
+
                             case 4:
                                 //sugerencias
                                 break;
-                
+
                             default:
                                 break;
                         }
-            
+
                     }
                     break;
 
