@@ -26,4 +26,5 @@
     int add_user(ManejoUsuarios *usuarios, int type);
     void save_db(void *structure, unsigned int size, char *name);
     int legal(int *fecha_nac);
+    int validate_answer(char *message, int start, int end);
 #endif

@@ -324,3 +324,26 @@ void save_db(void *structure, unsigned int size, char *name) {
     fwrite(structure, size, 1, db);
     fclose(db);
 }
+
+/*
+ * Esta funcion sirve para validar los datos que el usuario haya ingresado,
+ * se va a usar en las funciones de menus
+ *
+ * @author Cristobal Liendo
+ * @param message  El mensaje que se le va a mostrar al usuario
+ * @param start    El inicio del rango valido
+ * @param end      El final del rango valido
+ * @return int
+*/
+
+int validate_answer(char *message, int start, int end) {
+    int input;
+
+    do {
+        printf("%s", message);
+        scanf("%d", &input);
+        getchar();
+    } while(input < start || input > end);
+
+    return input;
+}
