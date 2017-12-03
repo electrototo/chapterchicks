@@ -62,13 +62,7 @@ int menu_principal() {
     printf("[1] Entrar\n");
     printf("[2] Crear una nueva cuenta\n");
 
-    do {
-        printf("Opción: ");
-        scanf("%d",&opcion_principal);
-        getchar();
-
-    } while(opcion_principal < 1 || opcion_principal > 2);
-
+    opcion_principal = validate_answer("Opción: ", 1, 2);
     CLS;
 
     return opcion_principal;
@@ -191,14 +185,7 @@ int menu_administrador_como() {
     printf("[1] Administrador\n");
     printf("[2] Usuario\n");
 
-    do{
-
-        printf("Opción: ");
-        scanf("%d", &opcion_acceso_admin);
-        getchar();
-
-    } while(opcion_acceso_admin < 1 || opcion_acceso_admin > 2);
-
+    opcion_acceso_admin = validate_answer("Opción: ", 1, 2);
     CLS;
 
     return opcion_acceso_admin;
@@ -225,14 +212,7 @@ int menu_administrador_general() {
     printf("[6] Ayuda\n");
     printf("[7] Salida del sistema\n");
 
-    do {
-
-        printf("Opción: ");
-        scanf("%d",&opcion_admin);
-        getchar();
-
-    } while(opcion_admin < 1 || opcion_admin > 7);
-
+    opcion_admin = validate_answer("Opción: ", 1, 7);
     CLS;
 
     return opcion_admin;
@@ -257,12 +237,7 @@ int menu_usuario() {
     printf("[3] Devolución de libros\n");
     printf("[4] Salir del sistema\n");
 
-    do{
-        printf("Opción: ");
-        scanf("%d", &opcion_usuario);
-        getchar();
-    } while(opcion_usuario < 1 || opcion_usuario > 4);
-
+    opcion_usuario = validate_answer("Opción: ", 1, 4);
     CLS;
 
     return opcion_usuario;
@@ -324,21 +299,8 @@ void menu_registrar_libro(char *titulo, char *autor, char *categoria,
 
 }
 
+
 /*
-void calcular_edad(int dia,int mes,int anyo){
-  //calcula la fecha actual
-  time_t tiempo;
-  struct tm *tmPtr;
-  tiempo = time(NULL);
-  tmPtr = localtime(&tiempo);
-
-  int anyo_actual,mes_actual,dia_actual;
-  
-}
-*/
-  
-
-/*                                                                                                                                                                                  
  * Si el tipo de usuario es un administrador, puede ver un informe de todos 
  * los libros que se encuentran en préstamo
  * 
@@ -354,7 +316,7 @@ void menu_informe_prestamos() {
         printf("\tFecha de préstamo: 12/11/2017\n");
         printf("\tFecha de devolución: 30/11/2017\n");
         printf("\n");
-	printf("Días faltantes para su devolución: 3");
+        printf("Días faltantes para su devolución: 3");
     }
   }
 
@@ -395,30 +357,31 @@ void menu_baja_de_usuario(char *usuario_baja){
 }
 
 
-/*                                                                                                                                                                                  
+/*
  * Si el tipo de usuario es un administrador, puede mostrar
  * el autor, la categoría y el título más popular
- *                                                                                                                                                                                  
- * @author Guillermo Ortega, Elena Ginebra, Cristobal Liendo                                                                                                                        
- * @return void                                                                                                                                                                     
+ *
+ * @author Elena Ginebra
+ * @return void
  */
 void menu_popular(){
     printf("MÁS DESTACADOS\n\n");
     printf("\tCategoría más popular: Fantasía\n");
-    printf("\tTítulo más popular: Harry Potter y la Piedra Filosofal\n");    printf("\tAutor más popular: J. K. Rowling\n");
+    printf("\tTítulo más popular: Harry Potter y la Piedra Filosofal\n");
+    printf("\tAutor más popular: J. K. Rowling\n");
     printf("\n");
 }
 
 
-/*                                                                                                                                                                                  
+/*
  * Si el tipo de usuario es un administrador, puede mostrar un
  * menú de ayuda al administrador donde se despliegan opciones distintas
  * dependiendo del área donde necesite ayuda, puede ser ayuda para
  * registrar usuarios, catálogo de libros, préstamos y devoluciones
- * ó regresar al menú principal. 
- *                                                                                                                                                                                  
- * @author Guillermo Ortega, Elena Ginebra, Cristobal Liendo                                                                                                                        
- * @return void                                                                                                                                                                     
+ * ó regresar al menú principal.
+ *
+ * @author Elena Ginebra
+ * @return void
  */
 void menu_ayuda(){
     int opcion_ayuda;
@@ -429,7 +392,7 @@ void menu_ayuda(){
         printf("AYUDA\n\n");
         printf("Selecciona el número correspondiente para el tipo de información que necesitas: \n");
         printf("[1] Registros de usuarios\n");
-	printf("[2] Catálogo de libros\n");
+    printf("[2] Catálogo de libros\n");
         printf("[3] Preśtamos y devoluciones.\n"); 
         printf("[4] Salir de ayuda\n");
         printf("Opción:");
@@ -438,13 +401,13 @@ void menu_ayuda(){
         printf("\n\n");
 
         if(opcion_ayuda==1) {
-	    printf("El sistema debe permitir las siguientes facilidades al usuario/cliente del servicio:\n");
-	    printf("\t1.- Pre-acceso para auto-registrarse como usuario del servicio, en este módulo permitirá a un usuario darse de alta con sus datos fundamentales:\n");
-	    printf("\t\t• Nombre completo\n\t\t• Dirección\n\t\t• Fecha de nacimiento (tendrá que tener al menos 18 años de edad cumplidas)\n\t\t• Correo electrónico\n");
-	    printf("\t2.- Acceso como usuario registrado al catálogo de libros para selección de un máximo de 3 libros.\n");
-	    printf("\t3.- Devolución de libros\n");
-	    printf("Una vez creada un usuario, estará activo por \"default\" sin embargo ésta se puede dar de baja a partir del menú general de administrador o lo puede realizar el mismo usuario si así lo desea.\n");
-	    printf("Cada usuario deberá tener un correo único y no podrá registrarse más de una sola vez.\n");
+        printf("El sistema debe permitir las siguientes facilidades al usuario/cliente del servicio:\n");
+        printf("\t1.- Pre-acceso para auto-registrarse como usuario del servicio, en este módulo permitirá a un usuario darse de alta con sus datos fundamentales:\n");
+        printf("\t\t• Nombre completo\n\t\t• Dirección\n\t\t• Fecha de nacimiento (tendrá que tener al menos 18 años de edad cumplidas)\n\t\t• Correo electrónico\n");
+        printf("\t2.- Acceso como usuario registrado al catálogo de libros para selección de un máximo de 3 libros.\n");
+        printf("\t3.- Devolución de libros\n");
+        printf("Una vez creada un usuario, estará activo por \"default\" sin embargo ésta se puede dar de baja a partir del menú general de administrador o lo puede realizar el mismo usuario si así lo desea.\n");
+        printf("Cada usuario deberá tener un correo único y no podrá registrarse más de una sola vez.\n");
             printf("\nSi el administrador utiliza el modo de ejecucion que implica usar el parámetro\"-usu\" despliega el listado de todos los usuarios del servicio catalogados y muestra su alta y baja.\n");   
             printf("El administador no tendrá acceso a las contraseñas de los usuarios. Tampoco podrá acceder ni modificar el crédito de ninguno de ellos\n\n");
         }
@@ -452,37 +415,31 @@ void menu_ayuda(){
         else if(opcion_ayuda == 2) {
             printf("Una categoría de libros consiste en hacer una selección que agrupa todos los libros que tratan del mismo tema o uno similar para así facilitar y sugerir al usuario libros que le convengan leer, dependiendo de sus gustos e intereses.\n");
             printf("Las categorías se crean desde que uno registra el libro y se agrupan de manera automatizada con todos los libros que hayan sido ingresados con la misma categoría.\n");;
-	    printf("El usuario tendrá acceso a cada una de éstas categorías y podrá elegir cualquier libro de ellos (con la condición de que no tenga ya tres libros rentados en su cuenta al momento de querer pedir prestado.\n)");
-	    printf("Un libro NO puede pertenecer a más de una categoría\n\n");
+        printf("El usuario tendrá acceso a cada una de éstas categorías y podrá elegir cualquier libro de ellos (con la condición de que no tenga ya tres libros rentados en su cuenta al momento de querer pedir prestado.\n)");
+        printf("Un libro NO puede pertenecer a más de una categoría\n\n");
         }
         
         else if(opcion_ayuda == 3) {
             printf("Cada usuario tiene acceso a pedir prestado un máximo de 3 libros en un determinado momento (al mismo tiempo).\n");
             printf("Los libros se pueden prestar hasta un máximo de 30 días, la cuenta empieza desde el día que se pidió prestado hasta que termine este mismo periodo.\n");
-	    printf("Si el usuario termina un libro antes de la fecha de devolución ó desea regresarlo antes del periodo de préstamo, tendrá la opción de hacerlo.\n");
+        printf("Si el usuario termina un libro antes de la fecha de devolución ó desea regresarlo antes del periodo de préstamo, tendrá la opción de hacerlo.\n");
             printf("\nSi el administrador utiliza el modo de ejecucion que implica usar \"-c\", se despliega un informe de todos los usuarios y libros correspondientes que se encuentran en su posesión en ese momento determinado.\n\n");
         }
     } while (opcion_ayuda != 4);
-  
 }
 
 int menu_categorias() {
-  int opcion_categorias;
+    int opcion_categorias;
 
-  printf("¿Qué quieres hacer?\n");
-  printf("[1] Mostrar todo el catálogo de libros\n");
-  printf("[2] Elegir de las categorías existentes\n");
-  printf("[3] Mostrar los libros más destacados\n");
-  printf("[4] Mostrar sugerencias\n");
-  printf("[5] Salir de biblioteca\n");
+    printf("¿Qué quieres hacer?\n");
+    printf("[1] Mostrar todo el catálogo de libros\n");
+    printf("[2] Elegir de las categorías existentes\n");
+    printf("[3] Mostrar los libros más destacados\n");
+    printf("[4] Mostrar sugerencias\n");
+    printf("[5] Salir de biblioteca\n");
 
-  do{
-    printf("Opción: ");
-    scanf("%d", &opcion_categorias);
-    getchar();
-  } while(opcion_categorias < 1 || opcion_categorias > 5);
+    opcion_categorias = validate_answer("Opción: ", 1, 5);
+    CLS;
 
-  CLS;
-
-  return opcion_categorias;
+    return opcion_categorias;
 }
