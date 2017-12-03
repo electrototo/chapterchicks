@@ -316,6 +316,7 @@ void register_book(Biblioteca *biblioteca, ManejoAutor *autores, ManejoCategoria
     
     // no se encontro el autor, por lo tanto se deberia crear
     if (!success) {
+        lookup_id = autores->actual;
         strcpy(autores->autores[autores->actual].nombre, nombre_autor);
         autores->autores[autores->actual].id = autores->actual;
 
@@ -331,9 +332,6 @@ void register_book(Biblioteca *biblioteca, ManejoAutor *autores, ManejoCategoria
 
     biblioteca->libros[biblioteca->actual].autor = lookup_id;
 
-    // busca si existe el genero especificado para el libro
-    // elena, completa la funcion
-
     // busca si existe la categoria específica
     success = 0;
     for (int i = 0; i < categorias->actual; i++) {
@@ -347,6 +345,7 @@ void register_book(Biblioteca *biblioteca, ManejoAutor *autores, ManejoCategoria
 
     // no se encontro la categoria, por lo tanto se deberia crear
     if (!success) {
+        lookup_id = categorias->actual;
         strcpy(categorias->categorias[categorias->actual].nombre, categoria);
         categorias->categorias[categorias->actual].id = categorias->actual;
 
@@ -367,6 +366,9 @@ void register_book(Biblioteca *biblioteca, ManejoAutor *autores, ManejoCategoria
 
     // guarda los cambios que se crearon en la biblioteca
     save_db(biblioteca, sizeof(*biblioteca), "biblioteca.dat");
+
+    sprintf(msg, "Creacion del libro %s", biblioteca->libros[biblioteca->actual - 1].titulo);
+    log_msg(msg);
 }
 
 /*
