@@ -14,7 +14,7 @@
 #ifndef ESTRUCTURAS_H
     #define ESTRUCTURAS_H
     typedef struct {
-        char nombre[50];
+        char nombre[100];
         int id;
         int prestados;
     } Autor;
@@ -40,7 +40,7 @@
         int categoria;
 
         char editorial[100];
-        char titulo[50];
+        char titulo[100];
         char ISBN13[20];
         char ISBN10[20];
         float costo;
