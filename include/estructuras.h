@@ -41,8 +41,8 @@
 
         char editorial[100];
         char titulo[50];
-        char ISBN13[14];
-        char ISBN10[11];
+        char ISBN13[20];
+        char ISBN10[20];
         float costo;
         int activo;
         int prestamos;
