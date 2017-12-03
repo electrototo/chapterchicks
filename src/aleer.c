@@ -29,6 +29,7 @@ int main(int argc, char **argv) {
     Libro libro;
     Categoria categoria_popular;
     Autor autor_popular;
+    Prestamo *prestamo;
 
     // variables para la creacion de un usuario
     unsigned char password[256], salt[128], hash[256];
@@ -284,15 +285,18 @@ int main(int argc, char **argv) {
             switch (eleccion) {
                 case 1:
                     for (int i = 0; i < prestamos.actual; i++) {
-                        libro = find_book_by_id(prestamos.prestamos[i].libro, &biblioteca);
+                        prestamo = &prestamos.prestamos[i];
 
-                        diferencia = difftime(prestamos.prestamos[i].fecha_devolucion, time(0));
+                        libro = find_book_by_id(prestamo->libro, &biblioteca);
+
+                        diferencia = difftime(prestamo->fecha_devolucion, time(0));
 
                         printf("Nombre del libro: %s\n", libro.titulo);
-                        printf("\tUsuario:            %s\n", find_user_by_id(prestamos.prestamos[i].usuario, &usuarios).email);
-                        printf("\tDía de préstamo:    %s", ctime(&prestamos.prestamos[i].fecha_prestamo));
-                        printf("\tDía de devolución:  %s", ctime(&prestamos.prestamos[i].fecha_devolucion));
+                        printf("\tUsuario:            %s\n", find_user_by_id(prestamo->usuario, &usuarios).email);
+                        printf("\tDía de préstamo:    %s", ctime(&prestamo->fecha_prestamo));
+                        printf("\tDía de devolución:  %s", ctime(&prestamo->fecha_devolucion));
                         printf("\tDías restantes:     %ld\n", diferencia / 86400);
+                        printf("\tDevuelto:           %s\n", (prestamo->devuelto) ? "Si" : "No");
                         printf("\n");
                     }
 
@@ -313,58 +317,53 @@ int main(int argc, char **argv) {
 
                     break;
 
-	        case 3:
-		  //Se pueden dar de alta o de baja los libros
+                case 3:
+                    //Se pueden dar de alta o de baja los libros
+                    do {
+                        eleccion = menu_alta_o_baja();
+                    
+                        if (eleccion == 1){
+                            register_book(&biblioteca, &autores, &categorias);
+                        }
 
-		  do {
-		      eleccion = menu_alta_o_baja ();
-		  
-		     if (eleccion == 1){
-		          register_book(&biblioteca, &autores, &categorias);
-		     }
+                        else if (eleccion == 2){
+                            for (int i = 0; i < biblioteca.actual; i++) {
+                                printf("Título: %s\n", biblioteca.libros[i].titulo);
+                                printf("\tAutor: %s\n", autores.autores[i].nombre);
+                                printf("\tCategoría: %s\n", categorias.categorias[i].nombre);
+                                printf("\tISBN 10: %s\n", biblioteca.libros[i].ISBN10);
+                                printf("\tISBN 13: %s\n", biblioteca.libros[i].ISBN13);
+                                printf("\tCosto: $%.2f\n", biblioteca.libros[i].costo);
+                                printf("\tAño de publicación: %d\n", biblioteca.libros[i].a_pub);
+                                printf("\tEditorial: %s\n\n", biblioteca.libros[i].editorial);
+                            }
+                        
+                            menu_baja_de_libros(nombre_libro);
+                        
+                            for (int i = 0; i < biblioteca.actual; i++) {
+                                if (strcmp(biblioteca.libros[i].titulo, nombre_libro) == 0) {
+                                    found = 1;
+                                    //escribe en bitácora
+                                    sprintf(msg, "Se dió de baja el libro %s por el administrador %s", nombre_libro, usuario->nombre);
+                                    log_msg(msg);
 
-		     if (eleccion == 2){
-		       
-		       for (int i = 0; i < biblioteca.actual; i++) {
-			 printf("Título: %s\n", biblioteca.libros[i].titulo);
-			 printf("\tAutor: %s\n", autores.autores[i].nombre);
-			 printf("\tCategoría: %s\n", categorias.categorias[i].nombre);
-			 printf("\tISBN 10: %s\n", biblioteca.libros[i].ISBN10);
-			 printf("\tISBN 13: %s\n", biblioteca.libros[i].ISBN13);
-			 printf("\tCosto: $%.2f\n", biblioteca.libros[i].costo);
-			 printf("\tAño de publicación: %d\n", biblioteca.libros[i].a_pub);
-			 printf("\tEditorial: %s\n\n", biblioteca.libros[i].editorial);
-		         found = 0;
-		       }
-		       
-		       menu_baja_de_libros(nombre_libro);
-			 
-		         for (int i = 0; i < biblioteca.actual; i++) {
-			     if (strcmp(biblioteca.libros[i].titulo, nombre_libro) == 0) {
-			         found = 1;
-				 //escribe en bitácora
-  			         sprintf(msg, "Se dió de baja el libro %s por el administrador %s", nombre_libro, usuario->nombre);
-			         log_msg(msg);
+                                    // pone la bandera de activo en falso
+                                    biblioteca.libros[i].activo = 0;
 
-				 // pone la bandera de activo en falso
-				 biblioteca.libros[i].activo = 0;
+                                    // guardar los libros
+                                    save_db(&biblioteca, sizeof(biblioteca), "biblioteca.dat");
 
-       			         // guardar los libros
-     			         save_db(&biblioteca, sizeof(biblioteca), "biblioteca.dat");
-
-				 break;
-			     }
-			     
-			 }
-		     
-		 	 		  
-		       if (!found)
-			   printf("\tEl libro especificado no existe\n");
-		       else
-			   printf("\tEl libro fue exitosamente dado de baja\n");
-		     }  
-		   } while(eleccion != 3);
-	   		  
+                                    break;
+                                }
+                            }
+                                    
+                            if (!found)
+                                printf("\tEl libro especificado no existe\n");
+                            else
+                                printf("\tEl libro fue exitosamente dado de baja\n");
+                        }  
+                    } while(eleccion != 3);
+                 
                     break;
       
                 case 4:
@@ -449,82 +448,58 @@ int main(int argc, char **argv) {
 
                 default:
                     break;
-	    }
-	}
+        }
+    }
     }    
 
     // el administrador decidio como usuario o la cuenta es de tipo
     // usuario
     else if (eleccion == 2 || usuario->tipo_usuario == MORTAL) {
         while((eleccion = menu_usuario()) != 4){
-            printf("ELECCION: %d\n", eleccion);
             switch(eleccion) {
                 case 1:
                     // accesar al catalogo de libros
-                    // aqui se podria mejorar mostrando un menu que pregunte por
-                    // la categoria en vez de mostrar todos los libros
-                    // TODO: Preguntar que libro quiere pedir prestado
-
                     while ((eleccion2 = menu_categorias()) != 5) {
+                        eleccion = 0;
+
                         switch (eleccion2){
                             case 1:
                                 for (int i = 0; i < biblioteca.actual; i++) {
-                                    printf("Título: %s\n", biblioteca.libros[i].titulo);
-                                    printf("\tAutor: %s\n", autores.autores[i].nombre);
-                                    printf("\tCategoría: %s\n", categorias.categorias[i].nombre);
-                                    printf("\tISBN 10: %s\n", biblioteca.libros[i].ISBN10);
-                                    printf("\tISBN 13: %s\n", biblioteca.libros[i].ISBN13);
-                                    printf("\tCosto: $%.2f\n", biblioteca.libros[i].costo);
-                                    printf("\tAño de publicación: %d\n", biblioteca.libros[i].a_pub);
-                                    printf("\tEditorial: %s\n\n", biblioteca.libros[i].editorial);
+                                    libro = biblioteca.libros[i];
+
+                                    printf("%s\n", libro.titulo);
+                                    printf("\tAutor:       %s\n",
+                                        find_autor_by_id(libro.autor, &autores).nombre);
+
+                                    printf("\tCategoría:   %s\n",
+                                        find_categoria_by_id(libro.categoria, &categorias).nombre);
+
+                                    printf("\tISBN 10:     %s\n", libro.ISBN10);
+                                    printf("\tISBN 13:     %s\n", libro.ISBN13);
+                                    printf("\tCosto:       $%.2f\n", libro.costo);
+                                    printf("\tAño:         %d\n", libro.a_pub);
+                                    printf("\tEditorial:   %s\n\n", libro.editorial);
 
                                     if (i % 5 == 0 && i != 0) {
-                                        eleccion = menu_prestamo_libros();
+                                        eleccion = menu_funcion_agregar_libro(
+                                            usuario, &biblioteca, &autores, &categorias, &prestamos);
 
-                                        if(eleccion == 2) {
-                                            // rentar un libro
-                                            success = add_book(usuario, &biblioteca, &autores,
-                                                &categorias, &prestamos);
-
-
-                                            if (success == 1)
-                                                printf("La renta fue exitosa, credito restante: %.2f\n", usuario->credito);
-                                            else if (success == 2)
-                                                printf("No tienes suficientes fondos: %.2f\n", usuario->credito);
-                                            else if (success == 3)
-                                                printf("No existe el libro seleccionado\n");
-                                            else if(success == 4)
-                                                printf("Ya no puedes rentar mas libros\n");
-
-                                        }
-                                        else if (eleccion == 3)
+                                        if (eleccion == 3) {
+                                            CLS;
                                             break;
+                                        }
                                     }
                                 }
                                 if (eleccion != 3) {
-                                    eleccion = menu_prestamo_libros();
+                                    eleccion = menu_funcion_agregar_libro(
+                                        usuario, &biblioteca, &autores, &categorias, &prestamos);
 
-                                    if(eleccion == 2) {
-                                        // rentar un libro
-                                        success = add_book(usuario, &biblioteca, &autores,
-                                            &categorias, &prestamos);
-
-                                        if (success == 1)
-                                            printf("La renta fue exitosa, credito restante: %.2f\n", usuario->credito);
-                                        else if (success == 2)
-                                            printf("No tienes suficientes fondos: %.2f\n", usuario->credito);
-                                        else if (success == 3)
-                                            printf("No existe el libro seleccionado\n");
-                                        else if(success == 4)
-                                            printf("Ya no puedes rentar mas libros\n");
-                                    }
+                                    if (eleccion == 3)
+                                        CLS;
                                 }
 
                                 save_db(&usuarios, sizeof(usuarios), "usuarios.dat");
 
-                                printf("Presione enter para salir de la lista...");
-                                getchar();
-                                system("clear");
                                 break;
 
                             case 2:

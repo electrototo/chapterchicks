@@ -86,6 +86,7 @@
         int usuario;
         time_t fecha_prestamo;
         time_t fecha_devolucion;
+        unsigned char devuelto;
     } Prestamo;
 
     typedef struct {
