@@ -703,6 +703,59 @@ int menu_funcion_agregar_libro(Usuario *user, Biblioteca *biblioteca,
 }
 
 /*
+ * Esta funcion sirve para dar de baja un libro
+ *
+ * @authors Elena Ginebra, Cristobal Liendo
+ * @param *usuario    la estructura del usuario que dio de baja el libro
+ * @param *biblioteca la estructura donde se encuentran los libros
+*/
+
+void baja_libro(Usuario *usuario, Biblioteca *biblioteca) {
+    char msg[100], nombre_libro[100];
+
+    int seleccion = menu_rentar_libro(nombre_libro);
+
+    int found = 0, id;
+    for (int i = 0; i < biblioteca->actual; i++) {
+        if (seleccion == 1) {
+            if (strcmp(biblioteca->libros[i].titulo, nombre_libro) == 0) {
+                found = 1;
+                id = i;
+            }
+        }
+        else if(seleccion == 2) {
+            if (strcmp(biblioteca->libros[i].ISBN10, nombre_libro) == 0) {
+                found = 1;
+                id = i;
+            }
+        }
+        else {
+            if (strcmp(biblioteca->libros[i].ISBN13, nombre_libro) == 0) {
+                found = 1;
+                id = i;
+            }
+        }
+    }
+
+    if (found) {
+        //escribe en bitácora
+        sprintf(msg, "Se dió de baja el libro %s por el administrador %s", nombre_libro, usuario->nombre);
+        log_msg(msg);
+
+        // pone la bandera de activo en falso
+        biblioteca->libros[id].activo = 0;
+
+        // guardar los libros
+        save_db(biblioteca, sizeof(*biblioteca), "biblioteca.dat");
+
+        printf("\tEl libro fue exitosamente dado de baja\n");
+    }
+    else {
+        printf("\tEl libro especificado no existe\n");
+    }
+}
+
+/*
  * Esta funcion sirve para imprimir un solo libro
  *
  * @author Cristobal Liendo

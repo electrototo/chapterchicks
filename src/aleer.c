@@ -327,34 +327,32 @@ int main(int argc, char **argv) {
                         }
 
                         else if (eleccion == 2){
+                            eleccion2 = 0;
+
                             for (int i = 0; i < biblioteca.actual; i++) {
                                 libro = biblioteca.libros[i];
                                 format_book(libro, &autores, &categorias, 1);
-                            }
-                        
-                            menu_baja_de_libros(nombre_libro);
-                            found = 0;
-                            for (int i = 0; i < biblioteca.actual; i++) {
-                                if (strcmp(biblioteca.libros[i].titulo, nombre_libro) == 0) {
-                                    found = 1;
-                                    //escribe en bitácora
-                                    sprintf(msg, "Se dió de baja el libro %s por el administrador %s", nombre_libro, usuario->nombre);
-                                    log_msg(msg);
 
-                                    // pone la bandera de activo en falso
-                                    biblioteca.libros[i].activo = 0;
+                                if (i % 5 == 0 && i != 0) {
+                                    eleccion2 = menu_seleccionar_libros();
 
-                                    // guardar los libros
-                                    save_db(&biblioteca, sizeof(biblioteca), "biblioteca.dat");
-
-                                    break;
+                                    if (eleccion2 == 2)
+                                        baja_libro(usuario, &biblioteca);
+                                    else if(eleccion2 == 3) {
+                                        CLS;
+                                        break;
+                                    }
                                 }
                             }
-                                    
-                            if (!found)
-                                printf("\tEl libro especificado no existe\n");
-                            else
-                                printf("\tEl libro fue exitosamente dado de baja\n");
+                            if (eleccion2 != 3) {
+                                eleccion2 = menu_seleccionar_libros();
+
+                                if (eleccion2 == 2)
+                                    baja_libro(usuario, &biblioteca);
+                                else if(eleccion2 == 3) {
+                                    CLS;
+                                }
+                            }
                         }  
                     } while(eleccion != 3);
                  
@@ -427,7 +425,7 @@ int main(int argc, char **argv) {
                     }
 
                     printf("Libro más popular:\n");
-                    format_book(libro, &autores, &categoria, 0);
+                    format_book(libro, &autores, &categorias, 0);
                     printf("\tCantidad de veces rentado: %d\n", libro.prestamos);
                     printf("\n");
 
@@ -504,7 +502,7 @@ int main(int argc, char **argv) {
                                     libro = biblioteca.libros[i];
 
                                     if (libro.categoria == lookup_id) {
-                                        format_book(libros, &autores, &categorias, 0);
+                                        format_book(libro, &autores, &categorias, 0);
 
                                         if (cat_count % 5 == 0 && cat_count != 0) {
                                             eleccion = menu_funcion_agregar_libro(

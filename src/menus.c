@@ -525,19 +525,16 @@ int menu_alta_o_baja(){
     return resultado;
 }
 
-/*
- * Si el tipo de usuario es un administrador, puede dar de baja
- * un libro que se encuentre registrado en la base de datos
- *
- * @author Elena Ginebra
- * @return void
- */
-void menu_baja_de_libros(char *libro_baja) {
-    printf("Ingresa el titulo del libro: ");
-    scanf("%s", libro_baja);
-    getchar();
+int menu_seleccionar_libros() {
+    int resultado;
+    printf("\n¿Qué quieres hacer?\n");
+    printf("[1] Continuar con la lista\n");
+    printf("[2] Dar de baja un libro\n");
+    printf("[3] Regresar\n");
 
-    CLS;
+    resultado = validate_answer("Opción: ", 1, 3);
+
+    return resultado;
 }
 
 int menu_seleccion_categoria(int end) {
