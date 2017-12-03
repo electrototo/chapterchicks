@@ -9,6 +9,8 @@
  * @date 22/11/2017
 */
 
+#include <time.h>
+
 #ifndef ESTRUCTURAS_H
     #define ESTRUCTURAS_H
     typedef struct {
@@ -82,8 +84,8 @@
     typedef struct {
         int libro;
         int usuario;
-        int fecha_prestamo;
-        int fecha_devolucion;
+        time_t fecha_prestamo;
+        time_t fecha_devolucion;
     } Prestamo;
 
     typedef struct {
