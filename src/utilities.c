@@ -454,7 +454,9 @@ int add_book(Usuario *user, Biblioteca *bib, ManejoAutor *autores,
             prestamos->prestamos[prestamos->actual].libro = libro->id;
             prestamos->prestamos[prestamos->actual].usuario = user->id;
             prestamos->prestamos[prestamos->actual].fecha_prestamo = time(NULL);
-            prestamos->prestamos[prestamos->actual].fecha_prestamo = time(NULL) + (60 * 60 * 24 * 30);
+            prestamos->prestamos[prestamos->actual].fecha_devolucion = time(NULL) + (60 * 60 * 24 * 30);
+
+            prestamos->actual++;
 
             // guarda un mensaje informativo
             sprintf(msg, "El usuario %s rento el libro %s", user->nombre, libro->titulo);
@@ -469,4 +471,36 @@ int add_book(Usuario *user, Biblioteca *bib, ManejoAutor *autores,
     }
 
     return success;
+}
+
+/* 
+ * Esta funcion busca en la biblioteca de libros el libro
+ * que tenga el mismo id y lo regresa
+ *
+ * @author Cristobal Liendo
+ * @param id    el id del libro a buscar
+ * @param *bib  la biblioteca donde se guardan los libros
+ * @return Libro
+*/
+Libro find_book_by_id(int id, Biblioteca *bib) {
+    for (int i = 0; i < bib->actual; i++) {
+        if (bib->libros[i].id == id)
+            return bib->libros[i];
+    }
+}
+
+/*
+ * Esta funcion busca en los usuarios el usuario que tenga el
+ * mismo id y lo regresa
+ *
+ * @author Cristobal Liendo
+ * @param id     el id del usuario a buscar
+ * @param *users donde se encuentran los usuarios
+ * @return Usuario
+*/
+Usuario find_user_by_id(int id, ManejoUsuarios *users) {
+    for (int i = 0; i < users->actual; i++) {
+        if (users->usuarios[i].id == id)
+            return users->usuarios[i];
+    }
 }

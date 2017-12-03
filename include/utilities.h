@@ -30,4 +30,7 @@
 
     int add_book(Usuario *user, Biblioteca *bib, ManejoAutor *autores,
         ManejoCategoria *categorias, ManejoPrestamo *prestamos);;
+
+    Libro find_book_by_id(int id, Biblioteca *bib);
+    Usuario find_user_by_id(int id, ManejoUsuarios *users);
 #endif
