@@ -43,4 +43,6 @@
         ManejoAutor *autores, ManejoCategoria *categorias, ManejoPrestamo *prestamos);
     void format_book(Libro libro, ManejoAutor *autores, ManejoCategoria *categorias, int admin);
     void baja_libro(Usuario *usuario, Biblioteca *biblioteca);
+    void book_return(Usuario *user, int arr_id, int book_id,
+        ManejoPrestamo *prestamos);
 #endif

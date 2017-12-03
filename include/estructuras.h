@@ -2,7 +2,7 @@
  * @file estructuras.h
  *
  * @brief Este archivo contiene las definiciones de
- *        las estructuras que se van a utilizar en 
+ *        las estructuras que se van a utilizar en
  *        el programa aleer
  *
  * @author Cristobal Liendo I
@@ -74,7 +74,7 @@
         int libros[3];
 
         int id;
-    } Usuario; 
+    } Usuario;
 
     typedef struct {
         Usuario usuarios[50];

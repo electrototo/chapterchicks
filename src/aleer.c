@@ -321,7 +321,7 @@ int main(int argc, char **argv) {
                     //Se pueden dar de alta o de baja los libros
                     do {
                         eleccion = menu_alta_o_baja();
-                    
+
                         if (eleccion == 1){
                             register_book(&biblioteca, &autores, &categorias);
                         }
@@ -353,11 +353,11 @@ int main(int argc, char **argv) {
                                     CLS;
                                 }
                             }
-                        }  
+                        }
                     } while(eleccion != 3);
-                 
+
                     break;
-      
+
                 case 4:
                     //baja de un cliente
                     menu_baja_de_usuario(email);
@@ -443,7 +443,7 @@ int main(int argc, char **argv) {
                     break;
         }
     }
-    }    
+    }
 
     // el administrador decidio como usuario o la cuenta es de tipo
     // usuario
@@ -560,6 +560,58 @@ int main(int argc, char **argv) {
 
                 case 3:
                     // devolver un libro
+                    // imprime una lista de todos los libros que tiene prestados
+                    printf("Libros prestados: %d\n", 3 - usuario->disponibles);
+
+                    for (int i = 0; i < 3 - usuario->disponibles; i++) {
+                        libro = find_book_by_id(usuario->libros[i], &biblioteca);
+                        format_book(libro, &autores, &categorias, 0);
+                    }
+
+                    eleccion = menu_regresar_libro(nombre_libro);
+
+                    // comprueba que tenga el libro en sus libros prestados
+                    found = 0;
+                    for (int i = 0; i < 3 - usuario->disponibles; i++) {
+                        lookup_id = usuario->libros[i];
+
+                        libro = find_book_by_id(lookup_id, &biblioteca);
+                        if (eleccion == 1) {
+                            if (strcmp(libro.titulo, nombre_libro) == 0) {
+                                found = 1;
+                                lookup_id = i;
+                                break;
+                            }
+                        }
+                        else if(eleccion == 2){
+                            if (strcmp(libro.ISBN10, nombre_libro) == 0) {
+                                found = 1;
+                                lookup_id = i;
+                                break;
+                            }
+                        }
+                        else if(eleccion == 3){
+                            if (strcmp(libro.ISBN13, nombre_libro) == 0) {
+                                found = 1;
+                                lookup_id = i;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (found) {
+                        book_return(usuario, lookup_id, libro.id, &prestamos);
+                        save_db(&usuarios, sizeof(usuarios), "usuarios.dat");
+
+                        sprintf(msg, "El usuario %s devolvio el libro %s", usuario->nombre, libro.titulo);
+                        log_msg(msg);
+                    }
+                    else {
+                        printf("\tNo se encontró el libro especificado\n");
+                    }
+
+                    printf("\n\n");
+
                     break;
 
                 default:

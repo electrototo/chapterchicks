@@ -25,7 +25,7 @@ FILE *log_file, *rand_file;
 /*
  * Esta funcion recibe como parametro un arreglo de caracteres
  * y remplaza la primera ocurrencia del caracter 'b' en 'a'
- * con un caracter nulo. 
+ * con un caracter nulo.
  * Se va a utilizar para quitar principalmente la nueva linea
  * que se obtiene al utilizar fgets().
  * Regresa un 1 si se encontro el caracter y un 0 si no
@@ -133,8 +133,8 @@ void enable_output() {
 /*
  * Esta funcion deshabilita el modo canonico en la terminal,
  * con el fin de evitar que se tenga que presionar enter
- * en la pantalla principal. 
- * 
+ * en la pantalla principal.
+ *
  * Precaucion: esta funcion no puede ser usada entre
  * disable_output() y enable_output() debido a que rescribiria
  * la configuracion por "default" de la terminal
@@ -171,7 +171,7 @@ void enable_canonical() {
 
 /*
  * Esta funcion creau un usuario de tipo "type" y regresa
- * el indice de la posicion en la que se encuentra el usuario 
+ * el indice de la posicion en la que se encuentra el usuario
  * dentro del arreglo de usuarios
  *
  * @author Cristobal Liendo
@@ -237,7 +237,7 @@ int add_user(ManejoUsuarios *usuarios, int type) {
 
     sprintf(msg, "Adición de crédito %.2f de usuario: %s", credito,  usuarios->usuarios[index].nombre);
     log_msg(msg);
-    
+
     // genera el salt del credito
     generate_salt(128, salt);
     memcpy(usuarios->usuarios[index].c_salt, salt, 128);
@@ -292,12 +292,12 @@ void register_book(Biblioteca *biblioteca, ManejoAutor *autores, ManejoCategoria
     char nombre_autor[100], categoria[100], msg[100];
 
     menu_registrar_libro(
-        biblioteca->libros[biblioteca->actual].titulo, 
+        biblioteca->libros[biblioteca->actual].titulo,
         nombre_autor,
         categoria,
-        biblioteca->libros[biblioteca->actual].ISBN10, 
-        biblioteca->libros[biblioteca->actual].ISBN13, 
-        &biblioteca->libros[biblioteca->actual].costo, 
+        biblioteca->libros[biblioteca->actual].ISBN10,
+        biblioteca->libros[biblioteca->actual].ISBN13,
+        &biblioteca->libros[biblioteca->actual].costo,
         &biblioteca->libros[biblioteca->actual].a_pub,
         biblioteca->libros[biblioteca->actual].editorial,
         &biblioteca->libros[biblioteca->actual].paginas
@@ -314,7 +314,7 @@ void register_book(Biblioteca *biblioteca, ManejoAutor *autores, ManejoCategoria
             break;
         }
     }
-    
+
     // no se encontro el autor, por lo tanto se deberia crear
     if (!success) {
         lookup_id = autores->actual;
@@ -392,7 +392,7 @@ int legal(int *fecha_nacimiento) {
     dob.tm_mday = fecha_nacimiento[0];
     dob.tm_hour = 0;
     dob.tm_min = 0;
-    dob.tm_sec = 0; 
+    dob.tm_sec = 0;
     dob.tm_isdst = -1;
 
     dob2 = mktime(&dob);
@@ -443,14 +443,14 @@ int validate_answer(char *message, int start, int end) {
     return input;
 }
 
-/* 
+/*
  * Esta funcion sirve para agregar un libro a la renta del usuario,
  * regresa un 1 si fue exitoso, 2 si no alcanzó el dinero o 3 si
  * no existe el libro, 4 si el usuario ya no puede rentar mas libros
  *
  * @author Cristobal Liendo
  * @param *user   El usuario que se encuentra registrado
- * @param *bib    La biblioteca donde se encuentran los libros  
+ * @param *bib    La biblioteca donde se encuentran los libros
  * @return int
 */
 
@@ -550,7 +550,7 @@ int add_book(Usuario *user, Biblioteca *bib, ManejoAutor *autores,
             prestamos->prestamos[prestamos->actual].usuario = user->id;
             prestamos->prestamos[prestamos->actual].fecha_prestamo = time(NULL);
             prestamos->prestamos[prestamos->actual].fecha_devolucion = time(NULL) + (60 * 60 * 24 * 30);
-            prestamos->prestamos[prestamos->actual].devuelto = 0; 
+            prestamos->prestamos[prestamos->actual].devuelto = 0;
 
             prestamos->actual++;
 
@@ -569,7 +569,7 @@ int add_book(Usuario *user, Biblioteca *bib, ManejoAutor *autores,
     return success;
 }
 
-/* 
+/*
  * Esta funcion busca en la biblioteca de libros el libro
  * que tenga el mismo id y lo regresa
  *
@@ -761,7 +761,7 @@ void baja_libro(Usuario *usuario, Biblioteca *biblioteca) {
  * @author Cristobal Liendo
  * @param libro       El libro ha imprimirse
  * @param *autores    la estructura donde se encuentran los autores
- * @param *categorias la estructura donde se guardan las categorias 
+ * @param *categorias la estructura donde se guardan las categorias
  * @param admin       Si es admini se va a imprimir si el libro esta activo o no
 */
 void format_book(Libro libro, ManejoAutor *autores, ManejoCategoria *categorias,
@@ -782,4 +782,42 @@ void format_book(Libro libro, ManejoAutor *autores, ManejoCategoria *categorias,
 
     if (admin)
         printf("\tActivo:      %s\n", (libro.activo) ? "Si" : "No");
+}
+
+/*
+ * Esta funcion se encarga de devolver un libro
+ *
+ * @author Cristobal Liendo
+ * @param *user        el usuario que devuelve un libro
+ * @param *biblioteca  estructura donde se encuentran los libros
+*/
+void book_return(Usuario *user, int arr_id, int book_id,
+    ManejoPrestamo *prestamos) {
+
+    int tmp;
+    Prestamo *p;
+
+    // mueve de lugar los libros prestados
+    for (int i = arr_id; i < 2; i++) {
+        tmp = user->libros[i + 1];
+        user->libros[i] = user->libros[i + 1];
+        user->libros[i + 1] = tmp;
+    }
+
+    // Busca la tarjeta de prestamo
+    for (int i = 0; i < prestamos->actual; i++) {
+        p = &prestamos->prestamos[i];
+
+        if (p->libro == book_id && p->usuario == user->id) {
+            // modifica la fecha de entrega
+            p->fecha_devolucion = time(NULL);
+            // y lo marca como devuelto
+            p->devuelto = 1;
+        }
+    }
+
+    user->disponibles++;
+
+    printf("\tEl libro fue correctamente devuelto\n");
+    save_db(prestamos, sizeof(*prestamos), "prestamos.dat");
 }

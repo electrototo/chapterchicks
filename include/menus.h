@@ -34,4 +34,5 @@
     int menu_rentar_libro(char *name);
     int menu_alta_o_baja();
     int menu_seleccionar_libros();
+    int menu_regresar_libro(char *name);
 #endif
