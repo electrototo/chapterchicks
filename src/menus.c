@@ -268,7 +268,7 @@ void menu_registrar_libro(char *titulo, char *autor, char *categoria,
     strip_char(titulo, '\n');
 
     printf("\tIngresa el autor del libro: ");
-    fgets(autor, 50, stdin);
+    fgets(autor, 100, stdin);
     strip_char(autor, '\n');
     
     printf("\tIngresa el género del libro: ");
@@ -276,15 +276,15 @@ void menu_registrar_libro(char *titulo, char *autor, char *categoria,
     strip_char(categoria, '\n');
     
     printf("\tIngresa el ISBN 10 del libro: ");
-    fgets(isbn10, 11, stdin);
+    fgets(isbn10, 15, stdin);
     strip_char(isbn10, '\n');
 
     printf("\tIngresa el ISBN 13 del libro: ");
-    fgets(isbn13, 14, stdin);
+    fgets(isbn13, 15, stdin);
     strip_char(isbn13, '\n');
 
     printf("\tIngresa la editorial del libro: ");
-    fgets(editorial, 50, stdin);
+    fgets(editorial, 100, stdin);
     strip_char(editorial, '\n');
     
     printf("\tIngresa el año de publicación del libro: ");
