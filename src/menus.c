@@ -254,7 +254,8 @@ int menu_usuario() {
  * @return void
 */
 void menu_registrar_libro(char *titulo, char *autor, char *categoria,
-    char *isbn10, char *isbn13, float *costo_libro, int *a_pub, char *editorial) {
+    char *isbn10, char *isbn13, float *costo_libro, int *a_pub, char *editorial,
+    int *paginas) {
 
     char char_autor, char_categoria;
 
@@ -293,8 +294,11 @@ void menu_registrar_libro(char *titulo, char *autor, char *categoria,
     scanf("%f", costo_libro);
     getchar();
 
-    CLS;
+    printf("\tPaginas:              ");
+    scanf("%d", paginas);
+    getchar();
 
+    CLS;
 }
 
 
@@ -534,4 +538,7 @@ void menu_baja_de_libros(char *libro_baja) {
     getchar();
 
     CLS;
+}
+
+int menu_seleccion_categoria(int end) {
 }

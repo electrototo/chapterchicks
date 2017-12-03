@@ -38,7 +38,7 @@
     typedef struct {
         int autor;
         int categoria;
-
+        int paginas;
         char editorial[100];
         char titulo[100];
         char ISBN13[20];

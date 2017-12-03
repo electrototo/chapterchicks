@@ -22,7 +22,8 @@
     int menu_usuario();
     int menu_categorias();
     void menu_registrar_libro(char *titulo, char *autor, char *categoria,
-        char *isbn10, char *isbn13, float *costo_libro, int *a_pub, char *editorial);
+        char *isbn10, char *isbn13, float *costo_libro, int *a_pub, char *editorial,
+        int *paginas);
     void creditos();
     void menu_informe_prestamos();
     void menu_informe_usuarios();
