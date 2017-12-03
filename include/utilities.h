@@ -31,8 +31,14 @@
     int add_book(Usuario *user, Biblioteca *bib, ManejoAutor *autores,
         ManejoCategoria *categorias, ManejoPrestamo *prestamos);;
 
-    Libro find_book_by_id(int id, Biblioteca *bib);
-    Usuario find_user_by_id(int id, ManejoUsuarios *users);
     void register_book(Biblioteca *biblioteca, ManejoAutor *autores, ManejoCategoria *categorias);
     void insertion_sort(ManejoUsuarios *users);
+
+    Libro find_book_by_id(int id, Biblioteca *bib);
+    Usuario find_user_by_id(int id, ManejoUsuarios *users);
+    Autor find_autor_by_id(int id, ManejoAutor *autores);
+    Categoria find_categoria_by_id(int id, ManejoCategoria *categorias);
+
+    int menu_funcion_agregar_libro(Usuario *user, Biblioteca *biblioteca,
+        ManejoAutor *autores, ManejoCategoria *categorias, ManejoPrestamo *prestamos);
 #endif

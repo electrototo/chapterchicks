@@ -361,6 +361,7 @@ void register_book(Biblioteca *biblioteca, ManejoAutor *autores, ManejoCategoria
 
     biblioteca->libros[biblioteca->actual].categoria = lookup_id;
     biblioteca->libros[biblioteca->actual].id = biblioteca->actual;
+    biblioteca->libros[biblioteca->actual].activo = 1;
 
     biblioteca->actual++;
 
@@ -548,6 +549,7 @@ int add_book(Usuario *user, Biblioteca *bib, ManejoAutor *autores,
             prestamos->prestamos[prestamos->actual].usuario = user->id;
             prestamos->prestamos[prestamos->actual].fecha_prestamo = time(NULL);
             prestamos->prestamos[prestamos->actual].fecha_devolucion = time(NULL) + (60 * 60 * 24 * 30);
+            prestamos->prestamos[prestamos->actual].devuelto = 0; 
 
             prestamos->actual++;
 
@@ -575,11 +577,11 @@ int add_book(Usuario *user, Biblioteca *bib, ManejoAutor *autores,
  * @param *bib  la biblioteca donde se guardan los libros
  * @return Libro
 */
+
 Libro find_book_by_id(int id, Biblioteca *bib) {
-    for (int i = 0; i < bib->actual; i++) {
+    for (int i = 0; i < bib->actual; i++)
         if (bib->libros[i].id == id)
             return bib->libros[i];
-    }
 }
 
 /*
@@ -591,11 +593,44 @@ Libro find_book_by_id(int id, Biblioteca *bib) {
  * @param *users donde se encuentran los usuarios
  * @return Usuario
 */
+
 Usuario find_user_by_id(int id, ManejoUsuarios *users) {
     for (int i = 0; i < users->actual; i++) {
         if (users->usuarios[i].id == id)
             return users->usuarios[i];
     }
+}
+
+/*
+ * Esta funcion busca en las categorias la categoria que tenga el
+ * mismo id y lo regresa
+ *
+ * @author Cristobal Liendo
+ * @param id           el id del usuario a buscar
+ * @param *categorias  donde se encuentran los usuarios
+ * @return Categoria
+*/
+
+Categoria find_categoria_by_id(int id, ManejoCategoria *categorias) {
+    for (int i = 0; i < categorias->actual; i++)
+        if (categorias->categorias[i].id == id)
+            return categorias->categorias[i];
+}
+
+/*
+ * Esta funcion busca en los autores el autor que tenga el
+ * mismo id y lo regresa
+ *
+ * @author Cristobal Liendo
+ * @param id           el id del usuario a buscar
+ * @param *autores  donde se encuentran los autores
+ * @return Autor
+*/
+
+Autor find_autor_by_id(int id, ManejoAutor *autores) {
+    for (int i = 0; i < autores->actual; i++)
+        if (autores->autores[i].id == id)
+            return autores->autores[i];
 }
 
 /*
@@ -622,4 +657,46 @@ void insertion_sort(ManejoUsuarios *users) {
             k--;
         }
     }
+}
+
+/* Sirve para imprimir los menus y manejar adecuadamente los errores
+ * al querer agregar un libro
+ *
+ * @author Cristobal Liendo
+ * @param *user        el usuario registrado
+ * @param *biblioteca  la estructura donde se encuentran los libros
+ * @param *autores     la estructura donde se guardan los autores
+ * @param *categorias  la estructura donde se guardan las categorias
+ * @param *prestamos   la estructura donde se guardan los prestamos
+ * @return int
+ */
+int menu_funcion_agregar_libro(Usuario *user, Biblioteca *biblioteca,
+    ManejoAutor *autores, ManejoCategoria *categorias, ManejoPrestamo *prestamos) {
+    int eleccion = menu_prestamo_libros();
+
+    int success;
+    if(eleccion == 2) {
+        // rentar un libro
+        success = add_book(user, biblioteca, autores,
+            categorias, prestamos);
+
+        if (success == 1) {
+            CLS;
+            printf("La renta fue exitosa, credito restante: %.2f\n", user->credito);
+        }
+        else if (success == 2) {
+            CLS;
+            printf("No tienes suficientes fondos: %.2f\n", user->credito);
+        }
+        else if (success == 3) {
+            CLS;
+            printf("\tNo existe el libro seleccionado\n");
+        }
+        else if(success == 4) {
+            CLS;
+            printf("\tYa no puedes rentar mas libros\n");
+        }
+    }
+
+    return eleccion;
 }

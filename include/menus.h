@@ -8,6 +8,8 @@
  * @date 20/11/17
 */
 
+#define CLS system("clear")
+
 #ifndef MENUS_H
     #define MENUS_H
 
