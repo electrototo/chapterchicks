@@ -15,8 +15,6 @@
 #include <menus.h>
 #include <utilities.h>
 
-#define CLS system("clear")
-
 /*
  * Esta funcion imprime los nombres de los programadores
  * cada vez que se inicie el programa
@@ -263,35 +261,35 @@ void menu_registrar_libro(char *titulo, char *autor, char *categoria,
     printf("ALTA DE LIBROS\n\n");
     printf("Registrar nuevo libro:\n\n");
 
-    printf("\tIngresa el nombre del libro: ");
+    printf("\tNombre del libro:     ");
     fgets(titulo, 100, stdin);
     strip_char(titulo, '\n');
 
-    printf("\tIngresa el autor del libro: ");
+    printf("\tAutor del libro:      ");
     fgets(autor, 100, stdin);
     strip_char(autor, '\n');
     
-    printf("\tIngresa el género del libro: ");
+    printf("\tGénero del libro:     ");
     fgets(categoria, 50, stdin);
     strip_char(categoria, '\n');
     
-    printf("\tIngresa el ISBN 10 del libro: ");
+    printf("\tISBN 10 del libro:    ");
     fgets(isbn10, 15, stdin);
     strip_char(isbn10, '\n');
 
-    printf("\tIngresa el ISBN 13 del libro: ");
+    printf("\tISBN 13 del libro:    ");
     fgets(isbn13, 15, stdin);
     strip_char(isbn13, '\n');
 
-    printf("\tIngresa la editorial del libro: ");
+    printf("\tEditorial del libro:  ");
     fgets(editorial, 100, stdin);
     strip_char(editorial, '\n');
     
-    printf("\tIngresa el año de publicación del libro: ");
+    printf("\tAño de publicación:   ");
     scanf("%d", a_pub);
     getchar();
 
-    printf("\tIngresa el costo del libro: ");
+    printf("\tCosto del libro:      ");
     scanf("%f", costo_libro);
     getchar();
 
@@ -481,7 +479,7 @@ int menu_prestamo_libros() {
 int menu_rentar_libro(char *name) {
     int eleccion;
 
-    printf("¿Cómo deseas buscar el libro?\n");
+    printf("\n¿Cómo deseas buscar el libro?\n");
     printf("[1] Por nombre\n");
     printf("[2] Por ISBN 10\n");
     printf("[3] Por ISBN 13\n");
@@ -489,11 +487,11 @@ int menu_rentar_libro(char *name) {
     eleccion = validate_answer("Opción: ", 1, 3);
 
     if (eleccion == 1)
-        printf("Ingresa el nombre del libro: ");
+        printf("\n\tIngresa el nombre del libro: ");
     else if (eleccion == 2)
-        printf("Ingresa el ISBN 10 del libro: ");
+        printf("\n\tIngresa el ISBN 10 del libro: ");
     else if (eleccion == 3)
-        printf("Ingresa el ISBN 13 del libro: ");
+        printf("\n\tIngresa el ISBN 13 del libro: ");
 
     fgets(name, 100, stdin);
     strip_char(name, '\n');
@@ -502,44 +500,38 @@ int menu_rentar_libro(char *name) {
 }
 
 /*                           
-* Este menu le pregunta al administrador si desea dar de                                                                                                                  
+* Este menu le pregunta al administrador si desea dar de
 * alta un libro o dar un libro de baja
-*                                                                                                                                                                               
-* @author Elena Ginebra                                                                                                                                                    
-* @return int                                                                                                                                                             
+*
+* @author Elena Ginebra
+* @return int
 */
 int menu_alta_o_baja(){
-  
-  int opcion_alta_o_baja;
-  
-      printf("¿Qué quieres hacer?\n");
-      printf("[1] Alta de un libro\n");
-      printf("[2] Baja de un libro\n");
-      printf("[3] Salir\n");
-      printf("Opción: ");
+    int resultado;
 
-  do {
-    scanf("%d", &opcion_alta_o_baja);
-    getchar();
-  } while (opcion_alta_o_baja<1 || opcion_alta_o_baja >3);
+    printf("¿Qué quieres hacer?\n");
+    printf("[1] Alta de un libro\n");
+    printf("[2] Baja de un libro\n");
+    printf("[3] Salir\n");
 
-  CLS;
+    resultado = validate_answer("Opción: ", 1, 3);
+
+    CLS;
   
-    return opcion_alta_o_baja;
+    return resultado;
 }
 
-/*                                                                                        
- * Si el tipo de usuario es un administrador, puede dar de baja                           
- * un libro que se encuentre registrado en la base de datos                             
- *                                                                                        
+/*
+ * Si el tipo de usuario es un administrador, puede dar de baja
+ * un libro que se encuentre registrado en la base de datos
+ *
  * @author Elena Ginebra
- * @return void                                                                           
+ * @return void
  */
 void menu_baja_de_libros(char *libro_baja) {
-  printf("Ingresa el titulo del libro: ");
-  scanf("%s", libro_baja);
-  getchar();
+    printf("Ingresa el titulo del libro: ");
+    scanf("%s", libro_baja);
+    getchar();
 
-  CLS;
+    CLS;
 }
-
