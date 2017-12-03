@@ -21,6 +21,7 @@ int main(int argc, char **argv) {
     ManejoAutor autores;
     ManejoCategoria categorias;
     ManejoPrestamo prestamos;
+    Biblioteca libros;
 
     Usuario *usuario;
 
@@ -50,7 +51,7 @@ int main(int argc, char **argv) {
     // variables que lleva el flujo de las elecciones del usuario
     int success = 0, login_index = 0, found = 0;
 
-    int eleccion, eleccion2, export;
+    int eleccion, eleccion2, export, opcion_alta_o_baja;
 
     int lookup_id, max = 0;
 
@@ -313,8 +314,38 @@ int main(int argc, char **argv) {
 
                     break;
 
-                case 3:
-                    register_book(&biblioteca, &autores, &categorias);
+	        case 3:
+		  //Se pueden dar de alta o de baja los libros
+		  do {
+		      eleccion = menu_alta_o_baja ();
+		  
+		     if (eleccion == 1){
+		          register_book(&biblioteca, &autores, &categorias);
+		     }
+
+		     if (eleccion == 2){
+		     //FALTA DAR DE BAJA LIBRO
+		     
+		         found = 0;
+		         for (int i = 0; i < biblioteca.actual; i++) {
+			     if (strcmp(libros.libros[i].titulo, nombre_libro) == 0) {
+			         found = 1;
+ 
+  			         sprintf(msg, "Se dió de baja el libro %s por el administrador %s", nombre_libro, usuario->nombre);
+			         log_msg(msg);
+
+			         // guarda los libros
+			         save_db(&libros, sizeof(libros), "biblioteca.dat");
+			     }
+			 }
+		     }
+		       if (!found)
+			   printf("\tEl libro especificado no existe\n");
+		       else
+			   printf("\tEl libro fue exitosamente dado de baja\n");
+		       
+		   } while(eleccion != 3);
+		  
                     break;
 
                 case 4:
@@ -327,7 +358,7 @@ int main(int argc, char **argv) {
                         if (strcmp(usuarios.usuarios[i].email, email) == 0) {
                             found = 1;
 
-                            sprintf(msg, "Se dio de baja el usuario %s por el administrador %s", email, usuario->nombre);
+                            sprintf(msg, "Se dió de baja el usuario %s por el administrador %s", email, usuario->nombre);
                             log_msg(msg);
 
                             // pone la bandera de activo en falso
@@ -533,5 +564,5 @@ int main(int argc, char **argv) {
         }
     }
 
-    return 0;
+        return 0;
 }
