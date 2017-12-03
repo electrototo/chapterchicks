@@ -30,4 +30,5 @@
     int menu_prestamo_libros();
     int menu_rentar_libro(char *name);
     int menu_alta_o_baja();
+void menu_baja_de_libros(char *libro_baja);
 #endif
