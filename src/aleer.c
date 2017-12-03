@@ -53,7 +53,7 @@ int main(int argc, char **argv) {
 
     int eleccion, eleccion2, export, opcion_alta_o_baja;
 
-    int lookup_id, max = 0;
+    int lookup_id, max = 0, cat_count = 0;
 
     time_t diferencia;
 
@@ -328,18 +328,12 @@ int main(int argc, char **argv) {
 
                         else if (eleccion == 2){
                             for (int i = 0; i < biblioteca.actual; i++) {
-                                printf("Título: %s\n", biblioteca.libros[i].titulo);
-                                printf("\tAutor: %s\n", autores.autores[i].nombre);
-                                printf("\tCategoría: %s\n", categorias.categorias[i].nombre);
-                                printf("\tISBN 10: %s\n", biblioteca.libros[i].ISBN10);
-                                printf("\tISBN 13: %s\n", biblioteca.libros[i].ISBN13);
-                                printf("\tCosto: $%.2f\n", biblioteca.libros[i].costo);
-                                printf("\tAño de publicación: %d\n", biblioteca.libros[i].a_pub);
-                                printf("\tEditorial: %s\n\n", biblioteca.libros[i].editorial);
+                                libro = biblioteca.libros[i];
+                                format_book(libro, &autores, &categorias, 1);
                             }
                         
                             menu_baja_de_libros(nombre_libro);
-                        
+                            found = 0;
                             for (int i = 0; i < biblioteca.actual; i++) {
                                 if (strcmp(biblioteca.libros[i].titulo, nombre_libro) == 0) {
                                     found = 1;
@@ -432,7 +426,8 @@ int main(int argc, char **argv) {
                         }
                     }
 
-                    printf("Libro más popular: %s\n", libro.titulo);
+                    printf("Libro más popular:\n");
+                    format_book(libro, &autores, &categoria, 0);
                     printf("\tCantidad de veces rentado: %d\n", libro.prestamos);
                     printf("\n");
 
@@ -467,18 +462,7 @@ int main(int argc, char **argv) {
                                 for (int i = 0; i < biblioteca.actual; i++) {
                                     libro = biblioteca.libros[i];
 
-                                    printf("%s\n", libro.titulo);
-                                    printf("\tAutor:       %s\n",
-                                        find_autor_by_id(libro.autor, &autores).nombre);
-
-                                    printf("\tCategoría:   %s\n",
-                                        find_categoria_by_id(libro.categoria, &categorias).nombre);
-
-                                    printf("\tISBN 10:     %s\n", libro.ISBN10);
-                                    printf("\tISBN 13:     %s\n", libro.ISBN13);
-                                    printf("\tCosto:       $%.2f\n", libro.costo);
-                                    printf("\tAño:         %d\n", libro.a_pub);
-                                    printf("\tEditorial:   %s\n\n", libro.editorial);
+                                    format_book(libro, &autores, &categorias, 0);
 
                                     if (i % 5 == 0 && i != 0) {
                                         eleccion = menu_funcion_agregar_libro(
@@ -505,16 +489,46 @@ int main(int argc, char **argv) {
                             case 2:
                                 printf("CATEGORÍAS EXISTENTES:\n\n");
 
-                                for (int i = 0; i <= categorias.actual; i++){
-                                    printf("%s\n", categorias.categorias[i].nombre);
+                                for (int i = 0; i < categorias.actual; i++){
+                                    printf("\t[%d] %s\n", i + 1, categorias.categorias[i].nombre);
                                 }
 
-                                printf("Ingresa el nombre de la categoría que deseas ver: ");
-                                //fgets(categoria_deseada, bla bla);
-                                //hacer un strcmp con todas las categorias para ver si existe
-                                //mostrar sólo libros de esa categoria
-                                printf("\nPresione enter para salir de la lista...");
-                                getchar();
+                                printf("\n");
+
+                                eleccion = validate_answer("Selecciona el genero: ", 1, categorias.actual + 1);
+                                eleccion--;
+
+                                lookup_id = categorias.categorias[eleccion].id;
+                                cat_count = 0;
+                                for (int i = 0; i < biblioteca.actual; i++) {
+                                    libro = biblioteca.libros[i];
+
+                                    if (libro.categoria == lookup_id) {
+                                        format_book(libros, &autores, &categorias, 0);
+
+                                        if (cat_count % 5 == 0 && cat_count != 0) {
+                                            eleccion = menu_funcion_agregar_libro(
+                                                usuario, &biblioteca, &autores, &categorias, &prestamos);
+
+                                            if (eleccion == 3) {
+                                                CLS;
+                                                break;
+                                            }
+                                        }
+
+                                        cat_count++;
+                                    }
+                                }
+                                if (eleccion != 3) {
+                                    eleccion = menu_funcion_agregar_libro(
+                                        usuario, &biblioteca, &autores, &categorias, &prestamos);
+
+                                    if (eleccion == 3)
+                                        CLS;
+                                }
+
+                                save_db(&usuarios, sizeof(usuarios), "usuarios.dat");
+
                                 system("clear");
                                 break;
 
@@ -538,10 +552,8 @@ int main(int argc, char **argv) {
                     printf("Libros prestados: %d\n", 3 - usuario->disponibles);
 
                     for (int i = 0; i < 3 - usuario->disponibles; i++) {
-                        // puede ser optimizado
                         libro = find_book_by_id(usuario->libros[i], &biblioteca);
-
-                        printf("\tNombre del libro: \"%s\"\n", libro.titulo);
+                        format_book(libro, &autores, &categorias, 0);
                     }
 
                     printf("\n\n");
