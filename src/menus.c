@@ -428,6 +428,13 @@ void menu_ayuda(){
     } while (opcion_ayuda != 4);
 }
 
+/*
+ * Muestra el menu de categorias para permitirle al usuario una mejor
+ * busqueda de los libros que desea rentar
+ *
+ * @author Elena Ginebra
+ * @return int
+*/
 int menu_categorias() {
     int opcion_categorias;
 
@@ -442,4 +449,54 @@ int menu_categorias() {
     CLS;
 
     return opcion_categorias;
+}
+
+/*
+ * Este menu se muestra cada 5 libros para preguntarle al usuario
+ * si desea seguir, rentar un libro o salir de los libros
+ *
+ * @author Cristobal Liendo
+ * @return int
+*/
+int menu_prestamo_libros() {
+    printf("¿Qué quieres hacer?\n");
+    printf("[1] Seguir con la lista\n");
+    printf("[2] Rentar un libro\n");
+    printf("[3] Salir\n");
+
+    return validate_answer("Opción: ", 1, 3);
+}
+
+/*
+ * Esta funcion sirve para desplegar el menu que pregunta el libro a
+ * prestar. Puede ser por nombre, isbn 10 e isbn 13.
+ *
+ * regresa un 1 si es nombre, 2 si es isbn 10 y 3 si es isbn 13
+ *
+ * @author Cristobal Liendo
+ * @param *name  nombre del libro
+ * @return int
+*/
+
+int menu_rentar_libro(char *name) {
+    int eleccion;
+
+    printf("¿Cómo deseas buscar el libro?\n");
+    printf("[1] Por nombre\n");
+    printf("[2] Por ISBN 10\n");
+    printf("[3] Por ISBN 13\n");
+
+    eleccion = validate_answer("Opción: ", 1, 3);
+
+    if (eleccion == 1)
+        printf("Ingresa el nombre del libro: ");
+    else if (eleccion == 2)
+        printf("Ingresa el ISBN 10 del libro: ");
+    else if (eleccion == 3)
+        printf("Ingresa el ISBN 13 del libro: ");
+
+    fgets(name, 100, stdin);
+    strip_char(name, '\n');
+
+    return eleccion;
 }

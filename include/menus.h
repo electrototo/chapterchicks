@@ -31,4 +31,6 @@
     void menu_baja_de_usuario(char *usuario_baja);
     void menu_popular();
     void menu_ayuda();
+    int menu_prestamo_libros();
+    int menu_rentar_libro(char *name);
 #endif

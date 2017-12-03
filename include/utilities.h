@@ -27,4 +27,7 @@
     void save_db(void *structure, unsigned int size, char *name);
     int legal(int *fecha_nac);
     int validate_answer(char *message, int start, int end);
+
+    int add_book(Usuario *user, Biblioteca *bib, ManejoAutor *autores,
+        ManejoCategoria *categorias, ManejoPrestamo *prestamos);;
 #endif

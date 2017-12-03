@@ -13,11 +13,13 @@ int main(int argc, char **argv) {
     FILE *biblioteca_db;
     FILE *autores_db;
     FILE *categorias_db;
+    FILE *prestamos_db;
     FILE *users_export;
 
     ManejoUsuarios usuarios;
     ManejoAutor autores;
     ManejoCategoria categorias;
+    ManejoPrestamo prestamos;
 
     Usuario *usuario;
 
@@ -118,6 +120,23 @@ int main(int argc, char **argv) {
         printf("Se encontraron %d categorias\n\n", categorias.actual);
     }
     fclose(categorias_db);
+
+    //carga de la base de datos de los prestamos
+    prestamos_db = fopen("prestamos.dat", "r");
+    if(prestamos_db == NULL) {
+        prestamos_db = fopen("prestamos.dat", "w");
+        prestamos.actual = 0;
+
+        sprintf(msg, "Creacion de base de datos para prestamos");
+        log_msg(msg);
+
+        fwrite(&prestamos, sizeof(prestamos), 1, prestamos_db);
+    }
+    else {
+        fread(&prestamos, sizeof(prestamos), 1, prestamos_db);
+        printf("Se encontraron %d prestamos\n\n", prestamos.actual);
+    }
+    fclose(prestamos_db);
 
 
     // si al momento de ejecutar el codigo hubieron argumentos
@@ -257,8 +276,6 @@ int main(int argc, char **argv) {
     // el administrador decidió entrar como administrador
     if (eleccion == 1) {
         while ((eleccion = menu_administrador_general()) != 7) {
-            printf("eleccion: %d\n", eleccion);
-
             switch (eleccion) {
                 case 1:
                     //informe de libros en préstamo
@@ -394,10 +411,9 @@ int main(int argc, char **argv) {
             }
         }
     }
+
     // el administrador decidio como usuario o la cuenta es de tipo
     // usuario
-
-      
     else if (eleccion == 2 || usuario->tipo_usuario == MORTAL) {
         while((eleccion = menu_usuario()) != 4){
             switch(eleccion) {
@@ -405,59 +421,100 @@ int main(int argc, char **argv) {
                     // accesar al catalogo de libros
                     // aqui se podria mejorar mostrando un menu que pregunte por
                     // la categoria en vez de mostrar todos los libros
-		    // TODO: Preguntar que libro quiere pedir prestado
+                    // TODO: Preguntar que libro quiere pedir prestado
 
-		  while ((eleccion2 = menu_categorias()) != 5) {
-       		      switch (eleccion2){
-		            case 1:
-			        for (int i = 0; i < biblioteca.actual; i++) {
-				    printf("Título: %s\n", biblioteca.libros[i].titulo);
-				    printf("\tAutor: %c\n", *autores.autores[i].nombre);
-			            printf("\tCategoría: %c\n", *categorias.categorias[i].nombre);
-				    printf("\tISBN 10: %s\n", biblioteca.libros[i].ISBN10);
-				    printf("\tISBN 13: %s\n", biblioteca.libros[i].ISBN13);
-				    printf("\tCosto: %.2f\n", biblioteca.libros[i].costo);
-				    printf("\tAño de publicación: %d\n", biblioteca.libros[i].a_pub);
-				    printf("\tEditorial: %s\n\n", biblioteca.libros[i].editorial);
-				}
-			      	printf("Presione enter para salir de la lista...");
-				getchar();
-			        system("clear");
-				break;
-				
-			    case 2:
-     			        //char categoria_deseada [50];
-			    
-			        printf("CATEGORÍAS EXISTENTES:\n\n");
-				
-			        for (int i = 0; i <= categorias.actual; i++){       
-				    printf("%c\n", *categorias.categorias[i].nombre);        
-				    }
-				
-				printf("Ingresa el nombre de la categoría que deseas ver: ");
-				//fgets(categoria_deseada, bla bla);
-				//hacer un strcmp con todas las categorias para ver si existe
-				//mostrar sólo libros de esa categoria
-				printf("\nPresione enter para salir de la lista...");
-				getchar();
-				system("clear");
-			        break;
-			    
-		            case 3:
-			      //más destacados
-			        break;
-			    
-		            case 4:
-			      //sugerencias
-			        break;
-			    
-		            default:
-			        break;
-			}
-			
-		  }
-		    
-		    break;
+                    while ((eleccion2 = menu_categorias()) != 5) {
+                        switch (eleccion2){
+                            case 1:
+                                for (int i = 0; i < biblioteca.actual; i++) {
+                                    printf("Título: %s\n", biblioteca.libros[i].titulo);
+                                    printf("\tAutor: %s\n", autores.autores[i].nombre);
+                                    printf("\tCategoría: %s\n", categorias.categorias[i].nombre);
+                                    printf("\tISBN 10: %s\n", biblioteca.libros[i].ISBN10);
+                                    printf("\tISBN 13: %s\n", biblioteca.libros[i].ISBN13);
+                                    printf("\tCosto: $%.2f\n", biblioteca.libros[i].costo);
+                                    printf("\tAño de publicación: %d\n", biblioteca.libros[i].a_pub);
+                                    printf("\tEditorial: %s\n\n", biblioteca.libros[i].editorial);
+
+                                    if (i % 5 == 0 && i != 0) {
+                                        eleccion = menu_prestamo_libros();
+
+                                        if(eleccion == 2) {
+                                            // rentar un libro
+                                            success = add_book(usuario, &biblioteca, &autores,
+                                                &categorias, &prestamos);
+
+                                            save_db(&usuarios, sizeof(usuarios), "usuarios.dat");
+
+                                            if (success == 1)
+                                                printf("La renta fue exitosa, credito restante: %.2f\n", usuario->credito);
+                                            else if (success == 2)
+                                                printf("No tienes suficientes fondos: %.2f\n", usuario->credito);
+                                            else if (success == 3)
+                                                printf("No existe el libro seleccionado\n");
+                                            else if(success == 4)
+                                                printf("Ya no puedes rentar mas libros\n");
+
+                                        }
+                                        else if (eleccion == 3)
+                                            break;
+                                    }
+                                }
+                                if (eleccion != 3) {
+                                    eleccion = menu_prestamo_libros();
+
+                                    if(eleccion == 2) {
+                                        // rentar un libro
+                                        success = add_book(usuario, &biblioteca, &autores,
+                                            &categorias, &prestamos);
+
+                                        if (success == 1)
+                                            printf("La renta fue exitosa, credito restante: %.2f\n", usuario->credito);
+                                        else if (success == 2)
+                                            printf("No tienes suficientes fondos: %.2f\n", usuario->credito);
+                                        else if (success == 3)
+                                            printf("No existe el libro seleccionado\n");
+                                        else if(success == 4)
+                                            printf("Ya no puedes rentar mas libros\n");
+
+                                    }
+                                }
+
+                                printf("Presione enter para salir de la lista...");
+                                getchar();
+                                system("clear");
+                                break;
+                    
+                            case 2:
+                                printf("CATEGORÍAS EXISTENTES:\n\n");
+                    
+                                for (int i = 0; i <= categorias.actual; i++){       
+                                    printf("%s\n", categorias.categorias[i].nombre);        
+                                }
+                    
+                                printf("Ingresa el nombre de la categoría que deseas ver: ");
+                                //fgets(categoria_deseada, bla bla);
+                                //hacer un strcmp con todas las categorias para ver si existe
+                                //mostrar sólo libros de esa categoria
+                                printf("\nPresione enter para salir de la lista...");
+                                getchar();
+                                system("clear");
+                                break;
+                    
+                            case 3:
+                                //más destacados
+                                break;
+                    
+                            case 4:
+                                //sugerencias
+                                break;
+                
+                            default:
+                                break;
+                        }
+            
+                    }
+                    break;
 
                 case 2:
                     // mostrar los libros en prestamo

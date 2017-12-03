@@ -69,6 +69,8 @@
         char c_hash[256];
         char c_salt[128];
 
+        int libros[3];
+
         int id;
     } Usuario; 
 
@@ -83,4 +85,9 @@
         int fecha_prestamo;
         int fecha_devolucion;
     } Prestamo;
+
+    typedef struct {
+        Prestamo prestamos[150];
+        int actual;
+    } ManejoPrestamo;
 #endif

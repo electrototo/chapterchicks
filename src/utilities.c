@@ -347,3 +347,126 @@ int validate_answer(char *message, int start, int end) {
 
     return input;
 }
+
+/* 
+ * Esta funcion sirve para agregar un libro a la renta del usuario,
+ * regresa un 1 si fue exitoso, 2 si no alcanzó el dinero o 3 si
+ * no existe el libro, 4 si el usuario ya no puede rentar mas libros
+ *
+ * @author Cristobal Liendo
+ * @param *user   El usuario que se encuentra registrado
+ * @param *bib    La biblioteca donde se encuentran los libros  
+ * @return int
+*/
+
+int add_book(Usuario *user, Biblioteca *bib, ManejoAutor *autores,
+        ManejoCategoria *categorias, ManejoPrestamo *prestamos) {
+    char name[100], msg[100];
+
+    unsigned char salt[128], hash[256], a_credito[10];
+
+    Libro *libro;
+
+    int eleccion = menu_rentar_libro(name);
+
+    int success = 3;
+    for (int i = 0; i < bib->actual; i++) {
+        if (eleccion == 1) {
+            if (strcmp(name, bib->libros[i].titulo) == 0) {
+                libro = &bib->libros[i];
+                success = 1;
+
+                break;
+            }
+        }
+        else if (eleccion == 2) {
+            if (strcmp(name, bib->libros[i].ISBN10) == 0) {
+                libro = &bib->libros[i];
+                success = 1;
+
+                break;
+            }
+        }
+        else if (eleccion == 3) {
+            if (strcmp(name, bib->libros[i].ISBN13) == 0) {
+                libro = &bib->libros[i];
+                success = 1;
+
+                break;
+            }
+        }
+    }
+
+    // si se encontro el libro
+    if (success == 1) {
+        // comprueba que el usuario tenga el dinero suficiente
+        if (user->credito < libro->costo)
+            success = 2;
+        else if (user->disponibles == 0)
+            success = 4;
+        else {
+            // recalcula el dinero del usuario
+            user->credito = user->credito - libro->costo;
+
+            // tambien el hash del credito
+            sprintf(a_credito, "%f", user->credito);
+            fastpbkdf2_hmac_sha256(a_credito, strlen(a_credito), user->c_salt,
+                128, 4096, hash, 256);
+
+            memcpy(user->c_hash, hash, 256);
+
+            // aumenta la cantidad de veces que se ha prestado el libro
+            libro->prestamos++;
+
+            // aumenta la cantidad de veces que el autor ha sido prestado
+            for (int i = 0; i < autores->actual; i++) {
+                if (libro->autor == autores->autores[i].id) {
+                    autores->autores[i].prestados++;
+
+                    break;
+                }
+                else {
+                    sprintf(msg, "Error inesperado al buscar el autor");
+                    log_msg(msg);
+                }
+            }
+
+            // aumenta la cantidad de veces que el genero ha sido prestado
+            for (int i = 0; i < categorias->actual; i++) {
+                if (libro->categoria == categorias->categorias[i].id) {
+                    categorias->categorias[i].prestados++;
+
+                    break;
+                }
+                else {
+                    sprintf(msg, "Error inesperado al buscar la categoria");
+                    log_msg(msg);
+                }
+            }
+
+            // agrega el libro a los libros del usuario
+            user->libros[3 - user->disponibles] = libro->id;
+
+            // disminuye la cantidad de libros que puede prestar
+            user->disponibles--;
+
+            // crea un registro
+            prestamos->prestamos[prestamos->actual].libro = libro->id;
+            prestamos->prestamos[prestamos->actual].usuario = user->id;
+            prestamos->prestamos[prestamos->actual].fecha_prestamo = time(NULL);
+            prestamos->prestamos[prestamos->actual].fecha_prestamo = time(NULL) + (60 * 60 * 24 * 30);
+
+            // guarda un mensaje informativo
+            sprintf(msg, "El usuario %s rento el libro %s", user->nombre, libro->titulo);
+            log_msg(msg);
+
+            // guarda todos los cambios en las bases de datos
+            save_db(bib, sizeof(*bib), "biblioteca.dat");
+            save_db(autores, sizeof(*autores), "autores.dat");
+            save_db(categorias, sizeof(*categorias), "categorias.dat");
+            save_db(prestamos, sizeof(*prestamos), "prestamos.dat");
+        }
+    }
+
+    return success;
+}
