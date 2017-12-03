@@ -41,4 +41,5 @@
 
     int menu_funcion_agregar_libro(Usuario *user, Biblioteca *biblioteca,
         ManejoAutor *autores, ManejoCategoria *categorias, ManejoPrestamo *prestamos);
+    void format_book(Libro libro, ManejoAutor *autores, ManejoCategoria *categorias, int admin);
 #endif

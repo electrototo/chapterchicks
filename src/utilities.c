@@ -299,7 +299,8 @@ void register_book(Biblioteca *biblioteca, ManejoAutor *autores, ManejoCategoria
         biblioteca->libros[biblioteca->actual].ISBN13, 
         &biblioteca->libros[biblioteca->actual].costo, 
         &biblioteca->libros[biblioteca->actual].a_pub,
-        biblioteca->libros[biblioteca->actual].editorial
+        biblioteca->libros[biblioteca->actual].editorial,
+        &biblioteca->libros[biblioteca->actual].paginas
     );
 
     // busca si existe el autor especificado para el libro
@@ -699,4 +700,33 @@ int menu_funcion_agregar_libro(Usuario *user, Biblioteca *biblioteca,
     }
 
     return eleccion;
+}
+
+/*
+ * Esta funcion sirve para imprimir un solo libro
+ *
+ * @author Cristobal Liendo
+ * @param libro       El libro ha imprimirse
+ * @param *autores    la estructura donde se encuentran los autores
+ * @param *categorias la estructura donde se guardan las categorias 
+ * @param admin       Si es admini se va a imprimir si el libro esta activo o no
+*/
+void format_book(Libro libro, ManejoAutor *autores, ManejoCategoria *categorias,
+    int admin) {
+    printf("%s\n", libro.titulo);
+    printf("\tAutor:       %s\n",
+        find_autor_by_id(libro.autor, autores).nombre);
+
+    printf("\tCategoría:   %s\n",
+        find_categoria_by_id(libro.categoria, categorias).nombre);
+
+    printf("\tISBN 10:     %s\n", libro.ISBN10);
+    printf("\tISBN 13:     %s\n", libro.ISBN13);
+    printf("\tCosto:       $%.2f\n", libro.costo);
+    printf("\tAño:         %d\n", libro.a_pub);
+    printf("\tEditorial:   %s\n", libro.editorial);
+    printf("\tPáginas:     %d\n\n", libro.paginas);
+
+    if (admin)
+        printf("\tActivo:      %s\n", (libro.activo) ? "Si" : "No");
 }
