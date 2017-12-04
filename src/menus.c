@@ -16,7 +16,7 @@
 #include <utilities.h>
 
 /*
- * Esta funcion imprime los nombres de los programadores
+ * Esta función imprime los nombres de los programadores
  * cada vez que se inicie el programa
  *
  * @author Cristobal Liendo
@@ -44,15 +44,15 @@ void creditos() {
 }
 
 /*
- * Es el menu que se imprime despues de haber mostrado
+ * Es el menú que se imprime despues de haber mostrado
  * los nombres de los programadores. Hay dos opciones:
  * entrar al sistema o el auto registro para usuarios 
  * nuevos que quieran usar el sistema.
  * El sistema entra en un ciclo hasta que el usuario
- * haya ingresado una opcion valida
+ * haya ingresado una opción válida
  *
  * @author Guillermo Ortega
- * @return 1 o 2, dependiendo de la eleccion del usuario
+ * @return 1 o 2, dependiendo de la elección del usuario
 */
 int menu_principal() {
     int opcion_principal;
@@ -67,11 +67,11 @@ int menu_principal() {
 }
 
 /*
- * Este menu sera usado para que el usuario pueda registrarse.
+ * Este menú serú usado para que el usuario pueda registrarse.
  * La contrasena la ingresa el usuario, debido a que es una
- * mala practica mandar contrasenas por correo debido a que 
+ * mala práctica mandar contraseñas por correo debido a que 
  * estas deben ir en texto claro.
- * La funcion tambien verifica que ambas contrasenas coincidan,
+ * La función tambien verifica que ambas contraseñas coincidan,
  * si no coinciden entra en un ciclo hasta que el usuario haya
  * ingresado unas contrasenas que coincidan
  *
@@ -136,16 +136,16 @@ int menu_agregar_usuario (char *nombre_usuario, char *contrasena,
 }
 
 /*
- * Esta funcion recibe como parametros dos direcciones de memoria
- * a las que se van a guardar el correo y la contrasena proporcionadas
+ * Esta función recibe como parámetros dos direcciones de memoria
+ * a las que se van a guardar el correo y la contraseña proporcionadas
  * por el usuario.
- * Su funcion principal es preguntarle al usuario su correo y su
+ * Su función principal es preguntarle al usuario su correo y su
  * contrasena
  *
  * @author Cristobal Liendo, Elena Ginebra, Guillermo Ortega
  * @param  *correo    Significa donde se desea guardar el correo
  *                    ingresado por el usuario
- * @param  *password  Es a donde se desea guardar la contrasena
+ * @param  *password  Es donde se desea guardar la contrasena
  *                    proporcionada por el usuario
  * @return void
 */
@@ -167,7 +167,7 @@ void menu_acceso(char *email, char *password1) {
 
 /*
  * Si el tipo de usuario es un administrador, se le va a desplegar
- * este menu para que pueda seleccionar la modalidad en la que desea
+ * este menú para que pueda seleccionar la modalidad en la que desea
  * entrar al sistema.
  * Regresa un 1 si quiere entrar como administrador y un 2 si es que
  * desea ingresar como usuario normal
@@ -190,10 +190,10 @@ int menu_administrador_como() {
 }
 
 /*
- * Si el administrador escoge ingresar como admiistrador se le
- * desplegara la lista de opciones
+ * Si el administrador escoge ingresar como administrador se le
+ * desplegará la lista de opciones
  * Regresa la opción que sea escogida y sigue preguntando mientras
- * que la opcion ingresada no esté entre las opciones disponibles
+ * que la opción ingresada no esté entre las opciones disponibles
  *
  * @author Guillermo Ortega, Elena Ginebra, Cristobal Liendo
  * @return int
@@ -217,8 +217,8 @@ int menu_administrador_general() {
 }
 
 /*
- * Si el tipo de usuario es un usuario o un administrados escoge ingresar como
- * usuario, este menu despliega las acciones disponibles 
+ * Si el tipo de usuario es un usuario o un administrador escoge ingresar como
+ * usuario, este menú despliega las acciones disponibles 
  * para un usuario
  * Regresa la opción escogida por el usuario y sigue preguntando por esta mientras
  * que la opción ingresada no sea válida.
@@ -374,7 +374,7 @@ void menu_ayuda(){
 }
 
 /*
- * Muestra el menu de categorias para permitirle al usuario una mejor
+ * Muestra el menú de categorías para permitirle al usuario una mejor
  * busqueda de los libros que desea rentar
  *
  * @author Elena Ginebra
@@ -396,7 +396,7 @@ int menu_categorias() {
 }
 
 /*
- * Este menu se muestra cada 5 libros para preguntarle al usuario
+ * Este menú se muestra cada 5 libros para preguntarle al usuario
  * si desea seguir, rentar un libro o salir de los libros
  *
  * @author Cristobal Liendo
@@ -419,7 +419,7 @@ int menu_prestamo_libros() {
 }
 
 /*
- * Esta funcion sirve para desplegar el menu que pregunta el libro a
+ * Esta funcion sirve para desplegar el menú que pregunta el libro a
  * prestar. Puede ser por nombre, isbn 10 e isbn 13.
  *
  * regresa un 1 si es nombre, 2 si es isbn 10 y 3 si es isbn 13
@@ -453,7 +453,7 @@ int menu_rentar_libro(char *name) {
 }
 
 /*
- * Esta funcion sirve para desplegar el menu que pregunta el libro a
+ * Esta funcion sirve para desplegar el menú que pregunta el libro a
  * regresar. Puede ser por nombre, isbn 10 e isbn 13.
  *
  * es muy parecida a la anterior, con diferencia que cambia el texto
@@ -492,7 +492,7 @@ int menu_regresar_libro(char *name) {
 }
 
 /*                           
-* Este menu le pregunta al administrador si desea dar de
+* Este menú le pregunta al administrador si desea dar de
 * alta un libro o dar un libro de baja
 *
 * @author Elena Ginebra
@@ -514,7 +514,7 @@ int menu_alta_o_baja(){
 }
 
 /*
- * Este menu sirve para preguntar al usuario si quiere seguir imprimiendo mas
+ * Este menú sirve para preguntar al usuario si quiere seguir imprimiendo mas
  * libros, dar de baja un libro o salirse. 
  *
  * @author Cristobal Liendo
