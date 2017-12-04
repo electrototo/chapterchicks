@@ -403,12 +403,19 @@ int menu_categorias() {
  * @return int
 */
 int menu_prestamo_libros() {
+    int eleccion;
+
     printf("¿Qué quieres hacer?\n");
     printf("[1] Seguir con la lista\n");
     printf("[2] Rentar un libro\n");
     printf("[3] Salir\n");
 
-    return validate_answer("Opción: ", 1, 3);
+    eleccion = validate_answer("Opción: ", 1, 3);
+
+    if (eleccion == 3 || eleccion == 1)
+        CLS;
+
+    return eleccion;
 }
 
 /*
