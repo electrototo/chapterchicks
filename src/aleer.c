@@ -150,6 +150,24 @@ int main(int argc, char **argv) {
     // si al momento de ejecutar el código hubieron argumentos
     if (argc > 1) {
         if (strcmp(argv[1], "-c") == 0) {
+            for (int i = 0; i < prestamos.actual; i++) {
+                prestamo = &prestamos.prestamos[i];
+                
+                libro = find_book_by_id(prestamo->libro, &biblioteca);
+                
+                diferencia = difftime(prestamo->fecha_devolucion, time(0));
+
+                printf("Nombre del libro: %s\n", libro.titulo);
+                printf("\tUsuario:            %s\n", find_user_by_id(prestamo->usuario, &usuarios).email);
+                printf("\tDía de préstamo:    %s", ctime(&prestamo->fecha_prestamo));
+                printf("\tDía de devolución:  %s", ctime(&prestamo->fecha_devolucion));
+                printf("\tDías restantes:     %ld\n", diferencia / 86400);
+                printf("\tDevuelto:           %s\n", (prestamo->devuelto) ? "Si" : "No");
+                printf("\n");
+                    }
+
+             printf("\n\n");
+
         }
 
         else if (strcmp(argv[1], "-a") == 0) {
