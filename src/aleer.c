@@ -591,8 +591,9 @@ int main(int argc, char **argv) {
                     break;
 
                 case 3:
+		  do{
                     // devolver un libro
-                    // imprime una lista de todos los libros que tiene prestados
+		    // imprime una lista de todos los libros que tiene prestados
                     printf("Libros prestados: %d\n", 3 - usuario->disponibles);
 
                     for (int i = 0; i < 3 - usuario->disponibles; i++) {
@@ -643,7 +644,7 @@ int main(int argc, char **argv) {
                     }
 
                     printf("\n\n");
-
+		  }while (eleccion != 4);
                     break;
 
                 default:
