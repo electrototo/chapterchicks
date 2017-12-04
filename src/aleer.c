@@ -31,7 +31,7 @@ int main(int argc, char **argv) {
     Autor autor_popular;
     Prestamo *prestamo;
 
-    // variables para la creacion de un usuario
+    // variables para la creación de un usuario
     unsigned char password[256], salt[128], hash[256];
     unsigned char msg[200];
 
@@ -147,7 +147,7 @@ int main(int argc, char **argv) {
     fclose(prestamos_db);
 
 
-    // si al momento de ejecutar el codigo hubieron argumentos
+    // si al momento de ejecutar el código hubieron argumentos
     if (argc > 1) {
         if (strcmp(argv[1], "-c") == 0) {
         }
@@ -246,12 +246,12 @@ int main(int argc, char **argv) {
         }
     }
 
-    // esto serivirá a futura para no tener que escribir
+    // esto serivirá a futuro para no tener que escribir
     // usuarios.usuarios[login_index] cada vez que se quiera
-    // acceder a la informacion del usuario actual
+    // acceder a la información del usuario actual
     usuario = &usuarios.usuarios[login_index];
 
-    // hay que comprobar si no hubo tampering con el credito de la
+    // hay que comprobar si no hubo tampering con el crédito de la
     // persona
     sprintf(a_credito, "%f", usuario->credito);
     fastpbkdf2_hmac_sha256(a_credito, strlen(a_credito), usuario->c_salt,
@@ -390,7 +390,7 @@ int main(int argc, char **argv) {
 
                 case 5:
                     max = 0;
-                    // obtiene la categoria mas popular
+                    // obtiene la categoría mas popular
                     for (int i = 0; i < categorias.actual; i++) {
                         if (categorias.categorias[i].prestados > max) {
                             max = categorias.categorias[i].prestados;
@@ -441,13 +441,13 @@ int main(int argc, char **argv) {
         }
     }
 
-    // el administrador decidio como usuario o la cuenta es de tipo
+    // el administrador decidió como usuario o la cuenta es de tipo
     // usuario
     else if (eleccion == 2 || usuario->tipo_usuario == MORTAL) {
         while((eleccion_principal = menu_usuario()) != 4){
             switch(eleccion_principal) {
                 case 1:
-                    // accesar al catalogo de libros
+                    // accesar al catálogo de libros
                     while ((eleccion2 = menu_categorias()) != 4) {
                         eleccion = 0;
 
@@ -578,7 +578,7 @@ int main(int argc, char **argv) {
                     break;
 
                 case 2:
-                    // mostrar los libros en prestamo
+                    // mostrar los libros en préstamo
                     printf("Libros prestados: %d\n", 3 - usuario->disponibles);
 
                     for (int i = 0; i < 3 - usuario->disponibles; i++) {
