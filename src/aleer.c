@@ -125,7 +125,7 @@ int main(int argc, char **argv) {
     }
     else {
         fread(&categorias, sizeof(categorias), 1, categorias_db);
-        printf("Se encontraron %d categorias\n\n", categorias.actual);
+        printf("Se encontraron %d categorias\n", categorias.actual);
     }
     fclose(categorias_db);
 
@@ -164,9 +164,9 @@ int main(int argc, char **argv) {
                 printf("\tDías restantes:     %ld\n", diferencia / 86400);
                 printf("\tDevuelto:           %s\n", (prestamo->devuelto) ? "Si" : "No");
                 printf("\n");
-                    }
+            }
 
-             printf("\n\n");
+            printf("\n\n");
 
         }
 
@@ -190,12 +190,12 @@ int main(int argc, char **argv) {
                     fprintf(users_export, "%s,%s,%d\n", usuarios.usuarios[i].nombre, usuarios.usuarios[i].email, usuarios.usuarios[i].activo);
 
                 printf("Usuario: %s\n", usuarios.usuarios[i].nombre);
-                printf("Email: %s\n", usuarios.usuarios[i].email);
+                printf("\tEmail: %s\n", usuarios.usuarios[i].email);
 
                 if (usuarios.usuarios[i].activo)
-                    printf("El usuario se encuentra activo\n");
+                    printf("\tEl usuario se encuentra activo\n");
                 else
-                    printf("El usuario se encuentra desactivo\n");
+                    printf("\tEl usuario se encuentra desactivo\n");
 
                 printf("\n");
             }
