@@ -444,7 +444,7 @@ int main(int argc, char **argv) {
     // el administrador decidio como usuario o la cuenta es de tipo
     // usuario
     else if (eleccion == 2 || usuario->tipo_usuario == MORTAL) {
-        while((eleccion_principal = menu_usuario()) != 4){
+        while((eleccion_principal = menu_usuario()) != 6){
             switch(eleccion_principal) {
                 case 1:
                     // accesar al catalogo de libros
@@ -643,6 +643,33 @@ int main(int argc, char **argv) {
                     }
 
                     printf("\n\n");
+
+                    break;
+
+                case 4:
+                    // agregar saldo
+                    credito = menu_agregar_dinero();
+
+                    sprintf(msg, "El usuario %s se agregó $%.2f", usuario->nombre, credito);
+
+                    usuario->credito += credito;
+                    credito += usuario->credito;
+
+                    // recalcula el nuevo hash del credito
+                    sprintf(a_credito, "%f", credito);
+                    fastpbkdf2_hmac_sha256(a_credito, strlen(a_credito), usuario->c_hash,
+                        128, 4096, hash, 256);
+
+                    memcpy(usuario->c_hash, hash, 256);
+                    save_db(&usuarios, sizeof(usuarios), "usuarios.dat");
+
+                    printf("\tSaldo exitosamente guardado\n\n");
+
+                    break;
+
+                case 5:
+                    // consultar saldo
+                    printf("\n\tTu saldo es de: $%.2f pesos\n\n", usuario->credito);
 
                     break;
 
