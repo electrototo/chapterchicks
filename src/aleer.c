@@ -51,7 +51,7 @@ int main(int argc, char **argv) {
     // variables que lleva el flujo de las elecciones del usuario
     int success = 0, login_index = 0, found = 0;
 
-    int eleccion, eleccion2, export, opcion_alta_o_baja;
+    int eleccion, eleccion2, eleccion_principal, export, opcion_alta_o_baja;
 
     int lookup_id, max = 0, cat_count = 0;
 
@@ -444,11 +444,11 @@ int main(int argc, char **argv) {
     // el administrador decidio como usuario o la cuenta es de tipo
     // usuario
     else if (eleccion == 2 || usuario->tipo_usuario == MORTAL) {
-        while((eleccion = menu_usuario()) != 4){
-            switch(eleccion) {
+        while((eleccion_principal = menu_usuario()) != 4){
+            switch(eleccion_principal) {
                 case 1:
                     // accesar al catalogo de libros
-                    while ((eleccion2 = menu_categorias()) != 5) {
+                    while ((eleccion2 = menu_categorias()) != 4) {
                         eleccion = 0;
 
                         switch (eleccion2){
@@ -491,6 +491,8 @@ int main(int argc, char **argv) {
 
                                 eleccion = validate_answer("Selecciona el genero: ", 1, categorias.actual + 1);
                                 eleccion--;
+
+                                CLS;
 
                                 lookup_id = categorias.categorias[eleccion].id;
                                 cat_count = 0;
@@ -572,7 +574,6 @@ int main(int argc, char **argv) {
                             default:
                                 break;
                         }
-
                     }
                     break;
 
