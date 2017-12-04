@@ -233,9 +233,11 @@ int menu_usuario() {
     printf("[1] Accesar al catálogo de libros\n");
     printf("[2] Mostrar libros en préstamo\n");
     printf("[3] Devolución de libros\n");
-    printf("[4] Salir del sistema\n");
+    printf("[4] Agregar saldo\n");
+    printf("[5] Consultar saldo\n");
+    printf("[6] Salir del sistema\n");
 
-    opcion_usuario = validate_answer("Opción: ", 1, 4);
+    opcion_usuario = validate_answer("Opción: ", 1, 6);
     CLS;
 
     return opcion_usuario;
@@ -530,4 +532,23 @@ int menu_seleccionar_libros() {
     resultado = validate_answer("Opción: ", 1, 3);
 
     return resultado;
+}
+
+/* 
+ * Este menu sirve para poder preguntar el saldo que se desa agregar.
+ * Puede ser un valor entre $10 y $3000 
+ *
+ * @author Cristobal Liendo
+ * @return float
+*/
+
+int menu_agregar_dinero() {
+    float dinero;
+
+    do {
+        printf("\n\tIngresa el dinero (entre $10 y $3000): ");
+        scanf("%f", &dinero);
+    } while (dinero < 10 || dinero > 3000);
+
+    return dinero;
 }

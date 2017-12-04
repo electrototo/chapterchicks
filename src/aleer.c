@@ -38,7 +38,7 @@ int main(int argc, char **argv) {
     float credito = 0;
     unsigned char a_credito[10];
 
-    int index;
+    int index, tmp;
 
     // variables para el registro del usuario
     char nombre[100], direccion[100], email[100];
@@ -275,6 +275,34 @@ int main(int argc, char **argv) {
         return 1;
     }
 
+    // comprueba que no haya ningun libro caduco dentro de los libros del usuario
+    for (int id = 0; id < 3 - usuario->disponibles; id++) {
+        // Busca la ficha de prestamo
+        for (int i = 0; i < prestamos.actual; i++) {
+            prestamo = &prestamos.prestamos[i];
+
+            if (prestamo->libro == usuario->libros[id] && prestamo->usuario == usuario->id) {
+                if (difftime(prestamo->fecha_devolucion, time(NULL)) < 0) {
+                    // mueve de lugar los libros prestados
+                    for (int j = id; j < 2; j++) {
+                        tmp = usuario->libros[j + 1];
+                        usuario->libros[j] = usuario->libros[j + 1];
+                        usuario->libros[j + 1] = tmp;
+                    }
+                    // modifica la fecha de entrega
+                    prestamo->fecha_devolucion = time(NULL);
+                    // y lo marca como devuelto
+                    prestamo->devuelto = 1;
+
+                    usuario->disponibles++;
+
+                    save_db(&prestamos, sizeof(prestamos), "prestamos.dat");
+                    save_db(&usuarios, sizeof(usuarios), "usuarios.dat");
+                }
+            }
+        }
+    }
+
     eleccion = 0;
     if (usuario->tipo_usuario == ADMIN)
         eleccion = menu_administrador_como();
@@ -444,7 +472,7 @@ int main(int argc, char **argv) {
     // el administrador decidió como usuario o la cuenta es de tipo
     // usuario
     else if (eleccion == 2 || usuario->tipo_usuario == MORTAL) {
-        while((eleccion_principal = menu_usuario()) != 4){
+        while((eleccion_principal = menu_usuario()) != 6){
             switch(eleccion_principal) {
                 case 1:
                     // accesar al catálogo de libros
@@ -643,6 +671,33 @@ int main(int argc, char **argv) {
                     }
 
                     printf("\n\n");
+
+                    break;
+
+                case 4:
+                    // agregar saldo
+                    credito = menu_agregar_dinero();
+
+                    sprintf(msg, "El usuario %s se agregó $%.2f", usuario->nombre, credito);
+
+                    usuario->credito += credito;
+                    credito += usuario->credito;
+
+                    // recalcula el nuevo hash del credito
+                    sprintf(a_credito, "%f", credito);
+                    fastpbkdf2_hmac_sha256(a_credito, strlen(a_credito), usuario->c_hash,
+                        128, 4096, hash, 256);
+
+                    memcpy(usuario->c_hash, hash, 256);
+                    save_db(&usuarios, sizeof(usuarios), "usuarios.dat");
+
+                    printf("\tSaldo exitosamente guardado\n\n");
+
+                    break;
+
+                case 5:
+                    // consultar saldo
+                    printf("\n\tTu saldo es de: $%.2f pesos\n\n", usuario->credito);
 
                     break;
 
