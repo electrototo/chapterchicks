@@ -67,13 +67,13 @@ int menu_principal() {
 }
 
 /*
- * Este menú serú usado para que el usuario pueda registrarse.
- * La contrasena la ingresa el usuario, debido a que es una
+ * Este menú será usado para que el usuario pueda registrarse.
+ * La contraseña la ingresa el usuario, debido a que es una
  * mala práctica mandar contraseñas por correo debido a que 
  * estas deben ir en texto claro.
  * La función tambien verifica que ambas contraseñas coincidan,
  * si no coinciden entra en un ciclo hasta que el usuario haya
- * ingresado unas contrasenas que coincidan
+ * ingresado unas contraseñas que coincidan
  *
  * @author Guillermo Ortega, Elena Ginebra, Cristobal Liendo
  * @return void
@@ -353,7 +353,7 @@ void menu_ayuda(){
             printf("\t\t• Nombre completo\n\t\t• Dirección\n\t\t• Fecha de nacimiento (tendrá que tener al menos 18 años de edad cumplidas)\n\t\t• Correo electrónico\n");
             printf("\t2.- Acceso como usuario registrado al catálogo de libros para selección de un máximo de 3 libros.\n");
             printf("\t3.- Devolución de libros\n");
-            printf("Una vez creada un usuario, estará activo por \"default\" sin embargo ésta se puede dar de baja a partir del menú general de administrador o lo puede realizar el mismo usuario si así lo desea.\n");
+            printf("Una vez creado un usuario, estará activo por \"default\" sin embargo ésta se puede dar de baja a partir del menú general de administrador o lo puede realizar el mismo usuario si así lo desea.\n");
             printf("Cada usuario deberá tener un correo único y no podrá registrarse más de una sola vez.\n");
             printf("\nSi el administrador utiliza el modo de ejecucion que implica usar el parámetro\"-usu\" despliega el listado de todos los usuarios del servicio catalogados y muestra su alta y baja.\n");   
             printf("El administador no tendrá acceso a las contraseñas de los usuarios. Tampoco podrá acceder ni modificar el crédito de ninguno de ellos\n\n");
