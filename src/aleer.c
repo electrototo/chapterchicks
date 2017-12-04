@@ -125,7 +125,7 @@ int main(int argc, char **argv) {
     }
     else {
         fread(&categorias, sizeof(categorias), 1, categorias_db);
-        printf("Se encontraron %d categorias\n\n", categorias.actual);
+        printf("Se encontraron %d categorias\n", categorias.actual);
     }
     fclose(categorias_db);
 
@@ -150,6 +150,24 @@ int main(int argc, char **argv) {
     // si al momento de ejecutar el código hubieron argumentos
     if (argc > 1) {
         if (strcmp(argv[1], "-c") == 0) {
+            for (int i = 0; i < prestamos.actual; i++) {
+                prestamo = &prestamos.prestamos[i];
+                
+                libro = find_book_by_id(prestamo->libro, &biblioteca);
+                
+                diferencia = difftime(prestamo->fecha_devolucion, time(0));
+
+                printf("Nombre del libro: %s\n", libro.titulo);
+                printf("\tUsuario:            %s\n", find_user_by_id(prestamo->usuario, &usuarios).email);
+                printf("\tDía de préstamo:    %s", ctime(&prestamo->fecha_prestamo));
+                printf("\tDía de devolución:  %s", ctime(&prestamo->fecha_devolucion));
+                printf("\tDías restantes:     %ld\n", diferencia / 86400);
+                printf("\tDevuelto:           %s\n", (prestamo->devuelto) ? "Si" : "No");
+                printf("\n");
+            }
+
+            printf("\n\n");
+
         }
 
         else if (strcmp(argv[1], "-a") == 0) {
@@ -172,12 +190,12 @@ int main(int argc, char **argv) {
                     fprintf(users_export, "%s,%s,%d\n", usuarios.usuarios[i].nombre, usuarios.usuarios[i].email, usuarios.usuarios[i].activo);
 
                 printf("Usuario: %s\n", usuarios.usuarios[i].nombre);
-                printf("Email: %s\n", usuarios.usuarios[i].email);
+                printf("\tEmail: %s\n", usuarios.usuarios[i].email);
 
                 if (usuarios.usuarios[i].activo)
-                    printf("El usuario se encuentra activo\n");
+                    printf("\tEl usuario se encuentra activo\n");
                 else
-                    printf("El usuario se encuentra desactivo\n");
+                    printf("\tEl usuario se encuentra desactivo\n");
 
                 printf("\n");
             }
@@ -338,8 +356,10 @@ int main(int argc, char **argv) {
                     insertion_sort(&usuarios_cpy);
 
                     for (int i = 0; i < usuarios_cpy.actual; i++) {
-                        printf("Nombre del usuario: %s\n", usuarios_cpy.usuarios[i].nombre);
-                        printf("\tNúmero de libros que ha pedido prestado: %d\n", 3 - usuarios_cpy.usuarios[i].disponibles);
+                        printf("Usuario: %s\n", usuarios_cpy.usuarios[i].nombre);
+                        printf("\tEmail:            %s\n", usuarios_cpy.usuarios[i].email);
+                        printf("\tDireccion:        %s\n", usuarios_cpy.usuarios[i].direccion);
+                        printf("\tLibros prestados: %d\n", 3 - usuarios_cpy.usuarios[i].disponibles);
                         printf("\n");
                     }
 
@@ -619,8 +639,6 @@ int main(int argc, char **argv) {
                     break;
 
                 case 3:
-                    // devolver un libro
-                    // imprime una lista de todos los libros que tiene prestados
                     printf("Libros prestados: %d\n", 3 - usuario->disponibles);
 
                     for (int i = 0; i < 3 - usuario->disponibles; i++) {
@@ -628,50 +646,49 @@ int main(int argc, char **argv) {
                         format_book(libro, &autores, &categorias, 0);
                     }
 
-                    eleccion = menu_regresar_libro(nombre_libro);
+                    while ((eleccion = menu_regresar_libro(nombre_libro)) != 4) {
+                        // comprueba que tenga el libro en sus libros prestados
+                        found = 0;
+                        for (int i = 0; i < 3 - usuario->disponibles; i++) {
+                            lookup_id = usuario->libros[i];
 
-                    // comprueba que tenga el libro en sus libros prestados
-                    found = 0;
-                    for (int i = 0; i < 3 - usuario->disponibles; i++) {
-                        lookup_id = usuario->libros[i];
-
-                        libro = find_book_by_id(lookup_id, &biblioteca);
-                        if (eleccion == 1) {
-                            if (strcmp(libro.titulo, nombre_libro) == 0) {
-                                found = 1;
-                                lookup_id = i;
-                                break;
+                            libro = find_book_by_id(lookup_id, &biblioteca);
+                            if (eleccion == 1) {
+                                if (strcmp(libro.titulo, nombre_libro) == 0) {
+                                    found = 1;
+                                    lookup_id = i;
+                                    break;
+                                }
+                            }
+                            else if(eleccion == 2){
+                                if (strcmp(libro.ISBN10, nombre_libro) == 0) {
+                                    found = 1;
+                                    lookup_id = i;
+                                    break;
+                                }
+                            }
+                            else if(eleccion == 3){
+                                if (strcmp(libro.ISBN13, nombre_libro) == 0) {
+                                    found = 1;
+                                    lookup_id = i;
+                                    break;
+                                }
                             }
                         }
-                        else if(eleccion == 2){
-                            if (strcmp(libro.ISBN10, nombre_libro) == 0) {
-                                found = 1;
-                                lookup_id = i;
-                                break;
-                            }
+
+                        if (found) {
+                            book_return(usuario, lookup_id, libro.id, &prestamos);
+                            save_db(&usuarios, sizeof(usuarios), "usuarios.dat");
+
+                            sprintf(msg, "El usuario %s devolvio el libro %s", usuario->nombre, libro.titulo);
+                            log_msg(msg);
                         }
-                        else if(eleccion == 3){
-                            if (strcmp(libro.ISBN13, nombre_libro) == 0) {
-                                found = 1;
-                                lookup_id = i;
-                                break;
-                            }
+                        else {
+                            printf("\tNo se encontró el libro especificado\n");
                         }
+
+                        printf("\n\n");
                     }
-
-                    if (found) {
-                        book_return(usuario, lookup_id, libro.id, &prestamos);
-                        save_db(&usuarios, sizeof(usuarios), "usuarios.dat");
-
-                        sprintf(msg, "El usuario %s devolvio el libro %s", usuario->nombre, libro.titulo);
-                        log_msg(msg);
-                    }
-                    else {
-                        printf("\tNo se encontró el libro especificado\n");
-                    }
-
-                    printf("\n\n");
-
                     break;
 
                 case 4:
