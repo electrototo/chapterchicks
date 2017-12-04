@@ -460,7 +460,7 @@ int menu_rentar_libro(char *name) {
  *
  * regresa un 1 si es nombre, 2 si es isbn 10 y 3 si es isbn 13
  *
- * @author Cristobal Liendo
+ * @author Cristobal Liendo, Elena Ginebra
  * @param *name  nombre del libro
  * @return int
 */
@@ -472,8 +472,9 @@ int menu_regresar_libro(char *name) {
     printf("[1] Por nombre\n");
     printf("[2] Por ISBN 10\n");
     printf("[3] Por ISBN 13\n");
+    printf("[4] Regresar a menú principal\n");
 
-    eleccion = validate_answer("Opción: ", 1, 3);
+    eleccion = validate_answer("Opción: ", 1, 4);
 
     if (eleccion == 1)
         printf("\n\tIngresa el nombre del libro: ");
