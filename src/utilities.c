@@ -23,7 +23,7 @@
 FILE *log_file, *rand_file;
 
 /*
- * Esta funcion recibe como parametro un arreglo de caracteres
+ * Esta función recibe como parámetro un arreglo de caracteres
  * y remplaza la primera ocurrencia del caracter 'b' en 'a'
  * con un caracter nulo.
  * Se va a utilizar para quitar principalmente la nueva linea
@@ -52,7 +52,7 @@ int strip_char(char *source, char target) {
 }
 
 /*
- * Esta funcion recibe como parametro una cadena de texto para
+ * Esta función recibe como parámetro una cadena de texto para
  * poder registar esa cadena en un archivo que se llama
  * actividades.log
  * Sirve para poder llevar una bitacora de todas las acciones
@@ -81,8 +81,8 @@ void log_msg(char *msg) {
 }
 
 /*
- * Esta funcion genera de manera aleatoria un salt para
- * poder generar el hash de la contrasena mediante
+ * Esta función genera de manera aleatoria un salt para
+ * poder generar el hash de la contraseña mediante
  * el algoritmo de pbkdf2
  *
  * @author Cristobal Liendo
@@ -98,7 +98,7 @@ void generate_salt(int length, char *salt) {
 }
 
 /*
- * Esta funcion deshabilita la salida de texto en la
+ * Esta función deshabilita la salida de texto en la
  * terminal, para evitar que los passwords salgan
  * impresos en pantalla
  *
@@ -119,8 +119,8 @@ void disable_output() {
 }
 
 /*
- * Esta funcion habilta la salida de texto en pantalla,
- * regresa a las opciones originales de termios.
+ * Esta función habilita la salida de texto en pantalla,
+ * regresa a las opciones originales de terminos.
  *
  * @author Cristobal Liendo
  * @return void
@@ -131,13 +131,13 @@ void enable_output() {
 }
 
 /*
- * Esta funcion deshabilita el modo canonico en la terminal,
+ * Esta función deshabilita el modo canónico en la terminal,
  * con el fin de evitar que se tenga que presionar enter
  * en la pantalla principal.
  *
- * Precaucion: esta funcion no puede ser usada entre
- * disable_output() y enable_output() debido a que rescribiria
- * la configuracion por "default" de la terminal
+ * Precaución: esta función no puede ser usada entre
+ * disable_output() y enable_output() debido a que rescribiría
+ * la configuración por "default" de la terminal
  *
  * @author Cristobal Liendo
  * @return void
@@ -154,7 +154,7 @@ void disable_canonical() {
 }
 
 /*
- * Esta funcion habilita el modo canonico en la terminal,
+ * Esta función habilita el modo canónico en la terminal,
  * para regresar al funcionamiento "normal" de esta
  *
  * @author cristobal Liendo
@@ -170,8 +170,8 @@ void enable_canonical() {
 }
 
 /*
- * Esta funcion creau un usuario de tipo "type" y regresa
- * el indice de la posicion en la que se encuentra el usuario
+ * Esta función crea un usuario de tipo "type" y regresa
+ * el índice de la posición en la que se encuentra el usuario
  * dentro del arreglo de usuarios
  *
  * @author Cristobal Liendo
@@ -197,7 +197,7 @@ int add_user(ManejoUsuarios *usuarios, int type) {
     float credito;
 
     while (!success) {
-        // suponemos que el correo es unico
+        // suponemos que el correo es único
         success = menu_agregar_usuario(
             nombre,
             password,
@@ -211,7 +211,7 @@ int add_user(ManejoUsuarios *usuarios, int type) {
             return -1;
 
         for (int i = 0; i < usuarios->actual; i++) {
-            // Se encontro un usuario
+            // Se encontró un usuario
             if (strcmp(usuarios->usuarios[i].email, email) == 0)
                 success = 0;
         }
@@ -232,17 +232,17 @@ int add_user(ManejoUsuarios *usuarios, int type) {
 
     sscanf(a_credito, "%f", &credito);
 
-    // se deberia llevar una bitacora de transacciones
+    // se debería llevar una bitácora de transacciones
     usuarios->usuarios[index].credito = credito;
 
     sprintf(msg, "Adición de crédito %.2f de usuario: %s", credito,  usuarios->usuarios[index].nombre);
     log_msg(msg);
 
-    // genera el salt del credito
+    // genera el salt del crédito
     generate_salt(128, salt);
     memcpy(usuarios->usuarios[index].c_salt, salt, 128);
 
-    // genera el hash del credito actual
+    // genera el hash del crédito actual
     sprintf(a_credito, "%f", credito);
     fastpbkdf2_hmac_sha256(a_credito, strlen(a_credito), salt,
         128, 4096, hash, 256);
@@ -279,13 +279,13 @@ int add_user(ManejoUsuarios *usuarios, int type) {
 }
 
 /*
- * Esta funcion registra un nuevo libro en la base de datos
- * crea la categoria y el autor si es que estos no existen
+ * Esta función registra un nuevo libro en la base de datos
+ * crea la categoría y el autor si es que estos no existen
  *
  * @author Cristobal Liendo
- * @param *biblioteca   apuntador a una estructura Biblioteca; se guardan los libros aqui
- * @param *autores      apuntador a una estrcutura ManejoAutor; se guardan los autores aqui
- * @param *categorias   apuntador a una estructura ManejoCategoria; se guardan las categorias aqui
+ * @param *biblioteca   apuntador a una estructura Biblioteca; se guardan los libros aquí
+ * @param *autores      apuntador a una estrcutura ManejoAutor; se guardan los autores aquí
+ * @param *categorias   apuntador a una estructura ManejoCategoria; se guardan las categorias aquí
 */
 
 void register_book(Biblioteca *biblioteca, ManejoAutor *autores, ManejoCategoria *categorias) {
@@ -315,7 +315,7 @@ void register_book(Biblioteca *biblioteca, ManejoAutor *autores, ManejoCategoria
         }
     }
 
-    // no se encontro el autor, por lo tanto se deberia crear
+    // no se encontró el autor, por lo tanto se debería crear
     if (!success) {
         lookup_id = autores->actual;
         strcpy(autores->autores[autores->actual].nombre, nombre_autor);
@@ -333,7 +333,7 @@ void register_book(Biblioteca *biblioteca, ManejoAutor *autores, ManejoCategoria
 
     biblioteca->libros[biblioteca->actual].autor = lookup_id;
 
-    // busca si existe la categoria específica
+    // busca si existe la categoría específica
     success = 0;
     for (int i = 0; i < categorias->actual; i++) {
         if (strcmp(categorias->categorias[i].nombre, categoria) == 0) {
@@ -344,7 +344,7 @@ void register_book(Biblioteca *biblioteca, ManejoAutor *autores, ManejoCategoria
         }
     }
 
-    // no se encontro la categoria, por lo tanto se deberia crear
+    // no se encontró la categoría, por lo tanto se deberia crear
     if (!success) {
         lookup_id = categorias->actual;
         strcpy(categorias->categorias[categorias->actual].nombre, categoria);
@@ -355,7 +355,7 @@ void register_book(Biblioteca *biblioteca, ManejoAutor *autores, ManejoCategoria
         sprintf(msg, "Creacion de la categoría %s", categoria);
         log_msg(msg);
 
-        // guarda la categoria, porque actualmente no existe en la
+        // guarda la categoría, porque actualmente no existe en la
         // base de datos
         save_db(categorias, sizeof(*categorias), "categorias.dat");
     }
@@ -374,7 +374,7 @@ void register_book(Biblioteca *biblioteca, ManejoAutor *autores, ManejoCategoria
 }
 
 /*
-* Esta funcion determina si el usuario es mayor de edad o no
+* Esta función determina si el usuario es mayor de edad o no
 * regresa verdadero si lo es, y falso si no lo es
 *
 * @author Cristobal Liendo, Guillermo Ortega
@@ -403,7 +403,7 @@ int legal(int *fecha_nacimiento) {
 }
 
 /*
-* Esta funcion sirve para guardar los datos de @p struct en la base
+* Esta función sirve para guardar los datos de @p struct en la base
 * de datos @p name, de tamaño @p size
 *
 * @author Cristobal Liendo
@@ -421,13 +421,13 @@ void save_db(void *structure, unsigned int size, char *name) {
 }
 
 /*
- * Esta funcion sirve para validar los datos que el usuario haya ingresado,
- * se va a usar en las funciones de menus
+ * Esta función sirve para validar los datos que el usuario haya ingresado,
+ * se va a usar en las funciones de menús
  *
  * @author Cristobal Liendo
  * @param message  El mensaje que se le va a mostrar al usuario
- * @param start    El inicio del rango valido
- * @param end      El final del rango valido
+ * @param start    El inicio del rango válido
+ * @param end      El final del rango válido
  * @return int
 */
 
@@ -444,7 +444,7 @@ int validate_answer(char *message, int start, int end) {
 }
 
 /*
- * Esta funcion sirve para agregar un libro a la renta del usuario,
+ * Esta función sirve para agregar un libro a la renta del usuario,
  * regresa un 1 si fue exitoso, 2 si no alcanzó el dinero o 3 si
  * no existe el libro, 4 si el usuario ya no puede rentar mas libros
  *
@@ -492,7 +492,7 @@ int add_book(Usuario *user, Biblioteca *bib, ManejoAutor *autores,
         }
     }
 
-    // si se encontro el libro
+    // si se encontró el libro
     if (success == 1) {
         // comprueba que el usuario tenga el dinero suficiente
         if (user->credito < libro->costo)
@@ -526,7 +526,7 @@ int add_book(Usuario *user, Biblioteca *bib, ManejoAutor *autores,
                 }
             }
 
-            // aumenta la cantidad de veces que el genero ha sido prestado
+            // aumenta la cantidad de veces que el género ha sido prestado
             for (int i = 0; i < categorias->actual; i++) {
                 if (libro->categoria == categorias->categorias[i].id) {
                     categorias->categorias[i].prestados++;
@@ -570,7 +570,7 @@ int add_book(Usuario *user, Biblioteca *bib, ManejoAutor *autores,
 }
 
 /*
- * Esta funcion busca en la biblioteca de libros el libro
+ * Esta función busca en la biblioteca de libros el libro
  * que tenga el mismo id y lo regresa
  *
  * @author Cristobal Liendo
@@ -586,7 +586,7 @@ Libro find_book_by_id(int id, Biblioteca *bib) {
 }
 
 /*
- * Esta funcion busca en los usuarios el usuario que tenga el
+ * Esta función busca en los usuarios el usuario que tenga el
  * mismo id y lo regresa
  *
  * @author Cristobal Liendo
@@ -603,7 +603,7 @@ Usuario find_user_by_id(int id, ManejoUsuarios *users) {
 }
 
 /*
- * Esta funcion busca en las categorias la categoria que tenga el
+ * Esta función busca en las categorias la categoria que tenga el
  * mismo id y lo regresa
  *
  * @author Cristobal Liendo
@@ -619,7 +619,7 @@ Categoria find_categoria_by_id(int id, ManejoCategoria *categorias) {
 }
 
 /*
- * Esta funcion busca en los autores el autor que tenga el
+ * Esta función busca en los autores el autor que tenga el
  * mismo id y lo regresa
  *
  * @author Cristobal Liendo
@@ -635,7 +635,7 @@ Autor find_autor_by_id(int id, ManejoAutor *autores) {
 }
 
 /*
- * Esta funcion sirve para ordenar los usuarios de manera alfabetica
+ * Esta función sirve para ordenar los usuarios de manera alfabética
  * guarda los resultados en sorted
  *
  * @author Cristobal Liendo
@@ -660,7 +660,7 @@ void insertion_sort(ManejoUsuarios *users) {
     }
 }
 
-/* Sirve para imprimir los menus y manejar adecuadamente los errores
+/* Sirve para imprimir los menús y manejar adecuadamente los errores
  * al querer agregar un libro
  *
  * @author Cristobal Liendo
@@ -703,7 +703,7 @@ int menu_funcion_agregar_libro(Usuario *user, Biblioteca *biblioteca,
 }
 
 /*
- * Esta funcion sirve para dar de baja un libro
+ * Esta función sirve para dar de baja un libro
  *
  * @authors Elena Ginebra, Cristobal Liendo
  * @param *usuario    la estructura del usuario que dio de baja el libro
@@ -756,7 +756,7 @@ void baja_libro(Usuario *usuario, Biblioteca *biblioteca) {
 }
 
 /*
- * Esta funcion sirve para imprimir un solo libro
+ * Esta función sirve para imprimir un solo libro
  *
  * @author Cristobal Liendo
  * @param libro       El libro ha imprimirse
@@ -785,7 +785,7 @@ void format_book(Libro libro, ManejoAutor *autores, ManejoCategoria *categorias,
 }
 
 /*
- * Esta funcion se encarga de devolver un libro
+ * Esta función se encarga de devolver un libro
  *
  * @author Cristobal Liendo
  * @param *user        el usuario que devuelve un libro
