@@ -38,7 +38,7 @@ int main(int argc, char **argv) {
     float credito = 0;
     unsigned char a_credito[10];
 
-    int index;
+    int index, tmp;
 
     // variables para el registro del usuario
     char nombre[100], direccion[100], email[100];
@@ -273,6 +273,34 @@ int main(int argc, char **argv) {
         printf("\nLo lamentamos, tu cuenta fue desactivada\n\n");
 
         return 1;
+    }
+
+    // comprueba que no haya ningun libro caduco dentro de los libros del usuario
+    for (int id = 0; id < 3 - usuario->disponibles; id++) {
+        // Busca la ficha de prestamo
+        for (int i = 0; i < prestamos.actual; i++) {
+            prestamo = &prestamos.prestamos[i];
+
+            if (prestamo->libro == usuario->libros[id] && prestamo->usuario == usuario->id) {
+                if (difftime(prestamo->fecha_devolucion, time(NULL)) < 0) {
+                    // mueve de lugar los libros prestados
+                    for (int j = id; j < 2; j++) {
+                        tmp = usuario->libros[j + 1];
+                        usuario->libros[j] = usuario->libros[j + 1];
+                        usuario->libros[j + 1] = tmp;
+                    }
+                    // modifica la fecha de entrega
+                    prestamo->fecha_devolucion = time(NULL);
+                    // y lo marca como devuelto
+                    prestamo->devuelto = 1;
+
+                    usuario->disponibles++;
+
+                    save_db(&prestamos, sizeof(prestamos), "prestamos.dat");
+                    save_db(&usuarios, sizeof(usuarios), "usuarios.dat");
+                }
+            }
+        }
     }
 
     eleccion = 0;
